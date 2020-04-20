@@ -60,3 +60,6 @@ gem 'haml-rails'
 
 #User
 gem 'devise'
+
+#japanase language
+gem 'rails-i18n'
