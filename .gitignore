@@ -69,3 +69,5 @@ yarn-debug.log*
 /pgsql-data
 
 .DS_Store
+
+/MyDocuments
