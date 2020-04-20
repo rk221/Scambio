@@ -67,3 +67,5 @@ yarn-debug.log*
 !/storage/.keep
 
 /pgsql-data
+
+.DS_Store
