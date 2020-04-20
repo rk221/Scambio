@@ -63,3 +63,5 @@ gem 'devise'
 
 #japanase language
 gem 'rails-i18n'
+gem 'devise-i18n'
+gem 'devise-i18n-views'
