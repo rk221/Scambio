@@ -1,4 +1,4 @@
-<h2><%= t('users.registrations.edit.edit') %><%= resource_name.to_s.humanize %></h2>
+<h2><%= t('users.registrations.edit.edit') %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -18,7 +18,7 @@
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
       <br />
-      <em><%= t('users.registrations.password_conditions') %></em>
+      <em><%= t('users.registrations.edit.password_conditions') %></em>
     <% end %>
   </div>
 
@@ -28,7 +28,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(<%= t('we_need_your_current_password_to_confirm_your_changes') %>)</i><br />
+    <%= f.label :current_password %> <i>(<%= t('users.registrations.edit.we_need_your_current_password_to_confirm_your_changes') %>)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
