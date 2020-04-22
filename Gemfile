@@ -63,3 +63,6 @@ gem 'devise'
 
 #japanase language
 gem 'rails-i18n'
+
+#deco
+gem 'draper'
