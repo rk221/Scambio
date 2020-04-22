@@ -7,37 +7,37 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
-  it "姓がない場合、無効である" do
+  it "名がない場合、無効である" do
     user = FactoryBot.build(:user, firstname: nil)
     user.valid?
     expect(user.errors[:firstname]).to include("を入力してください")
   end
 
-  it "姓がカタカナな場合、無効である" do
+  it "名がカタカナな場合、無効である" do
     user = FactoryBot.build(:user, firstname: "カタカナ")
     user.valid?
     expect(user.errors[:firstname]).to include("は不正な値です")
   end
 
-  it "姓がアルファベットな場合、無効である" do
+  it "名がアルファベットな場合、無効である" do
     user = FactoryBot.build(:user, firstname: "name")
     user.valid?
     expect(user.errors[:firstname]).to include("は不正な値です")
   end
 
-  it "名がない場合、無効である" do
+  it "姓がない場合、無効である" do
     user = FactoryBot.build(:user, lastname: nil)
     user.valid?
     expect(user.errors[:lastname]).to include("を入力してください")
   end
 
-  it "名がカタカナな場合、無効である" do
+  it "姓がカタカナな場合、無効である" do
     user = FactoryBot.build(:user, lastname: "カタカナ")
     user.valid?
     expect(user.errors[:lastname]).to include("は不正な値です")
   end
 
-  it "名がアルファベットな場合、無効である" do
+  it "姓がアルファベットな場合、無効である" do
     user = FactoryBot.build(:user, lastname: "name")
     user.valid?
     expect(user.errors[:lastname]).to include("は不正な値です")
