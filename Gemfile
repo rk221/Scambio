@@ -68,3 +68,5 @@ gem 'devise-i18n-views'
 
 #deco
 gem 'draper'
+
+gem 'react-rails'
