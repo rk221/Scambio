@@ -10,6 +10,7 @@ ja:
         firstname: "名"
         lastname: "姓"
         nickname: "ニックネーム"
+        birthdate: "生年月日"
     models:
       user: "ユーザ"
   users:
@@ -76,3 +77,6 @@ ja:
     unlocks:
       new:
         resend_unlock_instructions: "アカウントの凍結解除方法を再送する"
+  errors:
+    messages:
+      birthdate_cannot_be_in_the_future: "は正しい範囲で設定してください"

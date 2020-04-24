@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  it "姓、名、ニックネーム、Eメール、パスワードがある場合、有効である" do
+  it "姓、名、ニックネーム、生年月日、Eメール、パスワードがある場合、有効である" do
     user = FactoryBot.build(:user)
     expect(user).to be_valid
   end
@@ -59,6 +59,18 @@ RSpec.describe User, type: :model do
     user = FactoryBot.build(:user, nickname: 'a' * 31)
     user.valid?
     expect(user.errors[:nickname]).to include("は30文字以内で入力してください")
+  end
+
+  it "生年月日ない場合、無効である" do
+    user = FactoryBot.build(:user, birthdate: nil)
+    user.valid?
+    expect(user.errors[:birthdate]).to include("を入力してください")
+  end
+
+  it "生年月日が未来の場合、無効である" do
+    user = FactoryBot.build(:user, birthdate: 1.days.since)
+    user.valid?
+    expect(user.errors[:birthdate]).to include("は正しい範囲で設定してください")
   end
 
   it "Eメールがない場合、無効である" do

@@ -10,4 +10,14 @@ class User < ApplicationRecord
   validates :firstname, presence: true, format: {with: VALID_NAME_REGEX}
   validates :lastname, presence: true, format: {with: VALID_NAME_REGEX}
   validates :nickname, presence: true, length: {in: 4..30}
+  validates :birthdate, presence: true
+  validate :birthdate_cannot_be_in_the_future
+
+  def birthdate_cannot_be_in_the_future
+    # 生年月日が入力済かつ未来日ではない
+    if birthdate.present? && birthdate.future?
+      errors.add(:birthdate, :birthdate_cannot_be_in_the_future)
+    end
+  end
+  
 end
