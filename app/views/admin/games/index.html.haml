@@ -1,3 +1,26 @@
-Game
+%h1.mb-3 
+    = t '.title'
 
-= link_to '新規登録', new_admin_game_path, class: 'btn btn-primary'
+= link_to t('link_to.create'), new_admin_game_path, class: 'btn btn-primary mb-3'
+
+%table.table.table-hover.table-bordered
+    %thead.thead-default
+        %tr 
+            %th.w-25
+                = Game.human_attribute_name(:title)
+            %th.w-50
+                = Game.human_attribute_name(:image_icon)
+            %th.w-25
+    %body
+        - @games.each do |game|
+            %tr 
+                %td 
+                    = game.title
+                %td 
+                    - if game.image_icon.present?
+                        = image_tag(game.image_icon_url, class: 'img-fluid', style: 'width: 20%')
+                    - else
+                        = 'なし'
+                %td
+                    = link_to t('link_to.edit'), edit_admin_game_path(game), class: 'btn btn-primary mr-3'
+                    = link_to t('link_to.delete'), admin_game_path(game), method: :delete,data: {confirm: "#{Game.model_name.human}「#{game.title}」を削除しますか？"}, class: 'btn btn-danger'

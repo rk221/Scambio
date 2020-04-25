@@ -1,4 +1,12 @@
 ja:
+    link_to:
+        create: 登録
+        edit: 編集
+        delete: 削除
+    admin:
+        games:
+            index:
+                title: ゲーム一覧
     activerecord:
         attributes:
             game:
