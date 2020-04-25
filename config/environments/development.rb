@@ -66,4 +66,7 @@ Rails.application.configure do
 
   # default url
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000}
+  #missing host to link to!
+  host = 'samplehost'
+  Rails.application.routes.default_url_options[:host] = host
 end
