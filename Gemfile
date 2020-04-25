@@ -69,4 +69,6 @@ gem 'devise-i18n-views'
 #deco
 gem 'draper'
 
-gem 'react-rails'
+#image uploader
+gem 'carrierwave'
+gem 'mini_magick'
