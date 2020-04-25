@@ -85,6 +85,13 @@ RSpec.describe User, type: :model do
     expect(user.errors[:email]).to include("は不正な値です")
   end
 
+  it "Eメールが重複している場合、無効である" do
+    user = FactoryBot.create(:user)
+    user = FactoryBot.build(:user)
+    user.valid?
+    expect(user.errors[:email]).to include("はすでに存在します")
+  end
+
   it "パスワードがない場合、無効である" do
     user = FactoryBot.build(:user, password: nil)
     user.valid?
