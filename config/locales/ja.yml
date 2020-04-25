@@ -1,0 +1,14 @@
+ja:
+    activerecord:
+        attributes:
+            game:
+                title: ゲーム名
+                image_icon: アイコン
+        models:
+            game: ゲーム
+
+    helpers:
+        submit:
+            create: 登録する
+            update: 更新する
+            submit: 保存する
