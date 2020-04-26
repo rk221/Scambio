@@ -1,5 +1,7 @@
 ja:
     empty: なし 
+    confirm:
+        destroy: "%{model}「%{title}」を削除しますか？"
     link_to:
         create: 登録
         edit: 編集
@@ -27,3 +29,8 @@ ja:
         games: ゲーム
         profile: プロフィール変更
         log_out: ログアウト
+    flash:
+        new: 作成しました
+        update: 更新しました
+        failed: 失敗しました
+        destroy: 削除しました
