@@ -12,6 +12,8 @@ ja:
                 title: ゲーム一覧
             new:
                 title: ゲーム登録
+            edit:
+                title: ゲーム編集
     activerecord:
         attributes:
             game:

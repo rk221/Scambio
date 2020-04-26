@@ -1,0 +1,25 @@
+%h1.mb-3 
+    = t '.title'
+
+= form_with(model: [@game], url: admin_game_path, local: true) do |f|
+    = render 'shared/error_messages', model: f.object
+    .form-group
+        = f.label :title
+        = f.text_field :title, class: 'form-control'
+    
+    .form-group#image_app
+        = f.label :image_icon
+        = f.file_field :image_icon, accept: 'image/*', "@change": "onFileChange($event)", class: 'form-control-file'
+        .mt-10
+            %img{":src": "imageData", v: {if: "imageData"}, style: "width: 30%"}
+            %div{"v-else": true}
+                - if @game.image_icon.present?
+                    = image_tag(@game.image_icon_url, style: 'width: 30%')
+                - else  
+                    = t 'empty'
+
+
+    = f.submit nil, class:'btn btn-primary'
+
+
+= javascript_pack_tag 'image_prev'
