@@ -1,4 +1,5 @@
 ja:
+    empty: なし 
     link_to:
         create: 登録
         edit: 編集
@@ -7,6 +8,8 @@ ja:
         games:
             index:
                 title: ゲーム一覧
+            new:
+                title: ゲーム登録
     activerecord:
         attributes:
             game:
@@ -17,6 +20,10 @@ ja:
 
     helpers:
         submit:
-            create: 登録する
-            update: 更新する
-            submit: 保存する
+            create: 登録
+            update: 更新
+            submit: 保存
+    navbar:
+        games: ゲーム
+        profile: プロフィール変更
+        log_out: ログアウト

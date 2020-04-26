@@ -20,7 +20,7 @@
                     - if game.image_icon.present?
                         = image_tag(game.image_icon_url, class: 'img-fluid', style: 'width: 20%')
                     - else
-                        = 'なし'
+                        = t('empty') 
                 %td
                     = link_to t('link_to.edit'), edit_admin_game_path(game), class: 'btn btn-primary mr-3'
                     = link_to t('link_to.delete'), admin_game_path(game), method: :delete,data: {confirm: "#{Game.model_name.human}「#{game.title}」を削除しますか？"}, class: 'btn btn-danger'

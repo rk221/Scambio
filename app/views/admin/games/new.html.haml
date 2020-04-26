@@ -1,4 +1,5 @@
-%h1.mb5 ゲーム登録
+%h1.mb5
+    = t('.title')
 
 = form_with(model: [@game], url: admin_games_path, local: true) do |f|
     = render 'shared/error_messages', model: f.object
@@ -11,7 +12,7 @@
         = f.file_field :image_icon, accept: 'image/*', "@change": "onFileChange($event)", class: 'form-control-file'
         %img.mt-10{":src": "imageData", v: {if: "imageData"}, style: "width: 30%"}
 
-    = f.submit '登録', class:'btn btn-primary'
+    = f.submit nil, class:'btn btn-primary'
 
 
 = javascript_pack_tag 'image_prev'
