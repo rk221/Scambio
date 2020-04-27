@@ -1,0 +1,38 @@
+ja:
+    empty: なし 
+    confirm:
+        destroy: "%{model}「%{title}」を削除しますか？"
+    link_to:
+        create: 登録
+        edit: 編集
+        delete: 削除
+    admin:
+        games:
+            index:
+                title: ゲーム一覧
+            new:
+                title: ゲーム登録
+            edit:
+                title: ゲーム編集
+    activerecord:
+        attributes:
+            game:
+                title: ゲームタイトル
+                image_icon: アイコン
+        models:
+            game: ゲーム
+
+    helpers:
+        submit:
+            create: 登録
+            update: 更新
+            submit: 保存
+    navbar:
+        games: ゲーム
+        profile: プロフィール変更
+        log_out: ログアウト
+    flash:
+        new: 作成しました
+        update: 更新しました
+        failed: 失敗しました
+        destroy: 削除しました

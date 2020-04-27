@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :game do
-    title{'タイトル'}
+    title{'テストタイトル'}
   end
 end

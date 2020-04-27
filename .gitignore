@@ -71,3 +71,4 @@ yarn-debug.log*
 .DS_Store
 
 /MyDocuments
+/public/uploads/

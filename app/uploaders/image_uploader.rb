@@ -28,6 +28,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
+  process resize_to_limit: [300, 300]
+
   # Create different versions of your uploaded files:
   # サムネイルを有効化
   version :thumb do

@@ -11,4 +11,12 @@ RSpec.describe Game, type: :model do
     game.valid?
     expect(game.errors[:title]).to include("を入力してください")
   end
+
+  it "タイトルが重複している場合、無効である" do
+    FactoryBot.create(:game)
+    game = FactoryBot.build(:game)
+    game.valid?
+    expect(game.errors[:title]).to include("はすでに存在します")
+    
+  end
 end
