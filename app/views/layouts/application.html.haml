@@ -13,6 +13,17 @@
     %main.container
       %nav
         = render partial: 'navbar/navbar'
+      - breadcrumbs.tap do |links| 
+        - if links.any? 
+          .container
+            %ol.breadcrumb
+              - links.each do |link| 
+                - if link.current?
+                  %li.breadcrumb-item
+                    = link_to_unless(link.current?, link.text, link.url)
+                - else
+                  %li.breadcrumb-item.active
+                    = link_to_unless(link.current?, link.text, link.url)
       %p.notice
         = notice
       = yield
