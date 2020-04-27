@@ -17,7 +17,7 @@ ja:
     activerecord:
         attributes:
             game:
-                title: ゲーム名
+                title: ゲームタイトル
                 image_icon: アイコン
         models:
             game: ゲーム
