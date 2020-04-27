@@ -72,3 +72,6 @@ gem 'draper'
 #image uploader
 gem 'carrierwave'
 gem 'mini_magick'
+
+#breadcrumb
+gem 'gretel'
