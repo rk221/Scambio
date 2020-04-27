@@ -2,26 +2,26 @@ crumb :root do
   link "Home", root_path
 end
 
-crumb :profile do 
-  link "プロフィール", users_show_path
+crumb :mypage do 
+  link t('users.show.title'), users_show_path
 end
 
-crumb :edit_profile do
-  link "プロフィール変更", edit_user_registration_path
-  parent :profile
+crumb :edit_user do
+  link t('users.registrations.edit.edit'), edit_user_registration_path
+  parent :mypage
 end
 
 crumb :games do 
-  link "ゲーム一覧", admin_games_path
+  link t('admin.games.index.title'), admin_games_path
 end
 
 crumb :new_game do 
-  link "ゲーム登録", new_admin_game_path
+  link t('admin.games.new.title'), new_admin_game_path
   parent :games
 end
 
 crumb :edit_game do 
-  link "ゲーム編集", edit_admin_game_path
+  link t('admin.games.edit.title'), edit_admin_game_path
   parent :games
 end
 
