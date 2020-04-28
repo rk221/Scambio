@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_one :nintendo_friend_code
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -12,6 +13,8 @@ class User < ApplicationRecord
   validates :nickname, presence: true, length: {in: 4..30}
   validates :birthdate, presence: true
   validate :birthdate_cannot_be_in_the_future
+
+
 
   def birthdate_cannot_be_in_the_future
     # 生年月日が入力済かつ未来日ではない
