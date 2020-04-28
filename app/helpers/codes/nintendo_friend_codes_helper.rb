@@ -1,0 +1,2 @@
+module Codes::NintendoFriendCodesHelper
+end
