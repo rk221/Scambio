@@ -28,6 +28,13 @@ class Codes::NintendoFriendCodesController < CodesController
         end
     end
 
+    def destroy 
+        @nintendo_friend_code = NintendoFriendCode.find(params[:id])
+        @nintendo_friend_code.destroy
+
+        redirect_to codes_path, notice: t('flash.destroy')
+    end
+
     private
 
     def nintendo_friend_code_params

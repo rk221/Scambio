@@ -2,6 +2,7 @@ ja:
     empty: なし 
     confirm:
         destroy: "%{model}「%{title}」を削除しますか？"
+        simple_destroy: "%{name}を削除しますか？"
     link_to:
         create: 登録
         edit: 編集
