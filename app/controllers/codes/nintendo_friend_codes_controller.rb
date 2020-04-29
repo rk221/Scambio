@@ -1,2 +1,2 @@
-class Codes::NintendoFriendCodesController < ApplicationController
+class Codes::NintendoFriendCodesController < CodesController
 end

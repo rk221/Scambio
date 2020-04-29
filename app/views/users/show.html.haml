@@ -1,6 +1,9 @@
 - breadcrumb :mypage
-%h1 Users#show
+%h1.mb-5 Users#show
 %p Find me in app/views/users/show.html.haml
 
 %p Name
 = @user.firstname
+
+%p
+= link_to t('.codes'),codes_path, class: 'btn btn-primary'

@@ -14,6 +14,14 @@ ja:
                 title: ゲーム登録
             edit:
                 title: ゲーム編集
+    codes:
+        index:
+            title: コード一覧
+        nintendo_friend_codes:
+            new:
+                title: 任天堂フレンドコード登録
+            edit:
+                title: 任天堂フレンドコード編集
     activerecord:
         attributes:
             game:

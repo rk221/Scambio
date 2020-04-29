@@ -79,6 +79,7 @@ ja:
         resend_unlock_instructions: "アカウントの凍結解除方法を再送する"
     show:
       title: マイページ
+      codes: コード一覧
   errors:
     messages:
       birthdate_cannot_be_in_the_future: "は正しい範囲で設定してください"
