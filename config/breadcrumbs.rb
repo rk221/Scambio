@@ -29,12 +29,12 @@ crumb :codes do
   link t('codes.index.title'), codes_path
 end
 
-crumb :new_codes_nintendo_friend_code do 
+crumb :new_nintendo_friend_code do 
   link t('codes.nintendo_friend_codes.new.title'), new_codes_nintendo_friend_code_path
   parent :codes
 end
 
-crumb :edit_codes_nintendo_friend_code do 
+crumb :edit_nintendo_friend_code do 
   link t('codes.nintendo_friend_codes.edit.title'), edit_codes_nintendo_friend_code_path
   parent :codes
 end

@@ -3,7 +3,9 @@
     = t '.title'
 
 - if @nintendo_friend_code
+    %h4
+        = NintendoFriendCode.model_name.human
     = @nintendo_friend_code.friend_code
-    = link_to '編集', edit_codes_nintendo_friend_code_path, class: 'btn btn-success'
+    = link_to '編集', edit_codes_nintendo_friend_code_path(@nintendo_friend_code), class: 'btn btn-success'
 - else
     = link_to '登録', new_codes_nintendo_friend_code_path, class: 'btn btn-primary'

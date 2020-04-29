@@ -10,4 +10,9 @@ class Codes::NintendoFriendCodeDecorator < Draper::Decorator
   #     end
   #   end
 
+  def friend_code 
+    split_codes = object.friend_code.scan(/.{1,#{4}}/)
+    "#{split_codes[0]}-#{split_codes[1]}-#{split_codes[2]}"
+  end
+
 end

@@ -27,7 +27,10 @@ ja:
             game:
                 title: ゲームタイトル
                 image_icon: アイコン
+            nintendo_friend_code: 
+                friend_code: フレンドコード
         models:
+            nintendo_friend_code: 任天堂フレンドコード
             game: ゲーム
 
     helpers:
@@ -44,3 +47,4 @@ ja:
         update: 更新しました
         failed: 失敗しました
         destroy: 削除しました
+        regist: 登録しました
