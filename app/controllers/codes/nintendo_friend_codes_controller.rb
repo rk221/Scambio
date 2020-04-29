@@ -15,11 +15,17 @@ class Codes::NintendoFriendCodesController < CodesController
     end
 
     def edit 
-
+        @nintendo_friend_code = NintendoFriendCode.find(params[:id])
     end
 
     def update 
-        
+        @nintendo_friend_code = NintendoFriendCode.find(params[:id])
+
+        if @nintendo_friend_code.update(nintendo_friend_code_params)
+            redirect_to codes_path, notice: t('flash.update')
+        else
+            render :edit 
+        end
     end
 
     private

@@ -1,0 +1,12 @@
+- breadcrumb :edit_nintendo_friend_code
+%h1.mb5
+    = t('.title')
+
+= form_with(model: [@nintendo_friend_code], url: codes_nintendo_friend_code_path, local: true) do |f|
+    = render 'shared/error_messages', model: f.object
+    .form-group
+        = f.label :friend_code
+        = f.text_field :friend_code, class: 'form-control'
+
+    .form-group
+        = f.submit nil, class:'btn btn-primary'
