@@ -15,11 +15,17 @@ class Codes::PlayStationNetworkIdsController < ApplicationController
     end
 
     def edit 
-
+        @play_station_network_id = PlayStationNetworkId.find(params[:id])
     end
 
     def update 
+        @play_station_network_id = PlayStationNetworkId.find(params[:id])
 
+        if @play_station_network_id.update(play_station_network_id_params)
+            redirect_to codes_path, notice: t('flash.update')
+        else
+            render :edit 
+        end
     end
 
     def destroy 
