@@ -49,3 +49,6 @@ ja:
         failed: 失敗しました
         destroy: 削除しました
         regist: 登録しました
+    errors:
+        messages:
+            psn_id_head_alphabet: は先頭英字で入力してください

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_28_080019) do
+ActiveRecord::Schema.define(version: 2020_04_30_004805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,14 @@ ActiveRecord::Schema.define(version: 2020_04_28_080019) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_nintendo_friend_codes_on_user_id"
+  end
+
+  create_table "play_station_network_ids", force: :cascade do |t|
+    t.string "psn_id", limit: 16, null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_play_station_network_ids_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -63,4 +71,5 @@ ActiveRecord::Schema.define(version: 2020_04_28_080019) do
   end
 
   add_foreign_key "nintendo_friend_codes", "users"
+  add_foreign_key "play_station_network_ids", "users"
 end

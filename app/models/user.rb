@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_one :nintendo_friend_code
+  has_one :play_station_network_id
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
