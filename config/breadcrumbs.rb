@@ -39,6 +39,16 @@ crumb :edit_nintendo_friend_code do
   parent :codes
 end
 
+crumb :new_play_station_network_id do 
+  link t('codes.play_station_network_ids.new.title'), new_codes_play_station_network_id_path
+  parent :codes
+end
+
+crumb :edit_play_station_network_id do 
+  link t('codes.play_station_network_ids.edit.title'), edit_codes_play_station_network_id_path
+  parent :codes
+end
+
 # crumb :projects do
 #   link "Projects", projects_path
 # end

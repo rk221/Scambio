@@ -30,9 +30,11 @@ ja:
                 image_icon: アイコン
             nintendo_friend_code: 
                 friend_code: フレンドコード
+            play_station_network_id:
+                psn_id: PSN_ID
         models:
             nintendo_friend_code: 任天堂フレンドコード
-            play_station_network_id: PSNID
+            play_station_network_id: PlayStationNetworkID
             game: ゲーム
 
     helpers:
