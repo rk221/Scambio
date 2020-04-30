@@ -29,8 +29,13 @@ class Codes::PlayStationNetworkIdsController < ApplicationController
     end
 
     def destroy 
-        
+        @play_station_network_code = PlayStationNetworkId.find(params[:id])
+        @play_station_network_code.destroy
+
+        redirect_to codes_path, notice: t('flash.destroy')
     end
+
+    private
 
     def play_station_network_id_params 
         params.require(:play_station_network_id).permit(:id, :psn_id, :user_id)
