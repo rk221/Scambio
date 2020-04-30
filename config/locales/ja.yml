@@ -32,6 +32,7 @@ ja:
                 friend_code: フレンドコード
         models:
             nintendo_friend_code: 任天堂フレンドコード
+            play_station_network_id: PSNID
             game: ゲーム
 
     helpers:
