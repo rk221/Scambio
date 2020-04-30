@@ -15,7 +15,7 @@
     %h4
         = PlayStationNetworkId.model_name.human
     - if @play_station_network_id
-        = @play_station_network_id.friend_code
+        = @play_station_network_id.psn_id
         = link_to t('link_to.edit'), edit_codes_play_station_network_id_path(@play_station_network_id), class: 'btn btn-success'
         = link_to t('link_to.delete'), codes_play_station_network_id_path(@play_station_network_id), method: 'delete', data: {confirm: t('confirm.simple_destroy', name: PlayStationNetworkId.model_name.human)}, class: 'btn btn-danger'
     - else
