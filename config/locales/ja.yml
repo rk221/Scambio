@@ -2,6 +2,7 @@ ja:
     empty: なし 
     confirm:
         destroy: "%{model}「%{title}」を削除しますか？"
+        simple_destroy: "%{name}を削除しますか？"
     link_to:
         create: 登録
         edit: 編集
@@ -14,12 +15,26 @@ ja:
                 title: ゲーム登録
             edit:
                 title: ゲーム編集
+    codes:
+        index:
+            title: コード一覧
+        nintendo_friend_codes:
+            new:
+                title: 任天堂フレンドコード登録
+            edit:
+                title: 任天堂フレンドコード編集
     activerecord:
         attributes:
             game:
                 title: ゲームタイトル
                 image_icon: アイコン
+            nintendo_friend_code: 
+                friend_code: フレンドコード
+            play_station_network_id:
+                psn_id: PSN_ID
         models:
+            nintendo_friend_code: 任天堂フレンドコード
+            play_station_network_id: PlayStationNetworkID
             game: ゲーム
 
     helpers:
@@ -36,3 +51,7 @@ ja:
         update: 更新しました
         failed: 失敗しました
         destroy: 削除しました
+        regist: 登録しました
+    errors:
+        messages:
+            psn_id_head_alphabet: は先頭英字で入力してください

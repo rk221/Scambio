@@ -1,0 +1,2 @@
+module Codes::PlayStationNetworkIdsHelper
+end
