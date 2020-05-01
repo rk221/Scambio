@@ -11,9 +11,10 @@
     .form-group#image_app
         = f.label :image_icon
         = f.file_field :image_icon, accept: 'image/*', "@change": "onFileChange($event)", class: 'form-control-file'
-        %img.mt-10{":src": "imageData", v: {if: "imageData"}, style: "width: 30%"}
+        %img.mt-3{":src": "imageData", v: {if: "imageData"}, style: "width: 30%"}
 
-    = f.submit nil, class:'btn btn-primary'
+    .form-group
+        = f.submit nil, class:'btn btn-primary'
 
 
 = javascript_pack_tag 'image_prev'
