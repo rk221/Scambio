@@ -44,7 +44,7 @@ ja:
             submit: 保存
     navbar:
         games: ゲーム
-        profile: プロフィール変更
+        mypage: マイページ
         log_out: ログアウト
     flash:
         new: 作成しました

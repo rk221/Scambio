@@ -3,7 +3,7 @@ crumb :root do
 end
 
 crumb :mypage do 
-  link t('users.show.title'), users_show_path
+  link t('users.show.title'), user_path(current_user)
 end
 
 crumb :edit_user do
