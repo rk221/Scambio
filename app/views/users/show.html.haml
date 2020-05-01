@@ -5,5 +5,8 @@
 %p Name
 = @user.firstname
 
+%p 
+= link_to t('.edit_user'), edit_user_registration_path(@user), class: 'btn btn-success'
+
 %p
 = link_to t('.codes'),codes_path, class: 'btn btn-primary'
