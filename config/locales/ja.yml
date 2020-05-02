@@ -23,6 +23,11 @@ ja:
                 title: 任天堂フレンドコード登録
             edit:
                 title: 任天堂フレンドコード編集
+        play_station_network_ids:
+            new:
+                title: PlayStationNetworkID登録
+            edit:
+                title: PlayStationNetworkID編集
     activerecord:
         attributes:
             game:
