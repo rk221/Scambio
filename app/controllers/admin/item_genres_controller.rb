@@ -15,6 +15,19 @@ class Admin::ItemGenresController < AdminController
             render :new
         end
     end
+    
+    def edit 
+        @item_genre = ItemGenre.find(params[:id])
+    end
+
+    def update 
+        @item_genre = ItemGenre.find(params[:id])
+        if @item_genre.update(item_genre_params) 
+            redirect_to admin_item_genres_path, notice: t('flash.update')
+        else
+            render :edit
+        end
+    end
 
     private 
 
