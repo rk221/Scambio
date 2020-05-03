@@ -2,7 +2,7 @@
 %h1.mb-5 
     = t '.title'
 
-.form-group
+.form-group#nintendo-friend-code
     %h4
         = NintendoFriendCode.model_name.human
     - if @nintendo_friend_code
@@ -11,7 +11,7 @@
         = link_to t('link_to.delete'), codes_nintendo_friend_code_path(@nintendo_friend_code), method: 'delete', data: {confirm: t('confirm.simple_destroy', name: NintendoFriendCode.model_name.human)}, class: 'btn btn-danger'
     - else
         = link_to t('link_to.create'), new_codes_nintendo_friend_code_path, class: 'btn btn-primary'
-.form-group
+.form-group#play-station-network-id
     %h4
         = PlayStationNetworkId.model_name.human
     - if @play_station_network_id
