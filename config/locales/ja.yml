@@ -64,7 +64,7 @@ ja:
         mypage: マイページ
         log_out: ログアウト
     flash:
-        new: 作成しました
+        create: 作成しました
         update: 更新しました
         failed: 失敗しました
         destroy: 削除しました

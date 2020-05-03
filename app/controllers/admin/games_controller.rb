@@ -10,7 +10,7 @@ class Admin::GamesController < AdminController
     def create 
         @game = Game.new(game_params)
         if @game.save
-            redirect_to admin_games_path, notice: t('flash.new')
+            redirect_to admin_games_path, notice: t('flash.create')
         else
             render :new
         end

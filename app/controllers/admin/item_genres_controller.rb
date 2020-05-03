@@ -10,7 +10,7 @@ class Admin::ItemGenresController < AdminController
     def create 
         @item_genre = ItemGenre.new(item_genre_params)
         if @item_genre.save 
-            redirect_to admin_item_genres_path, notice: t('flash.new')
+            redirect_to admin_item_genres_path, notice: t('flash.create')
         else
             render :new
         end
