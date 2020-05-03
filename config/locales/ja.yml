@@ -1,7 +1,7 @@
 ja:
     empty: なし 
     confirm:
-        destroy: "%{model}「%{title}」を削除しますか？"
+        destroy: "%{model}「%{name}」を削除しますか？"
         simple_destroy: "%{name}を削除しますか？"
     link_to:
         create: 登録
@@ -15,6 +15,13 @@ ja:
                 title: ゲーム登録
             edit:
                 title: ゲーム編集
+        item_genres:
+            index:
+                title: アイテムジャンル一覧
+            new:
+                title: アイテムジャンル登録
+            edit: 
+                title: アイテムジャンル編集
     codes:
         index:
             title: コード一覧
@@ -33,14 +40,18 @@ ja:
             game:
                 title: ゲームタイトル
                 image_icon: アイコン
+            item_genre:
+                name:  アイテムジャンル名
+                default_unit_name: デフォルトの単位名
             nintendo_friend_code: 
                 friend_code: フレンドコード
             play_station_network_id:
                 psn_id: PSN_ID
         models:
+            game: ゲーム
+            item_genre: アイテムジャンル
             nintendo_friend_code: 任天堂フレンドコード
             play_station_network_id: PlayStationNetworkID
-            game: ゲーム
 
     helpers:
         submit:
@@ -49,6 +60,7 @@ ja:
             submit: 保存
     navbar:
         games: ゲーム
+        item_genres: アイテムジャンル
         mypage: マイページ
         log_out: ログアウト
     flash:

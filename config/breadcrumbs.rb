@@ -25,6 +25,18 @@ crumb :edit_game do
   parent :games
 end
 
+crumb :item_genres do 
+  link t('admin.item_genres.index.title'), admin_item_genres_path
+end
+
+crumb :new_item_genre do 
+  link t('admin.item_genres.new.title'), new_admin_item_genre_path
+end
+
+crumb :edit_item_genre do 
+  link t('admin.item_genres.edit.title'), edit_admin_item_genre_path
+end
+
 crumb :codes do 
   link t('codes.index.title'), codes_path
 end
