@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :games
+    resources :item_genres
   end
 
   resources :codes, only: [:index]

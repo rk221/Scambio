@@ -1,0 +1,24 @@
+- breadcrumb :item_genres
+%h1.mb-3 
+    = t '.title'
+
+= link_to t('link_to.create'), new_admin_item_genre_path, class: 'btn btn-primary mb-3'
+
+%table.table.table-hover.table-bordered
+    %thead.thead-default
+        %tr 
+            %th.w-50
+                = ItemGenre.human_attribute_name(:name)
+            %th.w-25
+                = ItemGenre.human_attribute_name(:default_unit_name)
+            %th.w-25
+    %body
+        - @item_genres.each do |item_genre|
+            %tr 
+                %td 
+                    = item_genre.name
+                %td 
+                    = item_genre.default_unit_name
+                %td
+                    = link_to t('link_to.edit'), edit_admin_item_genre_path(item_genre), class: 'btn btn-success mr-3'
+                    = link_to t('link_to.delete'), admin_item_genre_path(item_genre), method: :delete, data: {confirm: t('confirm.destroy', model: ItemGenre.model_name.human, title: item_genre.title)}, class: 'btn btn-danger'
