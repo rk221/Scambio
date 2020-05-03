@@ -29,6 +29,13 @@ class Admin::ItemGenresController < AdminController
         end
     end
 
+    def destroy 
+        @item_genre = ItemGenre.find(params[:id])
+        @item_genre.destroy
+
+        redirect_to admin_item_genres_path, notice: t('flash.destroy')
+    end
+
     private 
 
     def item_genre_params 
