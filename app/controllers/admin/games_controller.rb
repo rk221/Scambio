@@ -10,6 +10,10 @@ class Admin::GamesController < AdminController
     def create 
         @game = Game.new(game_params)
         if @game.save
+            #ItemGenreGameを追加する
+            ItemGenre.all.each do |item_genre|
+                ItemGenreGame.create(item_genre_id: item_genre.id, game_id: @game.id, enable_flag: false) 
+            end
             redirect_to admin_games_path, notice: t('flash.create')
         else
             render :new
