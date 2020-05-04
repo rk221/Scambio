@@ -1,0 +1,26 @@
+- breadcrumb :item_genre_games
+%h1.mb-3 
+    = t '.title'
+
+%table.table.table-hover.table-bordered
+    %thead.thead-default
+        %tr 
+            %th.w-25
+                = Game.human_attribute_name(:title)
+            %th.w-50
+                = Game.human_attribute_name(:image_icon)
+            %th.w-25
+    %body
+        - @games.each do |game|
+            %tr 
+                %td 
+                    = game.title
+                %td 
+                    - if game.image_icon.present?
+                        = image_tag(game.image_icon_url, style: 'width: 20%')
+                    - else
+                        = t('empty') 
+                %td
+                    = link_to t('link_to.edit'), edit_admin_game_path(game), class: 'btn btn-success mr-3'
+                    = link_to t('link_to.delete'), admin_game_path(game), method: :delete, data: {confirm: t('confirm.destroy', model: Game.model_name.human, name: game.title)}, class: 'btn btn-danger'
+                    

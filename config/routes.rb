@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :games
     resources :item_genres
+    resources :item_genre_games, param: :game_id, only: [:index, :update]
   end
 
   resources :codes, only: [:index]
