@@ -22,6 +22,9 @@ ja:
                 title: アイテムジャンル登録
             edit: 
                 title: アイテムジャンル編集
+        item_genre_games:
+            index:
+                title: アイテムジャンルゲーム一覧
     codes:
         index:
             title: コード一覧
