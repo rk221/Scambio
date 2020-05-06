@@ -16,10 +16,10 @@ RSpec.describe NintendoFriendCode, type: :system do
         end
     end
 
-    describe 'フレンドコードCRUD' do 
-        let(:login_user){general_user}
-        include_context 'ユーザがログイン状態になる'
+    let(:login_user){general_user}
+    include_context 'ユーザがログイン状態になる'
 
+    describe 'フレンドコードCRUD' do 
         before do
             click_link 'マイページ'
             click_link 'コード一覧'

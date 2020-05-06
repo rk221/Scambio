@@ -16,10 +16,10 @@ RSpec.describe PlayStationNetworkId, type: :system do
         end
     end
 
-    describe 'PSN_IDCRUD' do 
-        let(:login_user){general_user}
-        include_context 'ユーザがログイン状態になる'
+    let(:login_user){general_user}
+    include_context 'ユーザがログイン状態になる'
 
+    describe 'PSN_IDCRUD' do 
         before do
             click_link 'マイページ'
             click_link 'コード一覧'
