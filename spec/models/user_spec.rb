@@ -110,4 +110,9 @@ RSpec.describe User, type: :model do
     expect(user.errors[:password]).to include("は8文字以上で入力してください")
   end
 
+  it "管理ユーザフラグがない場合、無効である" do
+    user = FactoryBot.build(:user, admin_flag: nil)
+    user.valid?
+    expect(user.errors[:admin_flag]).to include("は一覧にありません")
+  end
 end
