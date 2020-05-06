@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-var app = new Vue({
+new Vue({
     el: '#image_app',
     data: {
         imageData: ''
