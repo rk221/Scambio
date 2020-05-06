@@ -11,6 +11,7 @@ ja:
         games:
             index:
                 title: ゲーム一覧
+                edit_item_genre_games: アイテムジャンル編集
             new:
                 title: ゲーム登録
             edit:
@@ -20,11 +21,13 @@ ja:
                 title: アイテムジャンル一覧
             new:
                 title: アイテムジャンル登録
-            edit: 
+            edit:
                 title: アイテムジャンル編集
         item_genre_games:
             index:
                 title: アイテムジャンルゲーム一覧
+                enable_or_disable: 有効/無効
+                
     codes:
         index:
             title: コード一覧

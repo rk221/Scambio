@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :games
     resources :item_genres
-    resources :item_genre_games, param: :game_id, only: [:index, :update]
+    resources :item_genre_games, param: :game_id, only: [:index]
+    post '/item_genre_game/enable/:id' => 'item_genre_games#enable', as: 'enable_item_genre_game'
+    post '/item_genre_game/disable/:id' => 'item_genre_games#disable', as: 'disable_item_genre_game'
   end
 
   resources :codes, only: [:index]

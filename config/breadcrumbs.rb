@@ -41,6 +41,7 @@ end
 
 crumb :item_genre_games do 
   link t('admin.item_genre_games.index.title'), admin_item_genres_path
+  parent :games
 end
 
 crumb :codes do 
