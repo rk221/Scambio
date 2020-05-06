@@ -1,0 +1,21 @@
+- breadcrumb :item_genre_games
+%h1.mb-5
+    = t '.title'
+
+%h2.mb-3
+    = "#{Game.human_attribute_name(:title)}  #{@item_genre_games[0].game.title}"
+%table.table.table-hover.table-bordered
+    %thead.thead-default
+        %tr 
+            %th.w-65
+                = ItemGenre.human_attribute_name(:name)
+            %th.w-35
+                = t '.enable_or_disable'
+    %tbody
+        - @item_genre_games.each do |item_genre_game|
+            %tr 
+                %td
+                    = item_genre_game.item_genre.name
+                %td{id: "item_genre_game_#{item_genre_game.id}"}
+                    = render partial: 'admin/item_genre_games/edit_enable', locals: {item_genre_game: item_genre_game}
+

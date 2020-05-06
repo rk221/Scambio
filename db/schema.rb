@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_03_062530) do
+ActiveRecord::Schema.define(version: 2020_05_04_020317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,17 @@ ActiveRecord::Schema.define(version: 2020_05_03_062530) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["title"], name: "index_games_on_title", unique: true
+  end
+
+  create_table "item_genre_games", force: :cascade do |t|
+    t.boolean "enable_flag", default: false, null: false
+    t.bigint "item_genre_id"
+    t.bigint "game_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_item_genre_games_on_game_id"
+    t.index ["item_genre_id", "game_id"], name: "index_item_genre_games_on_item_genre_id_and_game_id", unique: true
+    t.index ["item_genre_id"], name: "index_item_genre_games_on_item_genre_id"
   end
 
   create_table "item_genres", force: :cascade do |t|
@@ -91,6 +102,8 @@ ActiveRecord::Schema.define(version: 2020_05_03_062530) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "item_genre_games", "games"
+  add_foreign_key "item_genre_games", "item_genres"
   add_foreign_key "nintendo_friend_codes", "users"
   add_foreign_key "play_station_network_ids", "users"
   add_foreign_key "user_game_ranks", "games"

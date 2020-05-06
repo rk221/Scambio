@@ -31,10 +31,17 @@ end
 
 crumb :new_item_genre do 
   link t('admin.item_genres.new.title'), new_admin_item_genre_path
+  parent :item_genres
 end
 
 crumb :edit_item_genre do 
   link t('admin.item_genres.edit.title'), edit_admin_item_genre_path
+  parent :item_genres
+end
+
+crumb :item_genre_games do 
+  link t('admin.item_genre_games.index.title'), admin_item_genres_path
+  parent :games
 end
 
 crumb :codes do 
