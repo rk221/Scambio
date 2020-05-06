@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ItemGenre, type: :system do
-    let(:admin_user){FactoryBot.create(:user, admin_flag: true)}
-    let(:general_user){FactoryBot.create(:user, admin_flag: false)}
+    let(:admin_user){FactoryBot.create(:admin_user)}
+    let(:general_user){FactoryBot.create(:general_user)}
 
     shared_context 'ユーザがログイン状態になる' do
         before do
