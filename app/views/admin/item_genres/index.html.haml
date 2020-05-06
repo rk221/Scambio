@@ -1,5 +1,5 @@
 - breadcrumb :item_genres
-%h1.mb-3 
+%h1.mb-5 
     = t '.title'
 
 = link_to t('link_to.create'), new_admin_item_genre_path, class: 'btn btn-primary mb-3'
@@ -20,5 +20,5 @@
                 %td 
                     = item_genre.default_unit_name
                 %td
-                    = link_to t('link_to.edit'), edit_admin_item_genre_path(item_genre), class: 'btn btn-success mr-3'
+                    = link_to t('link_to.edit'), edit_admin_item_genre_path(item_genre), class: 'btn btn-success mr-2'
                     = link_to t('link_to.delete'), admin_item_genre_path(item_genre), method: :delete, data: {confirm: t('confirm.destroy', model: ItemGenre.model_name.human, name: item_genre.name)}, class: 'btn btn-danger'

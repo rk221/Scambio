@@ -1,4 +1,4 @@
-<h2 class="mb-5"><%= t('users.unlocks.new.resend_unlock_instructions') %></h2>
+<h1 class="mb-5"><%= t('users.unlocks.new.resend_unlock_instructions') %></h1>
 
 <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
