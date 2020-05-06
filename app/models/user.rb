@@ -17,7 +17,7 @@ class User < ApplicationRecord
   validates :nickname, presence: true, length: {in: 4..30}
   validates :birthdate, presence: true
   validate :birthdate_cannot_be_in_the_future
-
+  validates :admin_flag, inclusion: {in: [true, false]}
 
 
   def birthdate_cannot_be_in_the_future
