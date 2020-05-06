@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NintendoFriendCode, type: :system do
-    let(:general_user){FactoryBot.create(:user, admin_flag: false)}
+    let(:general_user){FactoryBot.create(:general_user)}
 
     shared_context 'ユーザがログイン状態になる' do
         before do
