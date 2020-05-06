@@ -6,8 +6,9 @@
     %h4
         = NintendoFriendCode.model_name.human
     - if @nintendo_friend_code
+        .mr-3
         = @nintendo_friend_code.friend_code
-        = link_to t('link_to.edit'), edit_codes_nintendo_friend_code_path(@nintendo_friend_code), class: 'btn btn-success'
+        = link_to t('link_to.edit'), edit_codes_nintendo_friend_code_path(@nintendo_friend_code), class: 'btn btn-success mr-2 ml-3'
         = link_to t('link_to.delete'), codes_nintendo_friend_code_path(@nintendo_friend_code), method: 'delete', data: {confirm: t('confirm.simple_destroy', name: NintendoFriendCode.model_name.human)}, class: 'btn btn-danger'
     - else
         = link_to t('link_to.create'), new_codes_nintendo_friend_code_path, class: 'btn btn-primary'
@@ -16,7 +17,7 @@
         = PlayStationNetworkId.model_name.human
     - if @play_station_network_id
         = @play_station_network_id.psn_id
-        = link_to t('link_to.edit'), edit_codes_play_station_network_id_path(@play_station_network_id), class: 'btn btn-success'
+        = link_to t('link_to.edit'), edit_codes_play_station_network_id_path(@play_station_network_id), class: 'btn btn-success mr-2 ml-3'
         = link_to t('link_to.delete'), codes_play_station_network_id_path(@play_station_network_id), method: 'delete', data: {confirm: t('confirm.simple_destroy', name: PlayStationNetworkId.model_name.human)}, class: 'btn btn-danger'
     - else
         = link_to t('link_to.create'), new_codes_play_station_network_id_path, class: 'btn btn-primary'
