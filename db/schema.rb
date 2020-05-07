@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_07_033545) do
+ActiveRecord::Schema.define(version: 2020_05_07_051044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,23 @@ ActiveRecord::Schema.define(version: 2020_05_07_033545) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_item_genres_on_name", unique: true
+  end
+
+  create_table "item_trades", force: :cascade do |t|
+    t.integer "buy_item_quantity", null: false
+    t.integer "sale_item_quantity", null: false
+    t.boolean "enable_flag", null: false
+    t.datetime "trade_deadline", null: false
+    t.bigint "user_id"
+    t.bigint "game_id"
+    t.bigint "buy_item_id"
+    t.bigint "sale_item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["buy_item_id"], name: "index_item_trades_on_buy_item_id"
+    t.index ["game_id"], name: "index_item_trades_on_game_id"
+    t.index ["sale_item_id"], name: "index_item_trades_on_sale_item_id"
+    t.index ["user_id"], name: "index_item_trades_on_user_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -115,6 +132,10 @@ ActiveRecord::Schema.define(version: 2020_05_07_033545) do
 
   add_foreign_key "item_genre_games", "games"
   add_foreign_key "item_genre_games", "item_genres"
+  add_foreign_key "item_trades", "games"
+  add_foreign_key "item_trades", "items", column: "buy_item_id"
+  add_foreign_key "item_trades", "items", column: "sale_item_id"
+  add_foreign_key "item_trades", "users"
   add_foreign_key "items", "games"
   add_foreign_key "items", "item_genres"
   add_foreign_key "nintendo_friend_codes", "users"
