@@ -4,6 +4,9 @@ class Game < ApplicationRecord
 
     has_many :item_genre_games, dependent: :destroy
     has_many :item_genres, through: :item_genre_games
+
+    has_many :items, dependent: :destroy
+    has_many :item_genres, through: :items
     
     validates :title, presence: true, uniqueness: true
     
