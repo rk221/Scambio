@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :buy_items, through: :item_trades, source: :buy_item
   has_many :sale_items, through: :item_trades, source: :sale_item
 
+  has_many :buy_item_trade_detials, class_name: "ItemTradeDetial", foreign_key: "buy_user_id"
+  has_many :buy_item_trades, through: :buy_item_trade_detials
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
