@@ -75,3 +75,6 @@ gem 'mini_magick'
 
 #breadcrumb
 gem 'gretel'
+
+#search form
+gem 'ransack'
