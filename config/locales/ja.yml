@@ -41,6 +41,9 @@ ja:
                 title: PlayStationNetworkID登録
             edit:
                 title: PlayStationNetworkID編集
+    games: 
+        index:
+            title: ゲーム一覧
     activerecord:
         attributes:
             game:

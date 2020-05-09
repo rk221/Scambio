@@ -11,18 +11,18 @@ crumb :edit_user do
   parent :mypage
 end
 
-crumb :games do 
+crumb :admin_games do 
   link t('admin.games.index.title'), admin_games_path
 end
 
-crumb :new_game do 
+crumb :admin_new_game do 
   link t('admin.games.new.title'), new_admin_game_path
-  parent :games
+  parent :admin_games
 end
 
-crumb :edit_game do 
+crumb :admin_edit_game do 
   link t('admin.games.edit.title'), edit_admin_game_path
-  parent :games
+  parent :admin_games
 end
 
 crumb :item_genres do 
@@ -66,6 +66,10 @@ end
 crumb :edit_play_station_network_id do 
   link t('codes.play_station_network_ids.edit.title'), edit_codes_play_station_network_id_path
   parent :codes
+end
+
+crumb :games do
+  link t('games.index.title'), games_path
 end
 
 # crumb :projects do
