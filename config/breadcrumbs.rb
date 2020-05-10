@@ -72,6 +72,20 @@ crumb :games do
   link t('games.index.title'), games_path
 end
 
+crumb :item_trades do 
+  link t('item_trades.index.title'), item_trades_path
+end
+
+crumb :new_item_trade do |game_id|
+  link t('item_trades.new.title'), new_item_trade_path(game_id: game_id)
+  parent :item_trades
+end
+
+crumb :edit_item_trade do 
+  link t('item_trades.edit.title'), edit_item_trade_path
+  parent :item_trades
+end
+
 # crumb :projects do
 #   link "Projects", projects_path
 # end

@@ -17,4 +17,6 @@ class ItemTrade < ApplicationRecord
     validates :sale_item_id, presence: true
     validates :enable_flag, inclusion: {in: [true, false]}
     validates :trade_deadline, presence: true
+
+    scope :enabled, -> {where("enable_flag = true and trade_deadline > ?", Time.zone.now)}
 end

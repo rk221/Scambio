@@ -1,0 +1,36 @@
+- breadcrumb :new_item_trade, game_id: @regist_item_trade_form.game_id
+%h1.mb-5
+    = t('.title')
+
+= form_with(model: [@regist_item_trade_form], url: item_trades_path, method: :post, local: true) do |f|
+    = render 'shared/error_messages', model: f.object
+
+    = f.hidden_field :user_id
+    = f.hidden_field :game_id
+
+    .form-group
+        = f.label :buy_item_genre_id
+        = f.select :buy_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {}, class: 'form-control'
+    .form-group
+        = f.label :buy_item_name
+        = f.text_field :buy_item_name, class: 'form-control'
+    .form-group
+        = f.label :buy_item_quantity
+        = f.number_field :buy_item_quantity, min: 1, max: 200000000, class: 'form-control'
+
+    .form-group
+        = f.label :sale_item_genre_id
+        = f.select :sale_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {}, class: 'form-control'
+    .form-group
+        = f.label :sale_item_name
+        = f.text_field :sale_item_name, class: 'form-control'
+    .form-group
+        = f.label :sale_item_quantity
+        = f.number_field :sale_item_quantity, min: 1, max: 200000000, class: 'form-control'
+
+    .form-group
+        = f.label :trade_deadline
+        = f.number_field :trade_deadline, min: 1, max: 24, class: 'form-control'
+
+    .form-group
+        = f.submit nil, class:'btn btn-primary'

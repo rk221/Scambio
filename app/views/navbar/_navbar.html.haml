@@ -4,6 +4,8 @@
             - if current_user.admin_flag?
                 = render partial: 'admin/shared/navbar_admin'
             %li.navitem
+                = link_to t('navbar.item_trades'), item_trades_path, class: 'nav-link'
+            %li.navitem
                 = link_to t('navbar.mypage'), user_path(current_user), class: 'nav-link'
             %li.navitem
                 = link_to t('navbar.log_out'), destroy_user_session_path, method: :delete, class: 'nav-link'

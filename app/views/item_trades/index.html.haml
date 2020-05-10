@@ -1,0 +1,58 @@
+- breadcrumb :item_trades
+%h1.mb-5 
+    = t '.title'
+
+= link_to t('link_to.create'), games_path, class: 'btn btn-primary mb-3'
+
+
+.mb-5
+    = search_form_for @q do |f|
+        .form-group
+            = f.label :buy_item_name, ItemTrade.human_attribute_name(:buy_item_name)
+            = f.search_field :buy_item_name_cont, class: 'form-control'
+        .form-group
+            = f.label :sale_item_name, ItemTrade.human_attribute_name(:sale_item_name)
+            = f.search_field :sale_item_name_cont, class: 'form-control'
+        .form-group
+            = f.submit t('helpers.submit.search'), class: 'btn btn-success'
+
+- @item_trades.each do |item_trade|
+    .table-responsive
+        %table.table.table-hover.table-bordered.text-nowrap
+            %tbody
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:user_nickname)
+                    %td 
+                        = item_trade.user.nickname
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:buy_item_name)
+                    %td 
+                        = item_trade.buy_item.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:buy_item_quantity)
+                    %td 
+                        = item_trade.buy_item_quantity
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:sale_item_name)
+                    %td 
+                        = item_trade.sale_item.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:sale_item_quantity)
+                    %td 
+                        = item_trade.sale_item_quantity
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:trade_deadline)
+                    %td 
+                        = item_trade.trade_deadline
+                    
+
+- # 表示するものメモ　ユーザ名、購入アイテム、売却アイテム、数量 * 2、有効期限、更新時間
+
+
+

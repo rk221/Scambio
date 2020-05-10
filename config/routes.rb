@@ -18,9 +18,10 @@ Rails.application.routes.draw do
     resources :play_station_network_ids, only: [:new, :create, :edit, :update, :destroy]
   end
 
-  resoruces :games, only: [:index]
+  get '/games', to: 'games#index'
 
-  resources :item_trades
+  get '/item_trades/new/:game_id', to: 'item_trades#new', as: 'new_item_trade'
+  resources :item_trades, only: [:index, :show, :create, :edit, :update, :destroy]
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'users#show'
