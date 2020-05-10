@@ -16,6 +16,10 @@
         .form-group
             = f.submit t('helpers.submit.search'), class: 'btn btn-success'
 
+.form_group.mb-3
+    = search_form_for @q, url: item_trades_path, html: {method: :get} do |f|
+        = f.select(:sorts, {'取引開始日時の近い順': 'updated_at desc', '購入数量の少ない順': 'buy_item_quantity asc'},{selected: params[:q][:sorts]}, class: 'select-sort form-control', 'v-on:change': 'onSelectedChange($event)')
+
 - @item_trades.each do |item_trade|
     .table-responsive
         %table.table.table-hover.table-bordered.text-nowrap
@@ -52,7 +56,7 @@
                         = item_trade.trade_deadline
                     
 
-- # 表示するものメモ　ユーザ名、購入アイテム、売却アイテム、数量 * 2、有効期限、更新時間
+= javascript_pack_tag 'select_sort'
 
 
 

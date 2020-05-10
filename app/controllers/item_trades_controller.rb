@@ -1,6 +1,7 @@
 class ItemTradesController < ApplicationController
     NUMBER_OF_OUTPUT_LINES = 50
     def index #page paramsを受け取るとページ切り替え可能
+        params[:q] = {sorts: 'updated_at desc'} if params[:q].blank?
         @q = ItemTrade.ransack(params[:q])
         @item_trades = ItemTradeDecorator.decorate_collection(@q.result(distinct: true).enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES))
     end
