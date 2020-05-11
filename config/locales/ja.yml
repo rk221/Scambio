@@ -76,7 +76,7 @@ ja:
                 sale_item_id: 売却アイテムID
                 sale_item_name: 売却アイテム名
                 sale_item_quantity: 売却数量
-                trade_deadline: 取引期限（あと何時間）
+                trade_deadline: 取引期限
 
         models:
             game: ゲーム
