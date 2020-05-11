@@ -1,5 +1,6 @@
 ja:
     empty: なし 
+
     confirm:
         destroy: "%{model}「%{name}」を削除しますか？"
         simple_destroy: "%{name}を削除しますか？"
@@ -51,8 +52,10 @@ ja:
             title: アイテムトレード登録ゲーム選択
         new:
             title: アイテムトレード登録
+            trade_deadline: 取引期限（今から何時間有効か）
         edit:
             title: アイテムトレード編集
+            trade_deadline: 取引期限（今から何時間有効か）
     activerecord:
         attributes:
             game:
@@ -77,6 +80,8 @@ ja:
                 sale_item_name: 売却アイテム名
                 sale_item_quantity: 売却数量
                 trade_deadline: 取引期限
+                buy_item_genre_id: 購入アイテムジャンル
+                sale_item_genre_id: 売却アイテムジャンル
 
         models:
             game: ゲーム

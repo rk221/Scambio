@@ -81,8 +81,8 @@ crumb :new_item_trade do |game_id|
   parent :item_trades
 end
 
-crumb :edit_item_trade do 
-  link t('item_trades.edit.title'), edit_item_trade_path
+crumb :edit_item_trade do |item_trade_id|
+  link t('item_trades.edit.title'), edit_item_trade_path(id: item_trade_id)
   parent :item_trades
 end
 

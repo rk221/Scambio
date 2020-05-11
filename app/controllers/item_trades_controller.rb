@@ -29,15 +29,22 @@ class ItemTradesController < ApplicationController
     end
 
     def edit 
-
+        @item_trade = ItemTrade.find(params[:id])
     end
 
     def update 
-
+        @item_trade = ItemTrade.find(params[:id])
+        
+        if @item_trade.update(buy_item_quantity: item_trade_params[:buy_item_quantity], sale_item_quantity: item_trade_params[:sale_item_quantity], trade_deadline: calc_trade_deadline(item_trade_params[:trade_deadline]))
+            redirect_to item_trades_path, notice: t('flash.update')
+        else
+            render :edit
+        end
     end
 
     def destroy
-
+        @item_trade = ItemGTrade.find(params[:id])
+        @item_trade.update(enable_flag: false)
     end
 
     private
@@ -45,9 +52,15 @@ class ItemTradesController < ApplicationController
         params.require(:item_trade).permit(:id, :user_id, :game_id, :buy_item_id, :buy_item_quantity, :sale_item_id, :sale_item_quantity, :enable_flag, :trade_deadline)
     end
 
+    def calc_trade_deadline(trade_deadline)
+        Time.zone.now + trade_deadline.to_i.hours
+    end
+
     def regist_item_trade_form_params 
         params.require(:regist_item_trade_form).permit(:game_id, :buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :enable_flag, :trade_deadline, :buy_item_genre_id, :sale_item_genre_id)
     end
+
+    
 
     def buy_item_params 
         params.require(:item_trade).permit(:buy_item_name, :game_id, :buy_item_genre_id)
