@@ -7,6 +7,6 @@ FactoryBot.define do
     buy_item_id {0}
     sale_item_id {0}
     enable_flag{false}
-    trade_deadline{Time.now}
+    trade_deadline{Time.zone.now}
   end
 end
