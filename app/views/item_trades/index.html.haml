@@ -57,6 +57,7 @@
                 %tr
                     %td{colspan: 2}
                         = link_to t('link_to.edit'), edit_item_trade_path(item_trade)
+                        = link_to t('link_to.delete'), item_trade_path(item_trade), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
                     
 
 = javascript_pack_tag 'select_sort'

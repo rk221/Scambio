@@ -43,8 +43,9 @@ class ItemTradesController < ApplicationController
     end
 
     def destroy
-        @item_trade = ItemGTrade.find(params[:id])
+        @item_trade = ItemTrade.find(params[:id])
         @item_trade.update(enable_flag: false)
+        redirect_to item_trades_path, notice: t('flash.destroy')
     end
 
     private
@@ -53,7 +54,11 @@ class ItemTradesController < ApplicationController
     end
 
     def calc_trade_deadline(trade_deadline)
-        Time.zone.now + trade_deadline.to_i.hours
+        if trade_deadline.present?
+            return trade_deadline.to_i.hours.since
+        else
+            return nil
+        end
     end
 
     def regist_item_trade_form_params 
