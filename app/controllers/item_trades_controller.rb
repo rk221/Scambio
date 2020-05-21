@@ -3,13 +3,12 @@ class ItemTradesController < ApplicationController
     def index #page paramsを受け取るとページ切り替え可能
         params[:q] = {sorts: 'updated_at desc'} if params[:q].blank?
         @q = ItemTrade.ransack(params[:q])
-        #@item_trades = ItemTradeDecorator.decorate_collection(@q.result(distinct: true).enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES))
         @item_trades = @q.result(distinct: true)#.enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES)
         
         @item_trades = @item_trades.search_buy_item_name(params[:q][:buy_item_name]) if params[:q][:buy_item_name].present?
         @item_trades = @item_trades.search_sale_item_name(params[:q][:sale_item_name]) if params[:q][:sale_item_name].present?
         @item_trades = ItemTradeDecorator.decorate_collection(@item_trades.enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES))
-        ## decoratorの処理を追加、newへのリンクを追加する！！
+        #page 処理を追加する
     end
 
     def show 

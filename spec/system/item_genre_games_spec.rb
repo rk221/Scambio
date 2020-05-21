@@ -70,7 +70,7 @@ RSpec.describe ItemGenreGame, type: :system do
                 context 'アイテムジャンルが登録済でゲームを追加する場合' do
                     before do 
                         item_genre_data.save
-                        click_link 'ゲーム'
+                        click_link 'ゲーム管理'
                         click_link '登録'
                         fill_in 'ゲームタイトル', with: game_data.title 
                         click_button '登録'

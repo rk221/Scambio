@@ -45,6 +45,7 @@ ja:
     games: 
         index:
             title: ゲーム一覧
+            item_trades: アイテムトレード一覧
     item_trades:
         index:
             title: アイテムトレード一覧

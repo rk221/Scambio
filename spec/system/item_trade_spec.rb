@@ -30,7 +30,8 @@ RSpec.describe ItemTrade, type: :system do
 
             describe 'アイテムトレード一覧表示' do
                 before do
-                    click_link 'アイテムトレード'
+                    click_link 'ゲーム'
+                    click_link 'アイテムトレード一覧'
                 end
 
                 it 'アイテムトレード一覧画面が表示されている' do
@@ -78,62 +79,53 @@ RSpec.describe ItemTrade, type: :system do
             end
 
             describe 'アイテムトレード登録' do
+                let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since)}
                 before do
-                    click_link 'アイテムトレード'
-                    click_link '登録'
+                    click_link 'ゲーム'
+                    click_link 'アイテムトレード一覧'
+                    click_link '取引登録'
                 end
-
-                it 'ゲーム一覧画面が表示されている' do
-                    expect(page).to have_content 'ゲーム一覧'
-                end
-
-                context 'ゲームを選択する' do
-                    let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since)}
-                    before do
-                        click_link '登録'
-                    end
                     
-                    it 'アイテムトレード登録画面が表示されている' do 
+                it 'アイテムトレード登録画面が表示されている' do 
+                    expect(page).to have_content 'アイテムトレード登録'
+                end
+
+                context '有効なデータで登録する' do
+                    before do
+                        select item_trade.buy_item.item_genre.name, from: '購入アイテムジャンル'
+                        fill_in '購入アイテム名', with: item_trade.buy_item.name
+                        fill_in '購入数量', with: item_trade.buy_item_quantity
+
+                        select item_trade.sale_item.item_genre.name, from: '売却アイテムジャンル'
+                        fill_in '売却アイテム名', with: item_trade.sale_item.name
+                        fill_in '売却数量', with: item_trade.sale_item_quantity
+                        fill_in '取引期限', with: 1
+                        click_button '登録'
+                    end
+
+                    it 'アイテムトレードが表示されている' do
+                        expect(page).to have_content 'アイテムトレード一覧'
+                        expect(page).to have_content login_user.nickname
+                        expect(page).to have_content item_trade.buy_item.name
+                        expect(page).to have_content item_trade.sale_item.name
+                    end
+                end
+
+                context 'アイテム名を入力せずに登録する' do
+                    before do
+                        select item_trade.buy_item.item_genre.name, from: '購入アイテムジャンル'
+                        fill_in '購入数量', with: item_trade.buy_item_quantity
+
+                        select item_trade.sale_item.item_genre.name, from: '売却アイテムジャンル'
+                        fill_in '売却数量', with: item_trade.sale_item_quantity
+                        fill_in '取引期限', with: 1
+                        click_button '登録'
+                    end
+
+                    it 'アイテム登録画面でエラーメッセージが表示されている' do
                         expect(page).to have_content 'アイテムトレード登録'
-                    end
-
-                    context '有効なデータで登録する' do
-                        before do
-                            select item_trade.buy_item.item_genre.name, from: '購入アイテムジャンル'
-                            fill_in '購入アイテム名', with: item_trade.buy_item.name
-                            fill_in '購入数量', with: item_trade.buy_item_quantity
-
-                            select item_trade.sale_item.item_genre.name, from: '売却アイテムジャンル'
-                            fill_in '売却アイテム名', with: item_trade.sale_item.name
-                            fill_in '売却数量', with: item_trade.sale_item_quantity
-                            fill_in '取引期限', with: 1
-                            click_button '登録'
-                        end
-
-                        it 'アイテムトレードが表示されている' do
-                            expect(page).to have_content 'アイテムトレード一覧'
-                            expect(page).to have_content login_user.nickname
-                            expect(page).to have_content item_trade.buy_item.name
-                            expect(page).to have_content item_trade.sale_item.name
-                        end
-                    end
-
-                    context 'アイテム名を入力せずに登録する' do
-                        before do
-                            select item_trade.buy_item.item_genre.name, from: '購入アイテムジャンル'
-                            fill_in '購入数量', with: item_trade.buy_item_quantity
-
-                            select item_trade.sale_item.item_genre.name, from: '売却アイテムジャンル'
-                            fill_in '売却数量', with: item_trade.sale_item_quantity
-                            fill_in '取引期限', with: 1
-                            click_button '登録'
-                        end
-
-                        it 'アイテム登録画面でエラーメッセージが表示されている' do
-                            expect(page).to have_content 'アイテムトレード登録'
-                            expect(page).to have_content "購入アイテム名を入力してください"
-                            expect(page).to have_content "売却アイテム名を入力してください"
-                        end
+                        expect(page).to have_content "購入アイテム名を入力してください"
+                        expect(page).to have_content "売却アイテム名を入力してください"
                     end
                 end
             end
@@ -141,12 +133,13 @@ RSpec.describe ItemTrade, type: :system do
             describe 'アイテムトレード編集' do
                 let!(:item_trade){FactoryBot.create(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since)}
                 before do
-                    click_link 'アイテムトレード'
+                    click_link 'ゲーム'
+                    click_link 'アイテムトレード一覧'
                     click_link '編集'
                 end
 
                 it 'アイテムトレード編集画面が表示されている' do
-                    expect(page).to have_content 'アイテムトレード一覧'
+                    expect(page).to have_content 'アイテムトレード編集'
                 end
 
                 context '数量と期限を変更し更新する' do
@@ -187,7 +180,8 @@ RSpec.describe ItemTrade, type: :system do
 
             describe 'アイテムトレード削除' do
                 before do
-                    click_link 'アイテムトレード'
+                    click_link 'ゲーム'
+                    click_link 'アイテムトレード一覧'
                 end
 
                 it 'アイテムトレード一覧画面が表示されている' do
