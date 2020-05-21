@@ -2,8 +2,8 @@ class ItemTrade < ApplicationRecord
     belongs_to :user
     belongs_to :game
 
-    belongs_to :buy_item, class_name: "Item", foreign_key: "buy_item_id"
-    belongs_to :sale_item, class_name: "Item", foreign_key: "sale_item_id"
+    belongs_to :buy_item, class_name: "Item", foreign_key: 'buy_item_id'
+    belongs_to :sale_item, class_name: "Item", foreign_key: 'sale_item_id'
 
     has_many :item_trade_detials
     has_many :buy_users, through: :item_trade_detials, source: :buy_user
@@ -19,4 +19,12 @@ class ItemTrade < ApplicationRecord
     validates :trade_deadline, presence: true
 
     scope :enabled, -> {where("enable_flag = true and trade_deadline > ?", Time.zone.now)}
+    scope :search_buy_item_name, -> (search_name){
+        joins("LEFT OUTER JOIN items as buy_items ON item_trades.buy_item_id = buy_items.id")
+        .where('buy_items.name like ?', "%" + search_name + "%" )
+    }
+    scope :search_sale_item_name, -> (search_name){
+        joins("LEFT OUTER JOIN items as sale_items ON item_trades.sale_item_id = sale_items.id")
+        .where('sale_items.name like ?', "%" + search_name + "%")
+    }
 end

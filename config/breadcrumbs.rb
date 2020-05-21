@@ -72,18 +72,19 @@ crumb :games do
   link t('games.index.title'), games_path
 end
 
-crumb :item_trades do 
-  link t('item_trades.index.title'), item_trades_path
+crumb :game_item_trades do |game_id|
+  link t('item_trades.index.title'), game_item_trades_path(game_id)
+  parent :games
 end
 
-crumb :new_item_trade do |game_id|
-  link t('item_trades.new.title'), new_item_trade_path(game_id: game_id)
-  parent :item_trades
+crumb :new_game_item_trade do |game_id|
+  link t('item_trades.new.title'), new_game_item_trade_path(game_id)
+  parent :game_item_trades, game_id
 end
 
-crumb :edit_item_trade do |item_trade_id|
-  link t('item_trades.edit.title'), edit_item_trade_path(id: item_trade_id)
-  parent :item_trades
+crumb :edit_game_item_trade do |item_trade|
+  link t('item_trades.edit.title'), edit_game_item_trade_path(item_trade)
+  parent :game_item_trades, item_trade.game_id
 end
 
 # crumb :projects do

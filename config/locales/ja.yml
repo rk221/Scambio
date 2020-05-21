@@ -48,6 +48,7 @@ ja:
     item_trades:
         index:
             title: アイテムトレード一覧
+            new_trade: 取引登録
         before_new:
             title: アイテムトレード登録ゲーム選択
         new:
@@ -108,11 +109,12 @@ ja:
             submit: 保存
             search: 検索
     navbar:
-        games: ゲーム
+        admin_games: ゲーム管理
         item_genres: アイテムジャンル
-        item_trades: アイテムトレード
+        games: ゲーム
         mypage: マイページ
         log_out: ログアウト
+
     flash:
         create: 作成しました
         update: 更新しました

@@ -6,7 +6,7 @@ new Vue({
     },
     methods:{
         onSelectedChange(e){
-            e.srcElement.parentNode.submit();
+            e.srcElement.parentNode.parentNode.submit();
         }
     }
 });

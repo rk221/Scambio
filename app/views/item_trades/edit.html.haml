@@ -1,8 +1,8 @@
-- breadcrumb :edit_item_trade, item_trade_id: @item_trade.id
+- breadcrumb :edit_game_item_trade, @item_trade
 %h1.mb-5
     = t('.title')
 
-= form_with(model: [@item_trade], url: item_trade_path, local: true) do |f|
+= form_with(model: [@item_trade], url: game_item_trade_path, local: true) do |f|
     = render 'shared/error_messages', model: f.object
 
     = f.hidden_field :user_id

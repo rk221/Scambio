@@ -3,7 +3,13 @@ class ItemTradesController < ApplicationController
     def index #page paramsを受け取るとページ切り替え可能
         params[:q] = {sorts: 'updated_at desc'} if params[:q].blank?
         @q = ItemTrade.ransack(params[:q])
-        @item_trades = ItemTradeDecorator.decorate_collection(@q.result(distinct: true).enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES))
+        #@item_trades = ItemTradeDecorator.decorate_collection(@q.result(distinct: true).enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES))
+        @item_trades = @q.result(distinct: true)#.enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES)
+        
+        @item_trades = @item_trades.search_buy_item_name(params[:q][:buy_item_name]) if params[:q][:buy_item_name].present?
+        @item_trades = @item_trades.search_sale_item_name(params[:q][:sale_item_name]) if params[:q][:sale_item_name].present?
+        @item_trades = ItemTradeDecorator.decorate_collection(@item_trades.enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES))
+        ## decoratorの処理を追加、newへのリンクを追加する！！
     end
 
     def show 
@@ -21,7 +27,7 @@ class ItemTradesController < ApplicationController
         @regist_item_trade_form = RegistItemTradeForm.new(regist_item_trade_form_params)
         @regist_item_trade_form.user_id = current_user.id
         if @regist_item_trade_form.save 
-            redirect_to item_trades_path, notice: t('flash.regist')
+            redirect_to game_item_trades_path(game_id: @regist_item_trade_form.game_id), notice: t('flash.regist')
         else
             @selectable_item_genres = ItemGenreGame.where(game_id: @regist_item_trade_form.game_id, enable_flag: true).joins(:item_genre).select(:item_genre_id, :name)
             render :new
@@ -36,7 +42,7 @@ class ItemTradesController < ApplicationController
         @item_trade = ItemTrade.find(params[:id])
         
         if @item_trade.update(buy_item_quantity: item_trade_params[:buy_item_quantity], sale_item_quantity: item_trade_params[:sale_item_quantity], trade_deadline: calc_trade_deadline(item_trade_params[:trade_deadline]))
-            redirect_to item_trades_path, notice: t('flash.update')
+            redirect_to game_item_trades_path(game_id: @item_trade.game_id), notice: t('flash.update')
         else
             render :edit
         end
@@ -45,7 +51,7 @@ class ItemTradesController < ApplicationController
     def destroy
         @item_trade = ItemTrade.find(params[:id])
         @item_trade.update(enable_flag: false)
-        redirect_to item_trades_path, notice: t('flash.destroy')
+        redirect_to game_item_trades_path(game_id: params[:game_id]), notice: t('flash.destroy')
     end
 
     private

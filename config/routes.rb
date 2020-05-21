@@ -20,8 +20,9 @@ Rails.application.routes.draw do
 
   get '/games', to: 'games#index'
 
-  get '/item_trades/new/:game_id', to: 'item_trades#new', as: 'new_item_trade'
-  resources :item_trades, only: [:index, :show, :create, :edit, :update, :destroy]
+  resources :games, only: [:index] do
+    resources :item_trades
+  end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'users#show'
