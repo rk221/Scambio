@@ -1,14 +1,15 @@
 class ItemTradesController < ApplicationController
     NUMBER_OF_OUTPUT_LINES = 50
     def index #page paramsを受け取るとページ切り替え可能
+        # 検索
         params[:q] = {sorts: 'updated_at desc'} if params[:q].blank?
         @q = ItemTrade.ransack(params[:q])
         @item_trades = @q.result(distinct: true)#.enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES)
-        
-        @item_trades = @item_trades.search_buy_item_name(params[:q][:buy_item_name]) if params[:q][:buy_item_name].present?
-        @item_trades = @item_trades.search_sale_item_name(params[:q][:sale_item_name]) if params[:q][:sale_item_name].present?
+        @item_trades = search_item_trades(@item_trades, params[:q])
+        # デコレータ　ページ　有効確認
         @item_trades = ItemTradeDecorator.decorate_collection(@item_trades.enabled.limit(NUMBER_OF_OUTPUT_LINES).offset(page * NUMBER_OF_OUTPUT_LINES))
-        #page 処理を追加する
+        # ジャンル一覧を取得
+        @selectable_item_genres = ItemGenreGame.where(game_id: params[:game_id]).joins(:item_genre).select(:item_genre_id, :name)
     end
 
     def show 
@@ -91,5 +92,14 @@ class ItemTradesController < ApplicationController
         end
         #整数ではない又はnilの場合 0を返す
         return 0
+    end
+
+    def search_item_trades (item_trades, params_q) #　自作の検索を行う
+        item_trades = item_trades.left_join_buy_item.left_join_sale_item
+        item_trades = item_trades.search_buy_item_name(params_q[:buy_item_name]) if params_q[:buy_item_name].present?
+        item_trades = item_trades.search_sale_item_name(params_q[:sale_item_name]) if params_q[:sale_item_name].present?
+        item_trades = item_trades.search_buy_item_genre_id(params_q[:buy_item_item_genre_id]) if params_q[:buy_item_item_genre_id].present?
+        item_trades = item_trades.search_sale_item_genre_id(params_q[:sale_item_item_genre_id]) if params_q[:sale_item_item_genre_id].present?
+        return item_trades
     end
 end

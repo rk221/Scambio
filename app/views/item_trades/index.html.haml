@@ -8,11 +8,19 @@
 .mb-5
     = search_form_for @q, url: game_item_trades_path do |f|
         .form-group
+            = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_id)
+            = f.select :buy_item_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {selected: params[:q][:buy_item_item_genre_id], include_blank: '選択なし'}, class: 'form-control'
+        .form-group
             = f.label :buy_item_name, ItemTrade.human_attribute_name(:buy_item_name)
             = f.search_field :buy_item_name, value: params[:q][:buy_item_name], class: 'form-control'
+
+        .form-group
+            = f.label :sale_item_genre_id, ItemTrade.human_attribute_name(:sale_item_genre_id)
+            = f.select :sale_item_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {selected: params[:q][:sale_item_item_genre_id], include_blank: '選択なし'}, class: 'form-control'
         .form-group
             = f.label :sale_item_name, ItemTrade.human_attribute_name(:sale_item_name)
             = f.search_field :sale_item_name, value: params[:q][:sale_item_name], class: 'form-control'
+            
         .form-group
             = f.submit t('helpers.submit.search'), class: 'btn btn-success'
         .form-group
@@ -28,6 +36,11 @@
                     = item_trade.user.nickname
             %tr 
                 %td 
+                    = ItemTrade.human_attribute_name(:buy_item_genre_id)
+                %td 
+                    = item_trade.buy_item.item_genre.name
+            %tr 
+                %td 
                     = ItemTrade.human_attribute_name(:buy_item_name)
                 %td 
                     = item_trade.buy_item.name
@@ -36,6 +49,11 @@
                     = ItemTrade.human_attribute_name(:buy_item_quantity)
                 %td 
                     = item_trade.buy_item_quantity
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:sale_item_genre_id)
+                %td 
+                    = item_trade.sale_item.item_genre.name
             %tr 
                 %td 
                     = ItemTrade.human_attribute_name(:sale_item_name)
