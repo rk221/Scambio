@@ -73,7 +73,17 @@
                 %td{colspan: 2}
                     = link_to t('link_to.edit'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id), class: 'btn btn-success mr-2'
                     = link_to t('link_to.delete'), game_item_trade_path(id: item_trade.id, gane_id: item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
-                    
+
+%nav{"aria-label": "ページネーション"}
+    %ul.pagination
+        - @hash_pages.each do |key, value|
+            - if value
+                %li.page-item
+                    = link_to key, game_item_trades_path(page_redirect_params(value)), class: 'page-link'
+            - else
+                %li.page-item.active
+                    %a.page-link
+                        = key
 
 = javascript_pack_tag 'select_sort'
 
