@@ -6,4 +6,7 @@ class ItemGenreGame < ApplicationRecord
     validates :game_id, presence: true
 
     validates :enable_flag, inclusion: {in: [true, false]}
+    scope :enabled, -> {
+        where('enable_flag = TRUE')
+    }
 end

@@ -13,7 +13,7 @@ class ItemTradesController < ApplicationController
         # デコレータ　ページ(1 <= :page <=page_count)
         @item_trades = ItemTradeDecorator.decorate_collection(@item_trades.limit(NUMBER_OF_OUTPUT_LINES).offset((page - 1) * NUMBER_OF_OUTPUT_LINES))
         # ジャンル一覧を取得
-        @selectable_item_genres = ItemGenreGame.where(game_id: params[:game_id]).joins(:item_genre).select(:item_genre_id, :name)
+        @selectable_item_genres = selectable_item_genres(params[:game_id])
     end
 
     def show 
@@ -23,7 +23,7 @@ class ItemTradesController < ApplicationController
     def new 
         game = Game.find_by(id: params[:game_id])
         return redirect_to games_path, danger: t('flash.item_trades.game_does_not_exist') if game.nil?
-        @selectable_item_genres = ItemGenreGame.where(game_id: game.id).joins(:item_genre).select(:item_genre_id, :name)
+        @selectable_item_genres = selectable_item_genres(game.id)
         @regist_item_trade_form = RegistItemTradeForm.new(game_id: game.id)
     end
 
@@ -34,6 +34,7 @@ class ItemTradesController < ApplicationController
             redirect_to game_item_trades_path(game_id: @regist_item_trade_form.game_id), notice: t('flash.regist')
         else
             @selectable_item_genres = ItemGenreGame.where(game_id: @regist_item_trade_form.game_id, enable_flag: true).joins(:item_genre).select(:item_genre_id, :name)
+            @selectable_item_genres = selectable_item_genres(@regist_item_trade_form.game_id)
             render :new
         end
     end
@@ -147,4 +148,7 @@ class ItemTradesController < ApplicationController
         return item_trades
     end
 
+    def selectable_item_genres(game_id = nil)
+        ItemGenreGame.enabled.where(game_id: game_id).joins(:item_genre).select(:item_genre_id, :name)
+    end
 end
