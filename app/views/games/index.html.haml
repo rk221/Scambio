@@ -1,0 +1,35 @@
+- breadcrumb :games
+%h1.mb-5
+    = t('.title')
+
+.mb-5
+    = search_form_for @q do |f|
+        .form-group
+            = f.label :title, Game.human_attribute_name(:title)
+            = f.search_field :title_cont, class: 'form-control'
+        .form-group
+            = f.submit t('helpers.submit.search'), class: 'btn btn-success'
+
+%table.table.table-hover.table-bordered.text-nowrap
+    %thead.thead-light
+        %tr 
+            %th
+                = Game.human_attribute_name(:title)
+            %th
+                = Game.human_attribute_name(:image_icon)
+            %th
+    %body
+        - @games.each do |game|
+            %tr 
+                %td 
+                    = game.title
+                %td 
+                    - if game.image_icon.present?
+                        = image_tag(game.image_icon_url, style: 'width: 30%')
+                    - else
+                        = t('empty') 
+                %td
+                    = link_to t('.item_trades'), game_item_trades_path(game_id: game.id), class: 'btn btn-primary'
+
+
+

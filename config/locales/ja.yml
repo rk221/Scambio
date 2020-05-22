@@ -1,5 +1,6 @@
 ja:
     empty: なし 
+
     confirm:
         destroy: "%{model}「%{name}」を削除しますか？"
         simple_destroy: "%{name}を削除しますか？"
@@ -41,6 +42,22 @@ ja:
                 title: PlayStationNetworkID登録
             edit:
                 title: PlayStationNetworkID編集
+    games: 
+        index:
+            title: ゲーム一覧
+            item_trades: アイテムトレード一覧
+    item_trades:
+        index:
+            title: アイテムトレード一覧
+            new_trade: 取引登録
+        before_new:
+            title: アイテムトレード登録ゲーム選択
+        new:
+            title: アイテムトレード登録
+            trade_deadline: 取引期限（今から何時間有効か）
+        edit:
+            title: アイテムトレード編集
+            trade_deadline: 取引期限（今から何時間有効か）
     activerecord:
         attributes:
             game:
@@ -53,28 +70,60 @@ ja:
                 friend_code: フレンドコード
             play_station_network_id:
                 psn_id: PSN_ID
+            item_trade:
+                user_id: ユーザID
+                user_nickname: ユーザ名
+                game_id: ゲームID
+                game_title: ゲームタイトル
+                buy_item_id: 購入アイテムID
+                buy_item_name: 購入アイテム名
+                buy_item_quantity: 購入数量
+                sale_item_id: 売却アイテムID
+                sale_item_name: 売却アイテム名
+                sale_item_quantity: 売却数量
+                trade_deadline: 取引期限
+                buy_item_genre_id: 購入アイテムジャンル
+                sale_item_genre_id: 売却アイテムジャンル
+
         models:
             game: ゲーム
             item_genre: アイテムジャンル
             nintendo_friend_code: 任天堂フレンドコード
             play_station_network_id: PlayStationNetworkID
+            item_trade: アイテムトレード
+    activemodel:
+        attributes:
+            regist_item_trade_form:
+                buy_item_name: 購入アイテム名
+                buy_item_quantity: 購入数量
+                sale_item_name: 売却アイテム名
+                sale_item_quantity: 売却数量
+                trade_deadline: 取引期限
+                buy_item_genre_id: 購入アイテムジャンル
+                sale_item_genre_id: 売却アイテムジャンル
+
 
     helpers:
         submit:
             create: 登録
             update: 更新
             submit: 保存
+            search: 検索
     navbar:
-        games: ゲーム
+        admin_games: ゲーム管理
         item_genres: アイテムジャンル
+        games: ゲーム
         mypage: マイページ
         log_out: ログアウト
+
     flash:
         create: 作成しました
         update: 更新しました
         failed: 失敗しました
         destroy: 削除しました
         regist: 登録しました
+        item_trades:
+            game_does_not_exist: 選択されたゲームが存在しません
     errors:
         messages:
             psn_id_head_alphabet: は先頭英字で入力してください

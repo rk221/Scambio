@@ -24,7 +24,7 @@ RSpec.describe Game, type: :system do
 
             context 'ゲーム一覧画面へ遷移している場合' do
                 before do
-                    click_link 'ゲーム'
+                    click_link 'ゲーム管理'
                 end
 
                 it 'ゲーム一覧画面が表示されている' do
@@ -34,7 +34,7 @@ RSpec.describe Game, type: :system do
 
             describe 'ゲーム新規登録' do
                 before do
-                    click_link 'ゲーム'
+                    click_link 'ゲーム管理'
                     click_link '登録'
                 end
 
@@ -73,7 +73,7 @@ RSpec.describe Game, type: :system do
             describe 'ゲーム編集' do 
                 let!(:game){FactoryBot.create(:game)} 
                 before do
-                    click_link 'ゲーム'
+                    click_link 'ゲーム管理'
                     click_link '編集'
                 end
 
@@ -109,7 +109,7 @@ RSpec.describe Game, type: :system do
             describe 'ゲーム削除' do 
                 let!(:game){FactoryBot.create(:game)} 
                 before do
-                    click_link 'ゲーム'
+                    click_link 'ゲーム管理'
                     click_link '削除'
                     accept_confirm
                 end
@@ -126,7 +126,7 @@ RSpec.describe Game, type: :system do
             include_context 'ユーザがログイン状態になる'
 
             it 'ゲームへのリンクが存在しない' do 
-                expect(page).to_not have_link 'ゲーム'
+                expect(page).to_not have_link 'ゲーム管理'
             end
         end
     end
