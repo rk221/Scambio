@@ -1,5 +1,5 @@
 class PlayStationNetworkId < ApplicationRecord
-    has_one :user
+    belongs_to :user
 
     # PSN_IDは英数字、ハイフン、アンダーバーのみ許可
     VALID_PSN_ID_REGEX = /\A[0-9A-Za-z\-_]+\z/

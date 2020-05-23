@@ -3,10 +3,10 @@ class User < ApplicationRecord
   has_one :play_station_network_id
   
   has_many :user_game_ranks
-  has_many :games, through: :user_game_ranks
+  has_many :user_game_rank_games, through: :user_game_ranks, source: :game
 
   has_many :item_trades
-  has_many :games, through: :item_trades
+  has_many :item_trade_games, through: :item_trades, source: :game
   has_many :buy_items, through: :item_trades, source: :buy_item
   has_many :sale_items, through: :item_trades, source: :sale_item
 

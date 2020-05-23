@@ -1,5 +1,5 @@
 class NintendoFriendCode < ApplicationRecord
-    has_one :user
+    belongs_to :user
 
     validates :friend_code, presence: true, length: {is: 12}, numericality: { only_integer: true }
     validates :user_id, presence: true, uniqueness: true
