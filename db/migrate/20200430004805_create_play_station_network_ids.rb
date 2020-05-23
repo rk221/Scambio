@@ -3,7 +3,7 @@ class CreatePlayStationNetworkIds < ActiveRecord::Migration[6.0]
     create_table :play_station_network_ids do |t|
       t.string :psn_id, null: false, limit: 16
 
-      t.references :user, foreign_key: true, unique:true
+      t.references :user, foreign_key: true, unique:true, null: false
 
       t.timestamps
     end

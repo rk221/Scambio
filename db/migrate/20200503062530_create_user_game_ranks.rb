@@ -5,8 +5,8 @@ class CreateUserGameRanks < ActiveRecord::Migration[6.0]
       t.integer :trade_count, null: false, default: 0
       t.integer :popularity, null: false, default: 0
 
-      t.references :user, foreign_key: true
-      t.references :game, foreign_key: true
+      t.references :user, foreign_key: true, null: false
+      t.references :game, foreign_key: true, null: false
 
       t.timestamps
     end
