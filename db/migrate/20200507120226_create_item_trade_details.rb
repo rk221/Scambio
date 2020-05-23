@@ -4,8 +4,8 @@ class CreateItemTradeDetails < ActiveRecord::Migration[6.0]
       t.integer :buy_user_popuarity, null: false, default: 0
       t.integer :sale_user_popuarity, null: false, default: 0
 
-      t.references :buy_user, foreign_key: {to_table: :users}
-      t.references :item_trade, foreign_key: true
+      t.references :buy_user, foreign_key: {to_table: :users}, null: false
+      t.references :item_trade, foreign_key: true, null: false
       
       t.timestamps
     end

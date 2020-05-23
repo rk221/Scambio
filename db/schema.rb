@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_120226) do
 
   create_table "item_genre_games", force: :cascade do |t|
     t.boolean "enable_flag", default: false, null: false
-    t.bigint "item_genre_id"
-    t.bigint "game_id"
+    t.bigint "item_genre_id", null: false
+    t.bigint "game_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_item_genre_games_on_game_id"
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_120226) do
   create_table "item_trade_details", force: :cascade do |t|
     t.integer "buy_user_popuarity", default: 0, null: false
     t.integer "sale_user_popuarity", default: 0, null: false
-    t.bigint "buy_user_id"
-    t.bigint "item_trade_id"
+    t.bigint "buy_user_id", null: false
+    t.bigint "item_trade_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["buy_user_id"], name: "index_item_trade_details_on_buy_user_id"
@@ -58,10 +58,10 @@ ActiveRecord::Schema.define(version: 2020_05_07_120226) do
     t.integer "sale_item_quantity", null: false
     t.boolean "enable_flag", null: false
     t.datetime "trade_deadline", null: false
-    t.bigint "user_id"
-    t.bigint "game_id"
-    t.bigint "buy_item_id"
-    t.bigint "sale_item_id"
+    t.bigint "user_id", null: false
+    t.bigint "game_id", null: false
+    t.bigint "buy_item_id", null: false
+    t.bigint "sale_item_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["buy_item_id"], name: "index_item_trades_on_buy_item_id"
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_120226) do
   create_table "items", force: :cascade do |t|
     t.string "name", limit: 30, null: false
     t.string "unit_name", limit: 10
-    t.bigint "item_genre_id"
-    t.bigint "game_id"
+    t.bigint "item_genre_id", null: false
+    t.bigint "game_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_items_on_game_id"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_120226) do
 
   create_table "nintendo_friend_codes", force: :cascade do |t|
     t.string "friend_code", limit: 12, null: false
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_nintendo_friend_codes_on_user_id"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_120226) do
 
   create_table "play_station_network_ids", force: :cascade do |t|
     t.string "psn_id", limit: 16, null: false
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_play_station_network_ids_on_user_id"
@@ -101,8 +101,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_120226) do
     t.integer "rank", default: 0, null: false
     t.integer "trade_count", default: 0, null: false
     t.integer "popularity", default: 0, null: false
-    t.bigint "user_id"
-    t.bigint "game_id"
+    t.bigint "user_id", null: false
+    t.bigint "game_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_user_game_ranks_on_game_id"

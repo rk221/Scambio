@@ -3,8 +3,8 @@ class CreateItemGenreGames < ActiveRecord::Migration[6.0]
     create_table :item_genre_games do |t|
       t.boolean :enable_flag, null: false, default: false
 
-      t.references :item_genre, foreign_key: true
-      t.references :game, foreign_key: true
+      t.references :item_genre, foreign_key: true, null: false
+      t.references :game, foreign_key: true, null: false
 
       t.timestamps
     end

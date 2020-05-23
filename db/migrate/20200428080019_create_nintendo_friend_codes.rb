@@ -3,7 +3,7 @@ class CreateNintendoFriendCodes < ActiveRecord::Migration[6.0]
     create_table :nintendo_friend_codes do |t|
       t.string :friend_code, null: false, limit: 12
 
-      t.references :user, foreign_key: true, unique:true
+      t.references :user, foreign_key: true, unique:true, null: false
 
       t.timestamps
     end
