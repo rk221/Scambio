@@ -20,8 +20,8 @@ crumb :admin_new_game do
   parent :admin_games
 end
 
-crumb :admin_edit_game do 
-  link t('admin.games.edit.title'), edit_admin_game_path
+crumb :admin_edit_game do |game_id|
+  link t('admin.games.edit.title'), edit_admin_game_path(game_id)
   parent :admin_games
 end
 
@@ -34,13 +34,13 @@ crumb :new_item_genre do
   parent :item_genres
 end
 
-crumb :edit_item_genre do 
-  link t('admin.item_genres.edit.title'), edit_admin_item_genre_path
+crumb :edit_item_genre do |item_genre_id|
+  link t('admin.item_genres.edit.title'), edit_admin_item_genre_path(item_genre_id)
   parent :item_genres
 end
 
-crumb :item_genre_games do 
-  link t('admin.item_genre_games.index.title'), admin_item_genres_path
+crumb :item_genre_games do |game_id|
+  link t('admin.item_genre_games.index.title'), admin_item_genres_path(game_id)
   parent :games
 end
 
@@ -48,23 +48,23 @@ crumb :codes do
   link t('codes.index.title'), codes_path
 end
 
-crumb :new_nintendo_friend_code do 
+crumb :new_nintendo_friend_code do
   link t('codes.nintendo_friend_codes.new.title'), new_codes_nintendo_friend_code_path
   parent :codes
 end
 
-crumb :edit_nintendo_friend_code do 
-  link t('codes.nintendo_friend_codes.edit.title'), edit_codes_nintendo_friend_code_path
+crumb :edit_nintendo_friend_code do |nintendo_friend_code_id|
+  link t('codes.nintendo_friend_codes.edit.title'), edit_codes_nintendo_friend_code_path(nintendo_friend_code_id)
   parent :codes
 end
 
-crumb :new_play_station_network_id do 
+crumb :new_play_station_network_id do
   link t('codes.play_station_network_ids.new.title'), new_codes_play_station_network_id_path
   parent :codes
 end
 
-crumb :edit_play_station_network_id do 
-  link t('codes.play_station_network_ids.edit.title'), edit_codes_play_station_network_id_path
+crumb :edit_play_station_network_id do |play_station_network_id_id| 
+  link t('codes.play_station_network_ids.edit.title'), edit_codes_play_station_network_id_path(play_station_network_id_id)
   parent :codes
 end
 
