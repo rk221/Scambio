@@ -58,6 +58,11 @@ ja:
         edit:
             title: アイテムトレード編集
             trade_deadline: 取引期限（今から何時間有効か）
+    users:
+        show:
+            title: マイページ
+            enable_trades: 有効なアイテムトレード一覧
+
     activerecord:
         attributes:
             game:
