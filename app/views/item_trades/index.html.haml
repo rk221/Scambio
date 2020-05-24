@@ -71,8 +71,11 @@
                     = item_trade.trade_deadline
             %tr
                 %td{colspan: 2}
-                    = link_to t('link_to.edit'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id), class: 'btn btn-success mr-2'
-                    = link_to t('link_to.delete'), game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
+                    - if current_user.id == item_trade.user_id
+                        = link_to t('link_to.edit'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id), class: 'btn btn-success mr-2'
+                        = link_to t('link_to.delete'), game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
+                    - else
+                        = "なし"
 
 %nav{"aria-label": "ページネーション"}
     %ul.pagination
