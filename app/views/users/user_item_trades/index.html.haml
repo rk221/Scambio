@@ -1,0 +1,95 @@
+- breadcrumb :user_item_trades
+%h1.mb-5 
+    = t '.title'
+
+.mb-5
+    = search_form_for @q, url: user_user_item_trades_path do |f|
+        .form-group
+            = f.label :game_title, ItemTrade.human_attribute_name(:game_title)
+            = f.search_field :game_title_cont, class: 'form-control'
+        .form-group 
+            = f.label :enabled, ItemTrade.human_attribute_name(:enable_flag)
+            = f.check_box :enabled, {checked: params[:q][:enabled].present?,class: 'form-check'}, checked_value = true, unchecked_value = false
+        .form-group
+            = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_id)
+            = f.select :buy_item_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.id]}, {selected: params[:q][:buy_item_item_genre_id], include_blank: '選択なし'}, class: 'form-control'
+        .form-group
+            = f.label :buy_item_name, ItemTrade.human_attribute_name(:buy_item_name)
+            = f.search_field :buy_item_name, value: params[:q][:buy_item_name], class: 'form-control'
+
+        .form-group
+            = f.label :sale_item_genre_id, ItemTrade.human_attribute_name(:sale_item_genre_id)
+            = f.select :sale_item_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.id]}, {selected: params[:q][:sale_item_item_genre_id], include_blank: '選択なし'}, class: 'form-control'
+        .form-group
+            = f.label :sale_item_name, ItemTrade.human_attribute_name(:sale_item_name)
+            = f.search_field :sale_item_name, value: params[:q][:sale_item_name], class: 'form-control'
+            
+        .form-group
+            = f.submit t('helpers.submit.search'), class: 'btn btn-success'
+        .form-group
+            = f.select(:sorts, {'取引開始日時の近い順': 'updated_at desc', '購入数量の少ない順': 'buy_item_quantity asc'},{selected: params[:q][:sorts]}, class: 'select-sort form-control', 'v-on:change': 'onSelectedChange($event)')
+        
+- @item_trades.each do |item_trade|
+    %table.table.table-hover.table-bordered.text-nowrap
+        %tbody
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:game_title)
+                %td 
+                    = item_trade.game.title
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:buy_item_genre_id)
+                %td 
+                    = item_trade.buy_item.item_genre.name
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:buy_item_name)
+                %td 
+                    = item_trade.buy_item.name
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:buy_item_quantity)
+                %td 
+                    = item_trade.buy_item_quantity
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:sale_item_genre_id)
+                %td 
+                    = item_trade.sale_item.item_genre.name
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:sale_item_name)
+                %td 
+                    = item_trade.sale_item.name
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:sale_item_quantity)
+                %td 
+                    = item_trade.sale_item_quantity
+            - if item_trade.enable_flag && item_trade.trade_deadline != "ERROR"
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:trade_deadline)
+                    %td 
+                        = item_trade.trade_deadline
+                %tr
+                    %td{colspan: 2}
+                        = link_to t('link_to.edit'), edit_user_user_item_trade_path(id: item_trade.id, user_id: current_user.id), class: 'btn btn-success mr-2'
+                        = link_to t('link_to.delete'), user_user_item_trade_path(id: item_trade.id, user_id: current_user.id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
+            - else
+                %td{colspan: 2}
+                    = link_to t('.edit'), edit_user_user_item_trade_path(id: item_trade.id, user_id: current_user.id), class: 'btn btn-success mr-2'
+
+%nav{"aria-label": "ページネーション"}
+    %ul.pagination
+        - @hash_pages.each do |key, value|
+            - if value
+                %li.page-item
+                    = link_to key, user_user_item_trades_path(page_redirect_params(value)), class: 'page-link'
+            - else
+                %li.page-item.active
+                    %a.page-link
+                        = key
+
+= javascript_pack_tag 'select_sort'

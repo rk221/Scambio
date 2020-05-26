@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
-  resources :users, only: [:show]
+  resources :users, only: [:show] do 
+    scope module: :users do
+      resources :user_item_trades, only: [:index, :edit, :update, :destroy]
+    end
+  end
 
   namespace :admin do
     resources :games
