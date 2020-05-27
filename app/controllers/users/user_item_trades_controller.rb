@@ -1,46 +1,20 @@
-class ItemTradesController < ApplicationController
+class Users::UserItemTradesController < ApplicationController
     helper_method :page_redirect_params    
 
     NUMBER_OF_OUTPUT_LINES = 10
 
+    # 過去の取引一覧
     def index #page paramsを受け取るとページ切り替え可能
         # 検索
         params[:q] = {sorts: 'updated_at desc'} if params[:q].blank?
         @q = ItemTrade.ransack(search_params)
-        @item_trades = search_item_trades(@q.result(distinct: true), search_params).enabled
+        @item_trades = search_item_trades(@q.result(distinct: true), search_params)
         # ページリンク用オブジェクト
         @hash_pages = hash_pages((@item_trades.count() + NUMBER_OF_OUTPUT_LINES - 1) / NUMBER_OF_OUTPUT_LINES)
         # デコレータ　ページ(1 <= :page <=page_count)
         @item_trades = ItemTradeDecorator.decorate_collection(@item_trades.limit(NUMBER_OF_OUTPUT_LINES).offset((page - 1) * NUMBER_OF_OUTPUT_LINES))
         # ジャンル一覧を取得
-        @selectable_item_genres = selectable_item_genres(params[:game_id])
-    end
-
-    def show 
-
-    end
-
-    def new 
-        game = Game.find_by(id: params[:game_id])
-        return redirect_to games_path, danger: t('flash.item_trades.game_does_not_exist') if game.nil?
-        @selectable_item_genres = selectable_item_genres(game.id)
-        @regist_item_trade_form = RegistItemTradeForm.new(game_id: game.id)
-    end
-
-    def create 
-        @regist_item_trade_form = RegistItemTradeForm.new(regist_item_trade_form_params)
-        @regist_item_trade_form.user_id = current_user.id
-        if @regist_item_trade_form.save 
-            # ゲームランクを生成する
-            user_game_rank = UserGameRank.new(user_id: current_user.id, game_id: @regist_item_trade_form.game_id)
-            user_game_rank.save
-
-            redirect_to game_item_trades_path(game_id: @regist_item_trade_form.game_id), notice: t('flash.regist')
-        else
-            @selectable_item_genres = ItemGenreGame.where(game_id: @regist_item_trade_form.game_id, enable_flag: true).joins(:item_genre).select(:item_genre_id, :name)
-            @selectable_item_genres = selectable_item_genres(@regist_item_trade_form.game_id)
-            render :new
-        end
+        @selectable_item_genres = ItemGenre.all
     end
 
     def edit 
@@ -50,8 +24,8 @@ class ItemTradesController < ApplicationController
     def update 
         @item_trade = ItemTrade.find(params[:id])
         
-        if @item_trade.update(buy_item_quantity: item_trade_params[:buy_item_quantity], sale_item_quantity: item_trade_params[:sale_item_quantity], trade_deadline: calc_trade_deadline(item_trade_params[:trade_deadline]))
-            redirect_to game_item_trades_path(game_id: @item_trade.game_id), notice: t('flash.update')
+        if @item_trade.update(update_item_trade_params)
+            redirect_to user_user_item_trades_path(game_id: @item_trade.game_id), notice: t('flash.update')
         else
             render :edit
         end
@@ -60,12 +34,19 @@ class ItemTradesController < ApplicationController
     def destroy
         @item_trade = ItemTrade.find(params[:id])
         @item_trade.update(enable_flag: false)
-        redirect_to game_item_trades_path(game_id: params[:game_id]), notice: t('flash.destroy')
+        redirect_to user_user_item_trades_path, notice: t('flash.destroy')
     end
 
     private
+
     def item_trade_params 
         params.require(:item_trade).permit(:id, :user_id, :game_id, :buy_item_id, :buy_item_quantity, :sale_item_id, :sale_item_quantity, :enable_flag, :trade_deadline)
+    end
+
+    def update_item_trade_params 
+        update_params = params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity, :enable_flag, :trade_deadline)
+        update_params[:trade_deadline] = calc_trade_deadline(update_params[:trade_deadline])
+        update_params
     end
 
     def calc_trade_deadline(trade_deadline)
@@ -74,24 +55,6 @@ class ItemTradesController < ApplicationController
         else
             return nil
         end
-    end
-
-    def regist_item_trade_form_params 
-        params.require(:regist_item_trade_form).permit(:game_id, :buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :enable_flag, :trade_deadline, :buy_item_genre_id, :sale_item_genre_id)
-    end
-
-    
-
-    def buy_item_params 
-        params.require(:item_trade).permit(:buy_item_name, :game_id, :buy_item_genre_id)
-    end
-
-    def sale_item_params 
-        params.require(:item_trade).permit(:sale_item_name, :game_id, :sale_item_genre_id)
-    end
-
-    def game_name_params
-        params.require(:item_trade).permit(:game_name)
     end
 
     # ページを変更する際の << < 1 2 3 4 5 > >> を表示するために、リンクとページ数を保持するためのもの valueがfalseの場合はリンクとして使用しない。順序は大事なので注意
@@ -136,7 +99,7 @@ class ItemTradesController < ApplicationController
 
     # 検索フォームのパラメータ（ソートも含む)
     def search_params
-        params.require(:q).permit(:buy_item_name, :sale_item_name, :buy_item_item_genre_id, :sale_item_item_genre_id, :sorts)
+        params.require(:q).permit(:enabled, :game_title_cont, :buy_item_name, :sale_item_name, :buy_item_item_genre_id, :sale_item_item_genre_id, :sorts)
     end
     # ページを変更する時のパラメータ（ヘルパー）
     def page_redirect_params(page)

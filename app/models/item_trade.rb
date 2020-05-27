@@ -19,6 +19,7 @@ class ItemTrade < ApplicationRecord
     validates :trade_deadline, presence: true
 
     scope :enabled, -> {where("enable_flag = true and trade_deadline > ?", Time.zone.now)}
+    scope :disabled, -> {where("enable_flag = false or trade_deadline <= ?", Time.zone.now)}
 
     scope :left_join_buy_item, -> {
         joins("LEFT OUTER JOIN items as buy_items ON item_trades.buy_item_id = buy_items.id")
@@ -41,4 +42,8 @@ class ItemTrade < ApplicationRecord
     scope :search_sale_item_genre_id, -> (search_genre_id){
         where('sale_items.item_genre_id = ?', search_genre_id)
     }
+
+    def self.ransackable_scopes(auth_object = nil)
+        %i(enabled)
+    end
 end

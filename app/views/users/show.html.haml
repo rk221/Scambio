@@ -1,12 +1,29 @@
 - breadcrumb :mypage
-%h1.mb-5 Users#show
-%p Find me in app/views/users/show.html.haml
-
-%p Name
-= @user.firstname
+%h1.mb-5
+    = t '.title'
 
 %p 
-= link_to t('.edit_user'), edit_user_registration_path(@user), class: 'btn btn-success'
+    = link_to t('.edit_user'), edit_user_registration_path(@user), class: 'btn btn-success'
 
 %p
-= link_to t('.codes'),codes_path, class: 'btn btn-primary'
+    = link_to t('.codes'),codes_path, class: 'btn btn-primary'
+
+%p
+    = link_to t('.user_item_trades'), user_user_item_trades_path(@user), class: 'btn btn-light'
+
+%h3.mb-2
+    = t('.recent_user_game_rank')
+
+- @user_game_ranks.each do |user_game_rank|
+    %table.table.table-hover.table-bordered.text-nowrap
+        %tbody
+            %tr 
+                %td 
+                    = Game.human_attribute_name(:title)
+                %td 
+                    = user_game_rank.game.title
+            %tr 
+                %td 
+                    = UserGameRank.human_attribute_name(:rank)
+                %td{class: "user-game-rank-#{user_game_rank.rank}"}
+                    = user_game_rank.rank_name

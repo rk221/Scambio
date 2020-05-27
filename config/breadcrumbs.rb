@@ -11,6 +11,16 @@ crumb :edit_user do
   parent :mypage
 end
 
+crumb :user_item_trades do
+  link t('users.user_item_trades.index.title'), user_user_item_trades_path(current_user)
+  parent :mypage
+end
+
+crumb :edit_user_item_trade do |item_trade_id|
+  link t('users.user_item_trades.edit.title'), edit_user_user_item_trade_path(user_id: current_user.id, id: item_trade_id)
+  parent :user_item_trades
+end
+
 crumb :admin_games do 
   link t('admin.games.index.title'), admin_games_path
 end

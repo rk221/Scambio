@@ -1,6 +1,5 @@
 ja:
     empty: なし 
-
     confirm:
         destroy: "%{model}「%{name}」を削除しますか？"
         simple_destroy: "%{name}を削除しますか？"
@@ -58,6 +57,7 @@ ja:
         edit:
             title: アイテムトレード編集
             trade_deadline: 取引期限（今から何時間有効か）
+
     activerecord:
         attributes:
             game:
@@ -84,13 +84,17 @@ ja:
                 trade_deadline: 取引期限
                 buy_item_genre_id: 購入アイテムジャンル
                 sale_item_genre_id: 売却アイテムジャンル
-
+                enable_flag: 有効フラグ
+            user_game_rank:
+                game_id: ゲームID
+                rank: ランク
         models:
             game: ゲーム
             item_genre: アイテムジャンル
             nintendo_friend_code: 任天堂フレンドコード
             play_station_network_id: PlayStationNetworkID
             item_trade: アイテムトレード
+            user_game_rank: ユーザゲームランク
     activemodel:
         attributes:
             regist_item_trade_form:
