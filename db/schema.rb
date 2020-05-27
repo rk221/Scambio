@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_07_120226) do
+ActiveRecord::Schema.define(version: 2020_05_27_084216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,12 +99,13 @@ ActiveRecord::Schema.define(version: 2020_05_07_120226) do
 
   create_table "user_game_ranks", force: :cascade do |t|
     t.integer "rank", default: 0, null: false
-    t.integer "trade_count", default: 0, null: false
     t.integer "popularity", default: 0, null: false
     t.bigint "user_id", null: false
     t.bigint "game_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "buy_trade_count", default: 0, null: false
+    t.integer "sale_trade_count", default: 0, null: false
     t.index ["game_id"], name: "index_user_game_ranks_on_game_id"
     t.index ["user_id", "game_id"], name: "index_user_game_ranks_on_user_id_and_game_id", unique: true
     t.index ["user_id"], name: "index_user_game_ranks_on_user_id"

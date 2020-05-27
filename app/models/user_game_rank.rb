@@ -6,6 +6,7 @@ class UserGameRank < ApplicationRecord
     validates :game_id, presence: true
 
     validates :rank, presence: true, numericality: {greater_than_or_equal_to: -2, less_than_or_equal_to: 4}
-    validates :trade_count, presence: true, numericality: {greater_than_or_equal_to: 0}
+    validates :buy_trade_count, presence: true, numericality: {greater_than_or_equal_to: 0}
+    validates :sale_trade_count, presence: true, numericality: {greater_than_or_equal_to: 0}
     validates :popularity, presence: true, numericality: {greater_than_or_equal_to: -100, less_than_or_equal_to: 100}
 end
