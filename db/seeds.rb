@@ -39,3 +39,4 @@ item_genre = ItemGenre.new(name: '家具', default_unit_name: '個')
 item_genre.save
 
 item_genre_game = ItemGenreGame.new(enable_flag: true, game_id: game.id, item_genre_id: item_genre.id)
+item_genre_game.save
