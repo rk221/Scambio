@@ -82,6 +82,7 @@ ja:
       codes: コード一覧
       edit_user: ユーザ情報変更
       user_item_trades: あなたの取引一覧
+      recent_user_game_rank: 最近取引されたゲーム
     user_item_trades:
       index:
         title: あなたの取引一覧

@@ -31,6 +31,10 @@ class ItemTradesController < ApplicationController
         @regist_item_trade_form = RegistItemTradeForm.new(regist_item_trade_form_params)
         @regist_item_trade_form.user_id = current_user.id
         if @regist_item_trade_form.save 
+            # ゲームランクを生成する
+            user_game_rank = UserGameRank.new(user_id: current_user.id, game_id: @regist_item_trade_form.game_id)
+            user_game_rank.save
+
             redirect_to game_item_trades_path(game_id: @regist_item_trade_form.game_id), notice: t('flash.regist')
         else
             @selectable_item_genres = ItemGenreGame.where(game_id: @regist_item_trade_form.game_id, enable_flag: true).joins(:item_genre).select(:item_genre_id, :name)
