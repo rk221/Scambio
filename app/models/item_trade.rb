@@ -8,6 +8,9 @@ class ItemTrade < ApplicationRecord
     has_many :item_trade_detials
     has_many :buy_users, through: :item_trade_detials, source: :buy_user
 
+    has_many :item_trade_queues
+    has_many :item_trade_queue_users, through: :item_trade_queues, source: :user
+
     validates :buy_item_quantity, presence: true, numericality: {greater_than_or_equal_to: 1}
     validates :sale_item_quantity, presence: true, numericality: {greater_than_or_equal_to: 1}
 
