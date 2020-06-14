@@ -49,7 +49,7 @@ crumb :admin_new_game do
 end
 
 crumb :admin_edit_game do |game_id|
-  link t('admin.games.edit.title'), edit_admin_game_path(game_id)
+  link t('admin.games.edit.title'), edit_admin_game_path(game_id: game_id)
   parent :admin_games
 end
 
@@ -63,12 +63,12 @@ crumb :new_item_genre do
 end
 
 crumb :edit_item_genre do |item_genre_id|
-  link t('admin.item_genres.edit.title'), edit_admin_item_genre_path(item_genre_id)
+  link t('admin.item_genres.edit.title'), edit_admin_item_genre_path(id: item_genre_id)
   parent :item_genres
 end
 
 crumb :item_genre_games do |game_id|
-  link t('admin.item_genre_games.index.title'), admin_item_genres_path(game_id)
+  link t('admin.item_genre_games.index.title'), admin_item_genres_path(id: game_id)
   parent :games
 end
 
@@ -82,7 +82,7 @@ crumb :new_nintendo_friend_code do
 end
 
 crumb :edit_nintendo_friend_code do |nintendo_friend_code_id|
-  link t('codes.nintendo_friend_codes.edit.title'), edit_codes_nintendo_friend_code_path(nintendo_friend_code_id)
+  link t('codes.nintendo_friend_codes.edit.title'), edit_codes_nintendo_friend_code_path(id: nintendo_friend_code_id)
   parent :codes
 end
 
@@ -92,7 +92,7 @@ crumb :new_play_station_network_id do
 end
 
 crumb :edit_play_station_network_id do |play_station_network_id_id| 
-  link t('codes.play_station_network_ids.edit.title'), edit_codes_play_station_network_id_path(play_station_network_id_id)
+  link t('codes.play_station_network_ids.edit.title'), edit_codes_play_station_network_id_path(id: play_station_network_id_id)
   parent :codes
 end
 
@@ -101,17 +101,17 @@ crumb :games do
 end
 
 crumb :game_item_trades do |game_id|
-  link t('item_trades.index.title'), game_item_trades_path(game_id)
+  link t('item_trades.index.title'), game_item_trades_path(game_id: game_id)
   parent :games
 end
 
 crumb :new_game_item_trade do |game_id|
-  link t('item_trades.new.title'), new_game_item_trade_path(game_id)
+  link t('item_trades.new.title'), new_game_item_trade_path(game_id: game_id)
   parent :game_item_trades, game_id
 end
 
 crumb :edit_game_item_trade do |item_trade|
-  link t('item_trades.edit.title'), edit_game_item_trade_path(item_trade)
+  link t('item_trades.edit.title'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id)
   parent :game_item_trades, item_trade.game_id
 end
 
