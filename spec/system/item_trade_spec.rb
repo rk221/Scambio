@@ -10,6 +10,9 @@ RSpec.describe ItemTrade, type: :system do
     let!(:buy_item){FactoryBot.create(:buy_item, item_genre_id: item_genre.id, game_id: game.id)}
     let!(:sale_item){FactoryBot.create(:sale_item, item_genre_id: item_genre.id, game_id: game.id)}
 
+    let!(:general_user_game_rank){FactoryBot.create(:user_game_rank, user_id: general_user.id, game_id: game.id)}
+    let!(:admin_user_game_rank){FactoryBot.create(:user_game_rank, user_id: admin_user.id, game_id: game.id)}
+
     shared_context 'ユーザがログイン状態になる' do
         before do
             visit new_user_session_path

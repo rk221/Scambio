@@ -20,8 +20,11 @@ class ItemTradeDetailsController < ApplicationController
         return redirect_to root_path, warning: t('flash.error') unless confirm_item_trade(@item_trade_detail.item_trade_queue.item_trade)
         
         if @item_trade_detail.update(buy_evaluate_params)
-            # 両者評価しているなら取引を終了させる
-            end_trade(@item_trade_detail) if @item_trade_detail.sale_popuarity
+            end_trade(@item_trade_detail) if @item_trade_detail.sale_popuarity # 両者評価しているなら取引を終了させる
+
+            # 購入側のRANKを更新
+            buy_user_game_rank = UserGameRank.find_by(user_id: @item_trade_detail.item_trade_queue.user_id, game_id: @item_trade_detail.item_trade_queue.item_trade.game_id)
+            buy_user_game_rank.buy_item_trade_update!(@item_trade_detail.buy_popuarity)
 
             redirect_to user_path(current_user), success: t('.success_message')
         else
@@ -35,8 +38,11 @@ class ItemTradeDetailsController < ApplicationController
         return redirect_to root_path, warning: t('flash.error') unless confirm_item_trade(@item_trade_detail.item_trade_queue)
 
         if @item_trade_detail.update(sale_evaluate_params)
-            # 両者評価しているなら取引を終了させる
-            end_trade(@item_trade_detail) if @item_trade_detail.buy_popuarity
+            end_trade(@item_trade_detail) if @item_trade_detail.buy_popuarity # 両者評価しているなら取引を終了させる
+
+            # 購入側のRANKを更新
+            sale_user_game_rank = UserGameRank.find_by(user_id: @item_trade_detail.item_trade_queue.item_trade.user_id, game_id: @item_trade_detail.item_trade_queue.item_trade.game_id)
+            sale_user_game_rank.sale_item_trade_update!(@item_trade_detail.sale_popuarity)
 
             redirect_to user_path(current_user), success: t('.success_message')
         else
