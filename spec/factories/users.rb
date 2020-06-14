@@ -14,7 +14,7 @@ FactoryBot.define do
     factory :admin_user, class: User do
         firstname {'管理者てすと'}
         lastname {'ゆーざー漢字'}
-        nickname {'ニックネーム'}
+        nickname {'管理ニックネーム'}
         birthdate {20.year.ago}
         email { 'test2@example.com' }
         password { 'password' }
@@ -26,7 +26,7 @@ FactoryBot.define do
     factory :general_user, class: User do
         firstname {'一般'}
         lastname {'ゆーざー漢字'}
-        nickname {'ニックネーム'}
+        nickname {'一般ニックネーム'}
         birthdate {20.year.ago}
         email { 'test3@example.com' }
         password { 'password' }

@@ -16,9 +16,27 @@ crumb :user_item_trades do
   parent :mypage
 end
 
-crumb :edit_user_item_trade do |item_trade_id|
-  link t('users.user_item_trades.edit.title'), edit_user_user_item_trade_path(user_id: current_user.id, id: item_trade_id)
+crumb :user_item_trade do |item_trade_id|
+  link t('users.user_item_trades.show.title'), user_user_item_trade_path(id: item_trade_id, user_id: current_user.id)
   parent :user_item_trades
+end
+
+crumb :user_item_trade_queues do
+  link t('users.item_trade_queues.index.title'), user_item_trade_queues_path(current_user)
+  parent :mypage
+end
+
+crumb :user_item_trade_queue do |item_trade_queue_id|
+  link t('users.item_trade_queues.show.title'), user_item_trade_queue_path(id: item_trade_queue_id, user_id: current_user.id)
+  parent :user_item_trade_queues
+end
+
+crumb :edit_buy_item_trade_detail do |item_trade_detail_id|
+  link t('item_trade_details.edit_buy.title'), edit_buy_item_trade_detail_path(id: item_trade_detail_id)
+end
+
+crumb :edit_sale_item_trade_detail do |item_trade_detail_id|
+  link t('item_trade_details.edit_sale.title'), edit_sale_item_trade_detail_path(id: item_trade_detail_id)
 end
 
 crumb :admin_games do 

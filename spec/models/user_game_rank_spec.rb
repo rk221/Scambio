@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UserGameRank, type: :model do
   let!(:user){FactoryBot.create(:user)}
   let!(:game){FactoryBot.create(:game)}
-  it "ユーザID、ゲームID、トレード回数、ランク、評判がある場合、有効である" do
+  it "ユーザID、ゲームID、購入トレード回数、売却トレード回数、ランク、評判がある場合、有効である" do
     user_game_rank = FactoryBot.build(:user_game_rank, user_id: user.id, game_id: game.id)
     expect(user_game_rank).to be_valid
   end
@@ -39,10 +39,16 @@ RSpec.describe UserGameRank, type: :model do
     expect(user_game_rank.errors[:rank]).to include("は4以下の値にしてください")
   end
 
-  it "トレード回数が0未満の場合、無効である" do
-    user_game_rank = FactoryBot.build(:user_game_rank, trade_count: -1, user_id: user.id, game_id: game.id)
+  it "購入トレード回数が0未満の場合、無効である" do
+    user_game_rank = FactoryBot.build(:user_game_rank, buy_trade_count: -1, user_id: user.id, game_id: game.id)
     user_game_rank.valid?
-    expect(user_game_rank.errors[:trade_count]).to include("は0以上の値にしてください")
+    expect(user_game_rank.errors[:buy_trade_count]).to include("は0以上の値にしてください")
+  end
+
+  it "売却トレード回数が0未満の場合、無効である" do
+    user_game_rank = FactoryBot.build(:user_game_rank, sale_trade_count: -1, user_id: user.id, game_id: game.id)
+    user_game_rank.valid?
+    expect(user_game_rank.errors[:sale_trade_count]).to include("は0以上の値にしてください")
   end
 
   it "評判が-100未満の場合、無効である" do

@@ -1,44 +1,16 @@
-- breadcrumb :mypage
-%h1.mb-5
+- breadcrumb :user_item_trade_queues
+%h1.mb-5 
     = t '.title'
-%h2
-    = @user.nickname
-%p 
-    = link_to t('.edit_user'), edit_user_registration_path(@user), class: 'btn btn-success'
 
-%p
-    = link_to t('.codes'),codes_path, class: 'btn btn-primary'
-
-%p
-    = link_to t('.user_item_trades'), user_user_item_trades_path(@user), class: 'btn btn-light'
-
-%p
-    = link_to t('.user_item_trade_queues'), user_item_trade_queues_path(@user), class: 'btn btn-outline-primary'
-
-%h3.mb-2
-    = t('.recent_user_game_rank')
-
-- @user_game_ranks.each do |user_game_rank|
+- @item_trade_queues.each do |item_trade_queue|
+    - next if item_trade_queue.item_trade_detail && item_trade_queue.item_trade_detail.sale_popuarity
     %table.table.table-hover.table-bordered.text-nowrap
         %tbody
             %tr 
                 %td 
-                    = Game.human_attribute_name(:title)
+                    = ItemTrade.human_attribute_name(:user_nickname)
                 %td 
-                    = user_game_rank.game.title
-            %tr 
-                %td 
-                    = UserGameRank.human_attribute_name(:rank)
-                %td{class: "user-game-rank-#{user_game_rank.rank}"}
-                    = user_game_rank.rank_name
-
-%h3.mb2
-    = t('.reaction_wait_item_trades')
-
-- @reaction_wait_item_trade_queues.each do |item_trade_queue|
-    - next if item_trade_queue.item_trade_detail && item_trade_queue.item_trade_detail.buy_popuarity
-    %table.table.table-hover.table-bordered.text-nowrap
-        %tbody
+                    = item_trade_queue.item_trade.user.nickname
             %tr 
                 %td 
                     = ItemTrade.human_attribute_name(:game_title)
@@ -76,4 +48,4 @@
                     = item_trade_queue.item_trade.sale_item_quantity
             %tr
                 %td{colspan: 2}
-                    = link_to t('link_to.show'), user_user_item_trade_path(id: item_trade_queue.item_trade.id, user_id: current_user.id), class: 'btn btn-primary mr-2'
+                    = link_to t('link_to.show'), user_item_trade_queue_path(id: item_trade_queue.id, user_id: current_user.id), class: 'btn btn-primary mr-2'

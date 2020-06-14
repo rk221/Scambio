@@ -1,0 +1,2 @@
+module ItemTradeDetailsHelper
+end

@@ -1,0 +1,61 @@
+- breadcrumb :user_item_trade_queue, @item_trade_queue.id
+%h1.mb-5
+    = t '.title'
+
+%table.table.table-hover.table-bordered.text-nowrap
+    %tbody
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:user_nickname)
+            %td 
+                = @item_trade_queue.item_trade.user.nickname
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:game_title)
+            %td 
+                = @item_trade_queue.item_trade.game.title
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:buy_item_genre_id)
+            %td 
+                = @item_trade_queue.item_trade.buy_item.item_genre.name
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:buy_item_name)
+            %td 
+                = @item_trade_queue.item_trade.buy_item.name
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:buy_item_quantity)
+            %td 
+                = @item_trade_queue.item_trade.buy_item_quantity
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:sale_item_genre_id)
+            %td 
+                = @item_trade_queue.item_trade.sale_item.item_genre.name
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:sale_item_name)
+            %td 
+                = @item_trade_queue.item_trade.sale_item.name
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:sale_item_quantity)
+            %td 
+                = @item_trade_queue.item_trade.sale_item_quantity
+
+%h3.mb-3
+    = t('.now_state')
+- if  @item_trade_queue.item_trade_detail && @item_trade_queue.item_trade_detail.sale_popuarity # 自分が評価していて、相手が評価していない
+    %h5.mb-3
+        = t('.your_evaluate_wait')
+- elsif @item_trade_queue.establish_flag #true 取引が成立している
+    %h5.mb-3
+        = t('.during_trade')
+
+    = link_to t('.edit_sale'), edit_sale_item_trade_detail_path(id: @item_trade_queue.item_trade_detail.id), class: 'btn btn-primary'
+    
+- elsif @item_trade_queue.establish_flag.nil? #nil 相手の応答待ち
+    %h5.mb-3
+        = t('.state_wait_reaction')

@@ -1,40 +1,54 @@
-class Users::UserItemTradesController < ApplicationController
+class Users::UserItemTradesController < UsersController
+    include ItemTrades
+
     helper_method :page_redirect_params    
+    before_action :user_auth
 
     NUMBER_OF_OUTPUT_LINES = 10
 
-    # 過去の取引一覧
+    # ユーザの取引一覧
     def index #page paramsを受け取るとページ切り替え可能
         # 検索
         params[:q] = {sorts: 'updated_at desc'} if params[:q].blank?
         @q = ItemTrade.ransack(search_params)
-        @item_trades = search_item_trades(@q.result(distinct: true), search_params)
+        @item_trades = search_item_trades(@q.result(distinct: true), search_params).where(user_id: current_user.id) # ユーザの物だけ抽出する
         # ページリンク用オブジェクト
         @hash_pages = hash_pages((@item_trades.count() + NUMBER_OF_OUTPUT_LINES - 1) / NUMBER_OF_OUTPUT_LINES)
-        # デコレータ　ページ(1 <= :page <=page_count)
-        @item_trades = ItemTradeDecorator.decorate_collection(@item_trades.limit(NUMBER_OF_OUTPUT_LINES).offset((page - 1) * NUMBER_OF_OUTPUT_LINES))
+        # デコレータ　ページ(1 <= :page <=page_count) # includes enable
+        @item_trades = ItemTradeDecorator.decorate_collection(@item_trades.limit(NUMBER_OF_OUTPUT_LINES).offset((page - 1) * NUMBER_OF_OUTPUT_LINES).includes(:enable_item_trade_queue))
         # ジャンル一覧を取得
         @selectable_item_genres = ItemGenre.all
     end
 
-    def edit 
-        @item_trade = ItemTrade.find(params[:id])
+    def show 
+        @item_trade = ItemTrade.find(params[:id]).decorate
+        return redirect_to root_path, warning: t('flash.error') unless confirm_item_trade(@item_trade)
+        @item_trade_queue = @item_trade.enable_item_trade_queue
     end
 
-    def update 
+    def respond # 購入応答 POST で 売却可否を受け取る
         @item_trade = ItemTrade.find(params[:id])
+        @item_trade_queue = @item_trade.enable_item_trade_queue
         
-        if @item_trade.update(update_item_trade_params)
-            redirect_to user_user_item_trades_path(game_id: @item_trade.game_id), notice: t('flash.update')
-        else
-            render :edit
-        end
-    end
+        return redirect_to root_path, warning: t('flash.error') unless confirm_item_trade(@item_trade)
 
-    def destroy
-        @item_trade = ItemTrade.find(params[:id])
-        @item_trade.update(enable_flag: false)
-        redirect_to user_user_item_trades_path, notice: t('flash.destroy')
+        if @item_trade_queue.update(respond_params)
+            if @item_trade_queue.establish_flag # 成立→引き続き詳細画面 不成立→編集画面
+                # Detailsを生成
+                item_trade_detail = ItemTradeDetail.new(item_trade_queue_id: @item_trade_queue.id)
+                item_trade_detail.save!
+                
+                redirect_to action: 'show', id: @item_trade.id, user_id: current_user.id, notice: t('.establish')
+            else
+                # 不成立メッセージを相手に送信（仮）
+                # 取引を終了する。
+                @item_trade.update!(enable_flag: false)
+                @item_trade_queue.update!(enable_flag: false, lock_version: @item_trade_queue.lock_version)
+                redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('.not_establish')
+            end
+        else
+            redirect_to root_path, warning: t('flash.error')
+        end
     end
 
     private
@@ -43,18 +57,8 @@ class Users::UserItemTradesController < ApplicationController
         params.require(:item_trade).permit(:id, :user_id, :game_id, :buy_item_id, :buy_item_quantity, :sale_item_id, :sale_item_quantity, :enable_flag, :trade_deadline)
     end
 
-    def update_item_trade_params 
-        update_params = params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity, :enable_flag, :trade_deadline)
-        update_params[:trade_deadline] = calc_trade_deadline(update_params[:trade_deadline])
-        update_params
-    end
-
-    def calc_trade_deadline(trade_deadline)
-        if trade_deadline.present?
-            return trade_deadline.to_i.hours.since
-        else
-            return nil
-        end
+    def respond_params
+        params.require(:item_trade_queue).permit(:id, :establish_flag, :lock_version)
     end
 
     # ページを変更する際の << < 1 2 3 4 5 > >> を表示するために、リンクとページ数を保持するためのもの valueがfalseの場合はリンクとして使用しない。順序は大事なので注意
@@ -99,7 +103,7 @@ class Users::UserItemTradesController < ApplicationController
 
     # 検索フォームのパラメータ（ソートも含む)
     def search_params
-        params.require(:q).permit(:enabled, :game_title_cont, :buy_item_name, :sale_item_name, :buy_item_item_genre_id, :sale_item_item_genre_id, :sorts)
+        params.require(:q).permit(:enabled_or_during_trade, :game_title_cont, :buy_item_name, :sale_item_name, :buy_item_item_genre_id, :sale_item_item_genre_id, :sorts)
     end
     # ページを変更する時のパラメータ（ヘルパー）
     def page_redirect_params(page)
