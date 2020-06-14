@@ -7,6 +7,7 @@ ja:
         create: 登録
         edit: 編集
         delete: 削除
+        show: 詳細
     admin:
         games:
             index:
@@ -49,6 +50,7 @@ ja:
         index:
             title: アイテムトレード一覧
             new_trade: 取引登録
+            buy_queue: 購入
         before_new:
             title: アイテムトレード登録ゲーム選択
         new:
@@ -57,7 +59,71 @@ ja:
         edit:
             title: アイテムトレード編集
             trade_deadline: 取引期限（今から何時間有効か）
-
+    item_trade_details:
+        edit_buy:
+            title: アイテムトレード評価
+            good: 高評価
+            normal: 普通
+            bad: 低評価
+        edit_sale:
+            title: アイテムトレード評価
+            good: 高評価
+            normal: 普通
+            bad: 低評価
+        buy_evaluate:
+            success_message: 取引を終了しました。
+        sale_evaluate:
+            success_message: 取引を終了しました。
+    users:
+        show:
+            title: マイページ
+            codes: コード一覧
+            edit_user: ユーザ情報変更
+            user_item_trades: あなたのアイテムトレード一覧
+            recent_user_game_rank: 最近取引されたゲーム
+            reaction_wait_item_trades: 反応待ちアイテムトレード一覧
+            user_item_trade_queues: 購入待ちアイテムトレード一覧
+        user_item_trades:
+            index:
+                title: あなたのアイテムトレード一覧
+                edit: 取引を有効化
+                enable_flag: 有効な取引だけ表示
+            show:
+                title: あなたのアイテムトレード詳細
+                now_state: 現在の取引状態
+                state_for_sale: 売り出し中
+                state_wait: あなたの反応待ち
+                state_during_trade: 現在取引中
+                your_evaluate_wait: 相手の評価待ち
+                establish: 取引を承諾
+                not_establish: 取引を拒否
+                edit_buy: 取引を完了
+                1_hour_has_not_passed_yet: 強制終了するには評価後1時間お待ちください。
+                forced_edit_link: 強制編集
+                forced_destroy_link: 強制削除
+                forced_edit: 相手の評価を待たずに更新しますがよろしいですか？
+                forced_destroy: 相手の評価を待たずに削除しますがよろしいですか？
+            edit:
+                title: アイテムトレード編集
+                trade_deadline: 取引期限（今から何時間有効か）
+            respond:
+                establish: 取引を承認しました。
+                not_establish: 取引を拒否しました。
+        item_trade_queues:
+            index:
+                title: アイテムトレード購入待ち一覧
+            show:
+                title: アイテムトレード購入待ち詳細
+                now_state: 現在の取引状態
+                state_wait_reaction: 相手の応答待ちです
+                state_during_trade: 取引が成立しています。チャットを行い、取引してください。
+                your_evaluate_wait: 相手の評価待ち
+                during_trade: 取引中
+                edit_sale: 取引を完了
+            buy:
+                another_user_already_exists: 既に他のユーザが購入しています。
+                success_message: 登録しました。
+                
     activerecord:
         attributes:
             game:
@@ -118,6 +184,7 @@ ja:
             update: 更新
             submit: 保存
             search: 検索
+            send: 送信
     navbar:
         admin_games: ゲーム管理
         item_genres: アイテムジャンル
@@ -133,6 +200,8 @@ ja:
         regist: 登録しました
         item_trades:
             game_does_not_exist: 選択されたゲームが存在しません
+        permit_error: このページを見る権限がありません
+        error: エラーが発生しました
     errors:
         messages:
             psn_id_head_alphabet: は先頭英字で入力してください

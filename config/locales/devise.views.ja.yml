@@ -77,20 +77,6 @@ ja:
     unlocks:
       new:
         resend_unlock_instructions: "アカウントの凍結解除方法を再送する"
-    show:
-      title: マイページ
-      codes: コード一覧
-      edit_user: ユーザ情報変更
-      user_item_trades: あなたのアイテムトレード一覧
-      recent_user_game_rank: 最近取引されたゲーム
-    user_item_trades:
-      index:
-        title: あなたのアイテムトレード一覧
-        edit: 取引を有効化
-        enable_flag: 有効な取引だけ表示
-      edit:
-        title: アイテムトレード編集
-        trade_deadline: 取引期限（今から何時間有効か）
   errors:
     messages:
       birthdate_cannot_be_in_the_future: "は正しい範囲で設定してください"

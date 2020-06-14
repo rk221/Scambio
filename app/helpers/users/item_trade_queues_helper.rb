@@ -1,0 +1,2 @@
+module Users::ItemTradeQueuesHelper
+end

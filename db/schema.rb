@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_27_113744) do
+ActiveRecord::Schema.define(version: 2020_06_08_122715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,20 +43,20 @@ ActiveRecord::Schema.define(version: 2020_05_27_113744) do
   end
 
   create_table "item_trade_details", force: :cascade do |t|
-    t.integer "buy_user_popuarity", default: 0, null: false
-    t.integer "sale_user_popuarity", default: 0, null: false
-    t.bigint "buy_user_id", null: false
-    t.bigint "item_trade_id", null: false
+    t.bigint "item_trade_queue_id", null: false
+    t.integer "buy_popuarity"
+    t.integer "sale_popuarity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["buy_user_id"], name: "index_item_trade_details_on_buy_user_id"
-    t.index ["item_trade_id"], name: "index_item_trade_details_on_item_trade_id"
+    t.index ["item_trade_queue_id"], name: "index_item_trade_details_on_item_trade_queue_id"
   end
 
   create_table "item_trade_queues", force: :cascade do |t|
+    t.boolean "enable_flag", default: true, null: false
+    t.boolean "establish_flag"
     t.bigint "item_trade_id", null: false
-    t.bigint "user_id", null: false
-    t.boolean "end_flag", default: true, null: false
+    t.bigint "user_id"
+    t.integer "lock_version", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["item_trade_id"], name: "index_item_trade_queues_on_item_trade_id"
@@ -74,7 +74,9 @@ ActiveRecord::Schema.define(version: 2020_05_27_113744) do
     t.bigint "sale_item_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "enable_item_trade_queue_id"
     t.index ["buy_item_id"], name: "index_item_trades_on_buy_item_id"
+    t.index ["enable_item_trade_queue_id"], name: "index_item_trades_on_enable_item_trade_queue_id"
     t.index ["game_id"], name: "index_item_trades_on_game_id"
     t.index ["sale_item_id"], name: "index_item_trades_on_sale_item_id"
     t.index ["user_id"], name: "index_item_trades_on_user_id"
@@ -154,11 +156,11 @@ ActiveRecord::Schema.define(version: 2020_05_27_113744) do
 
   add_foreign_key "item_genre_games", "games"
   add_foreign_key "item_genre_games", "item_genres"
-  add_foreign_key "item_trade_details", "item_trades"
-  add_foreign_key "item_trade_details", "users", column: "buy_user_id"
+  add_foreign_key "item_trade_details", "item_trade_queues"
   add_foreign_key "item_trade_queues", "item_trades"
   add_foreign_key "item_trade_queues", "users"
   add_foreign_key "item_trades", "games"
+  add_foreign_key "item_trades", "item_trade_queues", column: "enable_item_trade_queue_id"
   add_foreign_key "item_trades", "items", column: "buy_item_id"
   add_foreign_key "item_trades", "items", column: "sale_item_id"
   add_foreign_key "item_trades", "users"

@@ -1,0 +1,82 @@
+- breadcrumb :user_item_trade, @item_trade.id
+%h1.mb-5
+    = t '.title'
+
+
+%table.table.table-hover.table-bordered.text-nowrap
+    %tbody
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:game_title)
+            %td 
+                = @item_trade.game.title
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:buy_item_genre_id)
+            %td 
+                = @item_trade.buy_item.item_genre.name
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:buy_item_name)
+            %td 
+                = @item_trade.buy_item.name
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:buy_item_quantity)
+            %td 
+                = @item_trade.buy_item_quantity
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:sale_item_genre_id)
+            %td 
+                = @item_trade.sale_item.item_genre.name
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:sale_item_name)
+            %td 
+                = @item_trade.sale_item.name
+        %tr 
+            %td 
+                = ItemTrade.human_attribute_name(:sale_item_quantity)
+            %td 
+                = @item_trade.sale_item_quantity
+
+        - if @item_trade.trade_deadline != "ERROR" && @item_trade_queue.user_id.nil? # 取引有効 AND 期限有効 AND 購入されていない
+            %tr 
+                %td 
+                    = ItemTrade.human_attribute_name(:trade_deadline)
+                %td 
+                    = @item_trade.trade_deadline
+
+%h3.mb-3
+    = t('.now_state')
+- if  @item_trade_queue.item_trade_detail && @item_trade_queue.item_trade_detail.buy_popuarity # 自分が評価していて、相手が評価していない
+    %h5.mb-3
+        = t('.your_evaluate_wait')
+    - if @item_trade_queue.item_trade_detail.last_update_1_hour_passed? #自分が評価してから1時間経過
+        -#強制更新 強制停止
+        = link_to t('.forced_edit_link'), edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), data: {confirm: t('.forced_edit')}, class: 'btn btn-success mr-2'
+        = link_to t('.forced_destroy_link'), game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), method: :delete, data: {confirm: t('.forced_destroy')}, class: 'btn btn-danger'
+    - else  
+        = t('.1_hour_has_not_passed_yet')
+- elsif @item_trade_queue.establish_flag # true 取引が成立している場合
+    %h5.mb-3
+        = t('.state_during_trade')
+    -# 評価する
+    = link_to t('.edit_buy'), edit_buy_item_trade_detail_path(@item_trade_queue.item_trade_detail.id), class: 'btn btn-primary' 
+- elsif @item_trade_queue.establish_flag.nil? && @item_trade_queue.user_id # nil 取引の応答待ちの場合
+    %h5.mb-3
+        = t('.state_wait')
+    -# 承認 OR 拒否
+    = link_to t('.establish'), user_respond_user_item_trade_path(id: @item_trade.id, item_trade_queue: {id: @item_trade_queue.id, establish_flag: true, lock_version: @item_trade_queue.lock_version}), method: :post, class: 'btn btn-primary mr-2'
+    = link_to t('.not_establish'), user_respond_user_item_trade_path(id: @item_trade.id, item_trade_queue: {id: @item_trade_queue.id, establish_flag: false, lock_version: @item_trade_queue.lock_version}), method: :post, class: 'btn btn-danger'
+- else # 相手がいない場合
+    %h5.mb-3
+        = t('.state_for_sale')
+    -# 編集 OR 削除
+    = link_to t('link_to.edit'), edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), class: 'btn btn-success mr-2'
+    = link_to t('link_to.delete'), game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
+
+
+
+

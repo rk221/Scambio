@@ -1,9 +1,11 @@
 class ItemTradeDetail < ApplicationRecord
-    belongs_to :buy_user, class_name: "User", foreign_key: "buy_user_id"
-    belongs_to :item_trade
+    belongs_to :item_trade_queue
 
-    validates :buy_user_popuarity, presence: true, numericality: {only_integer: true}
-    validates :sale_user_popuarity, presence: true, numericality: {only_integer: true}
-    validates :buy_user_id, presence: true
-    validates :item_trade_id, presence: true
+    validates :buy_popuarity, inclusion: {in: [3, 0, -1]}, allow_nil: true
+    validates :sale_popuarity, inclusion: {in: [3, 0, -1]}, allow_nil: true
+    validates :item_trade_queue_id, presence: true
+
+    def last_update_1_hour_passed?
+        updated_at.since(1.hours) < Time.zone.now
+    end
 end
