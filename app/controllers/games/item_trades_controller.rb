@@ -1,4 +1,4 @@
-class ItemTradesController < ApplicationController
+class Games::ItemTradesController < ApplicationController
     include ItemTrades
 
     helper_method :page_redirect_params    

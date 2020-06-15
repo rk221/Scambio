@@ -46,19 +46,19 @@ ja:
         index:
             title: ゲーム一覧
             item_trades: アイテムトレード一覧
-    item_trades:
-        index:
-            title: アイテムトレード一覧
-            new_trade: 取引登録
-            buy_queue: 購入
-        before_new:
-            title: アイテムトレード登録ゲーム選択
-        new:
-            title: アイテムトレード登録
-            trade_deadline: 取引期限（今から何時間有効か）
-        edit:
-            title: アイテムトレード編集
-            trade_deadline: 取引期限（今から何時間有効か）
+        item_trades:
+            index:
+                title: アイテムトレード一覧
+                new_trade: 取引登録
+                buy_queue: 購入
+            before_new:
+                title: アイテムトレード登録ゲーム選択
+            new:
+                title: アイテムトレード登録
+                trade_deadline: 取引期限（今から何時間有効か）
+            edit:
+                title: アイテムトレード編集
+                trade_deadline: 取引期限（今から何時間有効か）
     item_trade_details:
         edit_buy:
             title: アイテムトレード評価
