@@ -11,12 +11,12 @@
                 = @item_trade_queue.item_trade.user.nickname
         %tr 
             %td 
-                = ItemTrade.human_attribute_name(:game_title)
+                = Game.human_attribute_name(:title)
             %td 
                 = @item_trade_queue.item_trade.game.title
         %tr 
             %td 
-                = ItemTrade.human_attribute_name(:buy_item_genre_id)
+                = ItemTrade.human_attribute_name(:buy_item_genre_name)
             %td 
                 = @item_trade_queue.item_trade.buy_item.item_genre.name
         %tr 
@@ -31,7 +31,7 @@
                 = @item_trade_queue.item_trade.buy_item_quantity
         %tr 
             %td 
-                = ItemTrade.human_attribute_name(:sale_item_genre_id)
+                = ItemTrade.human_attribute_name(:sale_item_genre_name)
             %td 
                 = @item_trade_queue.item_trade.sale_item.item_genre.name
         %tr 
