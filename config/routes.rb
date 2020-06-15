@@ -30,7 +30,9 @@ Rails.application.routes.draw do
   get '/games', to: 'games#index'
 
   resources :games, only: [:index] do
-    resources :item_trades
+    scope module: :games do
+      resources :item_trades
+    end
   end
 
   get '/item_trade_details/:id/edit_buy' => 'item_trade_details#edit_buy', as: 'edit_buy_item_trade_detail'
