@@ -9,7 +9,7 @@
     = f.hidden_field :game_id
 
     .form-group
-        = f.label :buy_item_genre_id
+        = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_name)
         = f.select :buy_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {}, class: 'form-control'
     .form-group
         = f.label :buy_item_name
@@ -19,7 +19,7 @@
         = f.number_field :buy_item_quantity, min: 1, max: 200000000, class: 'form-control'
 
     .form-group
-        = f.label :sale_item_genre_id
+        = f.label :sale_item_genre_id, ItemTrade.human_attribute_name(:sale_item_genre_name)
         = f.select :sale_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {}, class: 'form-control'
     .form-group
         = f.label :sale_item_name

@@ -15,7 +15,7 @@
             %tbody
                 %tr 
                     %td
-                        = f.label :buy_item_genre_id
+                        = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_name)
                     %td
                         = @item_trade.buy_item.item_genre.name
                 %tr 
@@ -34,7 +34,7 @@
             %tbody
                 %tr 
                     %td
-                        = f.label :sale_item_genre_id
+                        = f.label :sale_item_genre_id, ItemTrade.human_attribute_name(:sale_item_genre_name)
                     %td
                         = @item_trade.sale_item.item_genre.name
                 %tr 

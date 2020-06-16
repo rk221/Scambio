@@ -140,7 +140,6 @@ ja:
                 user_id: ユーザID
                 user_nickname: ユーザ名
                 game_id: ゲームID
-                game_title: ゲームタイトル
                 buy_item_id: 購入アイテムID
                 buy_item_name: 購入アイテム名
                 buy_item_quantity: 購入数量
@@ -148,8 +147,10 @@ ja:
                 sale_item_name: 売却アイテム名
                 sale_item_quantity: 売却数量
                 trade_deadline: 取引期限
-                buy_item_genre_id: 購入アイテムジャンル
-                sale_item_genre_id: 売却アイテムジャンル
+                buy_item_genre_id: 購入アイテムジャンルID
+                sale_item_genre_id: 売却アイテムジャンルID
+                buy_item_genre_name: 購入アイテムジャンル名
+                sale_item_genre_name: 売却アイテムジャンル名
                 enable_flag: 有効フラグ
             item_trade_queue:
                 user_id: ユーザID

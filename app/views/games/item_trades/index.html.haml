@@ -8,14 +8,14 @@
 .mb-5
     = search_form_for @q, url: game_item_trades_path do |f|
         .form-group
-            = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_id)
+            = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_name)
             = f.select :buy_item_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {selected: params[:q][:buy_item_item_genre_id], include_blank: '選択なし'}, class: 'form-control'
         .form-group
             = f.label :buy_item_name, ItemTrade.human_attribute_name(:buy_item_name)
             = f.search_field :buy_item_name, value: params[:q][:buy_item_name], class: 'form-control'
 
         .form-group
-            = f.label :sale_item_genre_id, ItemTrade.human_attribute_name(:sale_item_genre_id)
+            = f.label :sale_item_genre_id, ItemTrade.human_attribute_name(:sale_item_genre_name)
             = f.select :sale_item_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {selected: params[:q][:sale_item_item_genre_id], include_blank: '選択なし'}, class: 'form-control'
         .form-group
             = f.label :sale_item_name, ItemTrade.human_attribute_name(:sale_item_name)
@@ -26,55 +26,56 @@
         .form-group
             = f.select(:sorts, {'取引開始日時の近い順': 'updated_at desc', '購入数量の少ない順': 'buy_item_quantity asc'},{selected: params[:q][:sorts]}, class: 'select-sort form-control', 'v-on:change': 'onSelectedChange($event)')
         
-- @item_trades.each do |item_trade|
-    %table.table.table-hover.table-bordered.text-nowrap
-        %tbody
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:user_nickname)
-                %td 
-                    = item_trade.user.nickname
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_genre_id)
-                %td 
-                    = item_trade.buy_item.item_genre.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_name)
-                %td 
-                    = item_trade.buy_item.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_quantity)
-                %td 
-                    = item_trade.buy_item_quantity
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_genre_id)
-                %td 
-                    = item_trade.sale_item.item_genre.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_name)
-                %td 
-                    = item_trade.sale_item.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_quantity)
-                %td 
-                    = item_trade.sale_item_quantity
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:trade_deadline)
-                %td 
-                    = item_trade.trade_deadline
-            %tr
-                %td{colspan: 2}
-                    - if current_user.id == item_trade.user_id
-                        = link_to t('link_to.show'), user_user_item_trade_path(id: item_trade.id, user_id: current_user.id), class: 'btn btn-outline-dark'
-                    - else
-                        = link_to t('.buy_queue'), user_buy_item_trade_queue_path(id: item_trade.enable_item_trade_queue.id, user_id: current_user.id), method: :post, class: 'btn btn-primary'
+.item_trades
+    - @item_trades.each do |item_trade|
+        %table.table.table-hover.table-bordered.text-nowrap
+            %tbody
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:user_nickname)
+                    %td 
+                        = item_trade.user.nickname
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:buy_item_genre_name)
+                    %td 
+                        = item_trade.buy_item.item_genre.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:buy_item_name)
+                    %td 
+                        = item_trade.buy_item.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:buy_item_quantity)
+                    %td 
+                        = item_trade.buy_item_quantity
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:sale_item_genre_name)
+                    %td 
+                        = item_trade.sale_item.item_genre.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:sale_item_name)
+                    %td 
+                        = item_trade.sale_item.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:sale_item_quantity)
+                    %td 
+                        = item_trade.sale_item_quantity
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:trade_deadline)
+                    %td 
+                        = item_trade.trade_deadline
+                %tr
+                    %td{colspan: 2}
+                        - if current_user.id == item_trade.user_id
+                            = link_to t('link_to.show'), user_user_item_trade_path(id: item_trade.id, user_id: current_user.id), class: 'btn btn-outline-dark'
+                        - else
+                            = link_to t('.buy_queue'), user_buy_item_trade_queue_path(id: item_trade.enable_item_trade_queue.id, user_id: current_user.id), method: :post, class: 'btn btn-primary'
 
 %nav{"aria-label": "ページネーション"}
     %ul.pagination
