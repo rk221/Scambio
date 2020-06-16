@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_08_122715) do
+ActiveRecord::Schema.define(version: 2020_06_16_041537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 2020_06_08_122715) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_item_genres_on_name", unique: true
+  end
+
+  create_table "item_trade_chats", force: :cascade do |t|
+    t.bigint "item_trade_detail_id", null: false
+    t.boolean "sender_is_seller", null: false
+    t.string "message", limit: 200, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_trade_detail_id"], name: "index_item_trade_chats_on_item_trade_detail_id"
   end
 
   create_table "item_trade_details", force: :cascade do |t|
@@ -156,6 +165,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_122715) do
 
   add_foreign_key "item_genre_games", "games"
   add_foreign_key "item_genre_games", "item_genres"
+  add_foreign_key "item_trade_chats", "item_trade_details"
   add_foreign_key "item_trade_details", "item_trade_queues"
   add_foreign_key "item_trade_queues", "item_trades"
   add_foreign_key "item_trade_queues", "users"
