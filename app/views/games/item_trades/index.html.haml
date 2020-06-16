@@ -26,55 +26,56 @@
         .form-group
             = f.select(:sorts, {'取引開始日時の近い順': 'updated_at desc', '購入数量の少ない順': 'buy_item_quantity asc'},{selected: params[:q][:sorts]}, class: 'select-sort form-control', 'v-on:change': 'onSelectedChange($event)')
         
-- @item_trades.each do |item_trade|
-    %table.table.table-hover.table-bordered.text-nowrap
-        %tbody
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:user_nickname)
-                %td 
-                    = item_trade.user.nickname
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_genre_name)
-                %td 
-                    = item_trade.buy_item.item_genre.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_name)
-                %td 
-                    = item_trade.buy_item.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_quantity)
-                %td 
-                    = item_trade.buy_item_quantity
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_genre_name)
-                %td 
-                    = item_trade.sale_item.item_genre.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_name)
-                %td 
-                    = item_trade.sale_item.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_quantity)
-                %td 
-                    = item_trade.sale_item_quantity
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:trade_deadline)
-                %td 
-                    = item_trade.trade_deadline
-            %tr
-                %td{colspan: 2}
-                    - if current_user.id == item_trade.user_id
-                        = link_to t('link_to.show'), user_user_item_trade_path(id: item_trade.id, user_id: current_user.id), class: 'btn btn-outline-dark'
-                    - else
-                        = link_to t('.buy_queue'), user_buy_item_trade_queue_path(id: item_trade.enable_item_trade_queue.id, user_id: current_user.id), method: :post, class: 'btn btn-primary'
+.item_trades
+    - @item_trades.each do |item_trade|
+        %table.table.table-hover.table-bordered.text-nowrap
+            %tbody
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:user_nickname)
+                    %td 
+                        = item_trade.user.nickname
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:buy_item_genre_name)
+                    %td 
+                        = item_trade.buy_item.item_genre.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:buy_item_name)
+                    %td 
+                        = item_trade.buy_item.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:buy_item_quantity)
+                    %td 
+                        = item_trade.buy_item_quantity
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:sale_item_genre_name)
+                    %td 
+                        = item_trade.sale_item.item_genre.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:sale_item_name)
+                    %td 
+                        = item_trade.sale_item.name
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:sale_item_quantity)
+                    %td 
+                        = item_trade.sale_item_quantity
+                %tr 
+                    %td 
+                        = ItemTrade.human_attribute_name(:trade_deadline)
+                    %td 
+                        = item_trade.trade_deadline
+                %tr
+                    %td{colspan: 2}
+                        - if current_user.id == item_trade.user_id
+                            = link_to t('link_to.show'), user_user_item_trade_path(id: item_trade.id, user_id: current_user.id), class: 'btn btn-outline-dark'
+                        - else
+                            = link_to t('.buy_queue'), user_buy_item_trade_queue_path(id: item_trade.enable_item_trade_queue.id, user_id: current_user.id), method: :post, class: 'btn btn-primary'
 
 %nav{"aria-label": "ページネーション"}
     %ul.pagination

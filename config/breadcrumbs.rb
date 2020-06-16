@@ -101,17 +101,17 @@ crumb :games do
 end
 
 crumb :game_item_trades do |game_id|
-  link t('item_trades.index.title'), game_item_trades_path(game_id: game_id)
+  link t('games.item_trades.index.title'), game_item_trades_path(game_id: game_id)
   parent :games
 end
 
 crumb :new_game_item_trade do |game_id|
-  link t('item_trades.new.title'), new_game_item_trade_path(game_id: game_id)
+  link t('games.item_trades.new.title'), new_game_item_trade_path(game_id: game_id)
   parent :game_item_trades, game_id
 end
 
 crumb :edit_game_item_trade do |item_trade|
-  link t('item_trades.edit.title'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id)
+  link t('games.item_trades.edit.title'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id)
   parent :game_item_trades, item_trade.game_id
 end
 
