@@ -1,21 +1,9 @@
 require 'rails_helper'
+require 'support/user_shared_context'
 
 RSpec.describe Game, type: :system do
     let(:admin_user){FactoryBot.create(:admin_user)}
     let(:general_user){FactoryBot.create(:general_user)}
-
-    shared_context 'ユーザがログイン状態になる' do
-        before do
-            visit new_user_session_path
-            fill_in 'メールアドレス', with: login_user.email
-            fill_in 'パスワード', with: login_user.password
-            click_button 'ログイン'
-        end
-
-        it '「ログインしました。」とフラッシュメッセージが表示されている' do
-            expect(page).to have_content 'ログインしました。';
-        end
-    end
 
     describe 'ゲームCRUD' do 
         describe '管理ユーザでログインしている場合' do
