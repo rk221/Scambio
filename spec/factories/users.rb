@@ -34,4 +34,40 @@ FactoryBot.define do
         confirmed_at {Time.zone.now}
         admin_flag{false}
     end
+
+    factory :sale_user, class: User do
+        firstname {'売却'}
+        lastname {'太郎'}
+        nickname {'SaleMan'}
+        birthdate {20.year.ago}
+        email { 'sale@example.com' }
+        password { 'password' }
+        password_confirmation { 'password'}
+        confirmed_at {Time.zone.now}
+        admin_flag{false}
+    end
+
+    factory :buy_user, class: User do
+        firstname {'購入'}
+        lastname {'太郎'}
+        nickname {'BuyMan'}
+        birthdate {20.year.ago}
+        email { 'buy@example.com' }
+        password { 'password' }
+        password_confirmation { 'password'}
+        confirmed_at {Time.zone.now}
+        admin_flag{false}
+    end
+
+    factory :default_login_user, class: User do
+        firstname {'標準'}
+        lastname {'三郎'}
+        nickname {'DefaultMan'}
+        birthdate {20.year.ago}
+        email { 'default@example.com' }
+        password { 'password' }
+        password_confirmation { 'password'}
+        confirmed_at {Time.zone.now}
+        admin_flag{true}
+    end
 end
