@@ -40,6 +40,12 @@ Rails.application.routes.draw do
   patch '/item_trade_details/:id/edit_buy' => 'item_trade_details#buy_evaluate', as: 'buy_evaluate_item_trade_detail'
   patch '/item_trade_details/:id/edit_sale' => 'item_trade_details#sale_evaluate', as: 'sale_evaluate_item_trade_detail'
 
+  resources :item_trade_details, only: [] do
+    scope module: :item_trade_details do
+      resources :item_trade_chats, only: [:create]
+    end
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'users#show'
 end
