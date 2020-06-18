@@ -1,0 +1,2 @@
+module ItemTradeDetails::ItemTradeChatsHelper
+end

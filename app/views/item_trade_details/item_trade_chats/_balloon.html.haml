@@ -1,0 +1,14 @@
+-# 吹き出しを追加する
+.balloon
+    - if item_trade_chat.sender_is_seller
+        .seller
+            .created_at
+                = "#{item_trade_chat.created_at}"
+            .message
+                = simple_format(h item_trade_chat.message)
+    - else
+        .buyer
+            .message
+                = simple_format(h item_trade_chat.message)
+            .created_at
+                = "#{item_trade_chat.created_at}"

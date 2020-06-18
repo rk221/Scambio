@@ -24,6 +24,11 @@ class Users::UserItemTradesController < UsersController
         @item_trade = ItemTrade.find(params[:id]).decorate
         return redirect_to root_path, warning: t('flash.error') unless confirm_item_trade(@item_trade)
         @item_trade_queue = @item_trade.enable_item_trade_queue
+
+        if @item_trade_queue.item_trade_detail
+            @item_trade_chat = ItemTradeChat.new(item_trade_detail_id: @item_trade_queue.item_trade_detail.id, sender_is_seller: true) 
+            @item_trade_chats = @item_trade_queue.item_trade_detail.item_trade_chats.order(created_at: :asc).decorate
+        end
     end
 
     def respond # 購入応答 POST で 売却可否を受け取る
