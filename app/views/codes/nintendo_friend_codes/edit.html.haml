@@ -2,11 +2,4 @@
 %h1.mb-5
     = t('.title')
 
-= form_with(model: [@nintendo_friend_code], url: codes_nintendo_friend_code_path, local: true) do |f|
-    = render 'shared/error_messages', model: f.object
-    .form-group
-        = f.label :friend_code
-        = f.text_field :friend_code, class: 'form-control'
-
-    .form-group
-        = f.submit nil, class:'btn btn-primary'
+= render partial: 'codes/nintendo_friend_codes/shared/form', locals: {nintendo_friend_code: @nintendo_friend_code, form_path: codes_nintendo_friend_code_path}

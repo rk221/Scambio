@@ -52,11 +52,13 @@ RSpec.describe ItemTradeChat, type: :system do
                             context '売却ユーザでチャットを送信する' do
                                 before do
                                     fill_in 'item_trade_chat_message',	with: "テストメッセージ" 
+                                    sleep 1
                                     click_button '送信'
                                 end
 
                                 it 'チャットが反映されている' do
-                                    expect(find('#item_trade_chat')).to have_content 'テストメッセージ'
+                                    sleep 2
+                                    expect(page).to have_content 'テストメッセージ'
                                 end
 
                                 context '購入ユーザでログインしている' do
@@ -73,17 +75,21 @@ RSpec.describe ItemTradeChat, type: :system do
                                         end
 
                                         it '売却ユーザで送信したチャットが表示されている' do
-                                            expect(find('#item_trade_chat')).to have_content 'テストメッセージ'
+                                            sleep 2
+                                            expect(page).to have_content 'テストメッセージ'
                                         end
 
                                         context '購入ユーザでチャットを送信する' do
                                             before do
                                                 fill_in 'item_trade_chat_message',	with: "購入テストメッセージ" 
+                                                sleep 1
                                                 click_button '送信'
+                                                sleep 1
                                             end
 
                                             it 'チャットが反映されている' do
-                                                expect(find('#item_trade_chat')).to have_content '購入テストメッセージ'
+                                                sleep 2
+                                                expect(page).to have_content '購入テストメッセージ'
                                             end
                                         end
                                     end

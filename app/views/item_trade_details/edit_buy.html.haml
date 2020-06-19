@@ -2,20 +2,4 @@
 %h1.mb-5
     = t('.title')
 
-= form_with(model: [@item_trade_detail], url: edit_buy_item_trade_detail_path, local: true) do |f|
-    = render 'shared/error_messages', model: f.object
-
-    .form-group.btn-group.btn-group-toggle{"data-toggle": 'buttons'}
-        %label.btn.btn-outline-success{"for": 'good'}
-            = f.radio_button :buy_popuarity, 3, id: "good", style: "display:none;"
-            = t('.good')
-
-        %label.btn.btn-outline-info.active{"for": 'normal'}
-            =f.radio_button :buy_popuarity, 0, checked: true, id: "normal", style: "display:none;"
-            = t('.normal')
-
-        %label.btn.btn-outline-warning{"for": 'bad'}
-            = f.radio_button :buy_popuarity, -1, id: "bad", style: "display:none;"
-            = t('.bad')
-    .form-group
-        = f.submit t('helpers.submit.send'), class:'btn btn-primary'
+= render partial: 'item_trade_details/shared/edit', locals: {item_trade_detail: @item_trade_detail, edit_path: edit_buy_item_trade_detail_path, label: :buy_popuarity}

@@ -1,0 +1,8 @@
+= form_with(model: [play_station_network_id], url: form_path, local: true) do |f|
+    = render 'shared/error_messages', model: f.object
+    .form-group
+        = f.label :psn_id
+        = f.text_field :psn_id, class: 'form-control'
+
+    .form-group
+        = f.submit nil, class:'btn btn-primary'

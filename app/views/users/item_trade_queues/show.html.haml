@@ -2,49 +2,8 @@
 %h1.mb-5
     = t '.title'
 
-.item_trades
-    %table.table.table-hover.table-bordered.text-nowrap
-        %tbody
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:user_nickname)
-                %td 
-                    = @item_trade_queue.item_trade.user.nickname
-            %tr 
-                %td 
-                    = Game.human_attribute_name(:title)
-                %td 
-                    = @item_trade_queue.item_trade.game.title
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_genre_name)
-                %td 
-                    = @item_trade_queue.item_trade.buy_item.item_genre.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_name)
-                %td 
-                    = @item_trade_queue.item_trade.buy_item.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:buy_item_quantity)
-                %td 
-                    = @item_trade_queue.item_trade.buy_item_quantity
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_genre_name)
-                %td 
-                    = @item_trade_queue.item_trade.sale_item.item_genre.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_name)
-                %td 
-                    = @item_trade_queue.item_trade.sale_item.name
-            %tr 
-                %td 
-                    = ItemTrade.human_attribute_name(:sale_item_quantity)
-                %td 
-                    = @item_trade_queue.item_trade.sale_item_quantity
+.container.mb-5
+    = render(partial: 'users/shared/item_trade_show', locals: {item_trade: @item_trade_queue.item_trade, item_trade_queue: @item_trade_queue}) 
 
 -# 取引の状態や、操作を行う
 .container.mb-5
@@ -67,10 +26,4 @@
 -# チャット機能
 - if @item_trade_queue.item_trade_detail
     .container
-        %h5.mb-3
-            = t('.chat')
-        #item_trade_chat.overflow-auto{"data-item_trade_detail_id": @item_trade_queue.item_trade_detail.id}
-            - @item_trade_chats.each do |item_trade_chat|
-                = render(partial: 'item_trade_details/item_trade_chats/balloon', locals: {item_trade_chat: item_trade_chat})
-
-        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat}) 
+        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat, item_trade_chats: @item_trade_chats, item_trade_queue: @item_trade_queue}) 

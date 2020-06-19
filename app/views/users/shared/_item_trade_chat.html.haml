@@ -1,3 +1,9 @@
+-# チャット機能
+%h5.mb-3
+    = t('.chat')
+#item_trade_chat.overflow-auto{"data-item_trade_detail_id": item_trade_queue.item_trade_detail.id}
+    = render(partial: 'item_trade_details/item_trade_chats/balloon', collection: item_trade_chats, as: 'item_trade_chat')
+
 = form_with model: item_trade_chat, url: item_trade_detail_item_trade_chats_path(item_trade_detail_id: item_trade_chat.item_trade_detail_id) do |f|
     = f.hidden_field :item_trade_detail_id
     = f.hidden_field :sender_is_seller

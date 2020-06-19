@@ -2,14 +2,4 @@
 %h1.mb-5
     = t('.title')
 
-= form_with(model: [@item_genre], url: admin_item_genres_path, local: true) do |f|
-    = render 'shared/error_messages', model: f.object
-    .form-group
-        = f.label :name
-        = f.text_field :name, class: 'form-control'
-    .form-group
-        = f.label :default_unit_name
-        = f.text_field :default_unit_name, class: 'form-control'
-
-    .form-group
-        = f.submit nil, class:'btn btn-primary'
+= render partial: '/admin/item_genres/shared/form', locals: {item_genre: @item_genre, form_path: admin_item_genres_path}
