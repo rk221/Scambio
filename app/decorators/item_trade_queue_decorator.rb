@@ -1,4 +1,4 @@
-class Codes::NintendoFriendCodeDecorator < Draper::Decorator
+class ItemTradeQueueDecorator < Draper::Decorator
   delegate_all
 
   # Define presentation-specific methods here. Helpers are accessed through
@@ -9,10 +9,5 @@ class Codes::NintendoFriendCodeDecorator < Draper::Decorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-
-  def friend_code 
-    split_codes = object.friend_code.scan(/.{1,#{4}}/)
-    "#{split_codes[0]}-#{split_codes[1]}-#{split_codes[2]}"
-  end
-
+  decorates_association :item_trade
 end

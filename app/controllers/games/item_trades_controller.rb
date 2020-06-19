@@ -14,13 +14,9 @@ class Games::ItemTradesController < ApplicationController
         # ページリンク用オブジェクト
         @hash_pages = hash_pages((@item_trades.count() + NUMBER_OF_OUTPUT_LINES - 1) / NUMBER_OF_OUTPUT_LINES)
         # デコレータ　ページ(1 <= :page <=page_count)
-        @item_trades = ItemTradeDecorator.decorate_collection(@item_trades.limit(NUMBER_OF_OUTPUT_LINES).offset((page - 1) * NUMBER_OF_OUTPUT_LINES).includes(:enable_item_trade_queue))
+        @item_trades = @item_trades.limit(NUMBER_OF_OUTPUT_LINES).offset((page - 1) * NUMBER_OF_OUTPUT_LINES).includes(:user, {buy_item: :item_genre}, {sale_item: :item_genre}, :enable_item_trade_queue).decorate
         # ジャンル一覧を取得
         @selectable_item_genres = selectable_item_genres(params[:game_id])
-    end
-
-    def show 
-
     end
 
     def new 
