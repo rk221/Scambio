@@ -60,16 +60,15 @@ ja:
                 title: アイテムトレード編集
                 trade_deadline: 取引期限（今から何時間有効か）
     item_trade_details:
+        shared:
+            edit:
+                good: 高評価
+                normal: 普通
+                bad: 低評価
         edit_buy:
             title: アイテムトレード評価
-            good: 高評価
-            normal: 普通
-            bad: 低評価
         edit_sale:
             title: アイテムトレード評価
-            good: 高評価
-            normal: 普通
-            bad: 低評価
         buy_evaluate:
             success_message: 取引を終了しました。
         sale_evaluate:
@@ -103,7 +102,6 @@ ja:
                 forced_destroy_link: 強制削除
                 forced_edit: 相手の評価を待たずに更新しますがよろしいですか？
                 forced_destroy: 相手の評価を待たずに削除しますがよろしいですか？
-                chat: チャット
             edit:
                 title: アイテムトレード編集
                 trade_deadline: 取引期限（今から何時間有効か）
@@ -121,10 +119,12 @@ ja:
                 your_evaluate_wait: 相手の評価待ち
                 during_trade: 取引中
                 edit_sale: 取引を完了
-                chat: チャット
             buy:
                 another_user_already_exists: 既に他のユーザが購入しています。
                 success_message: 登録しました。
+        shared:
+            item_trade_chat:
+                chat: チャット
                 
     activerecord:
         attributes:

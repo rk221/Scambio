@@ -2,12 +2,4 @@
 %h1.mb-5
     = t('.title')
 
-= form_with(model: [@play_station_network_id], url: codes_play_station_network_ids_path, local: true) do |f|
-    = render 'shared/error_messages', model: f.object
-    .form-group
-        = f.label :psn_id
-        = f.text_field :psn_id, class: 'form-control'
-    
-
-    .form-group
-        = f.submit nil, class:'btn btn-primary'
+= render partial: 'codes/play_station_network_ids/shared/form', locals: {play_station_network_id: @play_station_network_id, form_path: codes_play_station_network_ids_path}
