@@ -1,6 +1,6 @@
 class Admin::ItemGenreGamesController < ApplicationController
     def index 
-        @item_genre_games = ItemGenreGame.where(game_id: params[:game_id]).order(:id)
+        @item_genre_games = ItemGenreGame.where(game_id: params[:game_id]).includes(:item_genre).order(:id)
     end
 
     def enable

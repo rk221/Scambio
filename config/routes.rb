@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   resources :games, only: [:index] do
     scope module: :games do
-      resources :item_trades
+      resources :item_trades, except: [:show]
     end
   end
 

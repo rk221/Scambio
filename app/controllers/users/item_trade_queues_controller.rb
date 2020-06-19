@@ -2,10 +2,11 @@ class Users::ItemTradeQueuesController < UsersController
     before_action :user_auth
     
     def index
-        @item_trade_queues = Users::ItemTradeQueueDecorator.decorate_collection(
-            ItemTradeQueue.exist_user_enabled.where(item_trade_queues: {user_id: current_user.id})
+        @item_trade_queues = ItemTradeQueue
+            .exist_user_enabled
+            .where(item_trade_queues: {user_id: current_user.id})
             .includes(:item_trade, :item_trade_detail)
-            .order("item_trade_queues.updated_at DESC"))
+            .order("item_trade_queues.updated_at DESC").decorate
     end
 
     def show 
