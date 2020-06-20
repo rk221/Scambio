@@ -8,6 +8,6 @@ class ItemTradeDetails::ItemTradeChatsController < ApplicationController
 
     private
     def item_trade_chat_params
-        params.require(:item_trade_chat).permit(:id, :item_trade_detail_id, :sender_is_seller, :message)
+        params.require(:item_trade_chat).permit(:id, :item_trade_detail_id, :sender_is_seller, :message, :image)
     end
 end

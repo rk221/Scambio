@@ -27,18 +27,6 @@ RSpec.describe ItemTradeChat, type: :model do
     expect(item_trade_chat.errors[:item_trade_detail_id]).to include("を入力してください")
   end
 
-  it "メッセージがない場合、無効である" do
-    item_trade_chat = FactoryBot.build(:item_trade_chat, sender_is_seller: true, item_trade_detail_id: item_trade_detail.id, message: nil)
-    item_trade_chat.valid?
-    expect(item_trade_chat.errors[:message]).to include("を入力してください")
-  end
-
-  it "メッセージが0文字の場合、無効である" do
-    item_trade_chat = FactoryBot.build(:item_trade_chat, sender_is_seller: true, item_trade_detail_id: item_trade_detail.id, message: "")
-    item_trade_chat.valid?
-    expect(item_trade_chat.errors[:message]).to include("を入力してください")
-  end
-
   it "メッセージが201文字以上の場合、無効である" do
     item_trade_chat = FactoryBot.build(:item_trade_chat, sender_is_seller: true, item_trade_detail_id: item_trade_detail.id, message: "a" * 201)
     item_trade_chat.valid?

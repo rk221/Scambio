@@ -5,10 +5,16 @@
             .created_at
                 = "#{item_trade_chat.created_at}"
             .message
-                = simple_format(h item_trade_chat.message)
+                - if item_trade_chat.image.present? # Image が存在する場合
+                    = image_tag item_trade_chat.image_url, class: 'chat_image'
+                - else
+                    = simple_format(h item_trade_chat.message)
     - else
         .buyer
             .message
-                = simple_format(h item_trade_chat.message)
+                - if item_trade_chat.image.present? # Image が存在する場合
+                    = image_tag item_trade_chat.image_url, class: 'chat_image'
+                - else
+                    = simple_format(h item_trade_chat.message)
             .created_at
                 = "#{item_trade_chat.created_at}"

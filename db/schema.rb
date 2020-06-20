@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_16_041537) do
+ActiveRecord::Schema.define(version: 2020_06_20_030036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,11 +43,12 @@ ActiveRecord::Schema.define(version: 2020_06_16_041537) do
   end
 
   create_table "item_trade_chats", force: :cascade do |t|
-    t.bigint "item_trade_detail_id", null: false
+    t.bigint "item_trade_detail_id"
     t.boolean "sender_is_seller", null: false
     t.string "message", limit: 200, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "image"
     t.index ["item_trade_detail_id"], name: "index_item_trade_chats_on_item_trade_detail_id"
   end
 

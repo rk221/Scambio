@@ -125,6 +125,7 @@ ja:
         shared:
             item_trade_chat:
                 chat: チャット
+                image_upload: 画像をアップロード
                 
     activerecord:
         attributes:
@@ -158,6 +159,9 @@ ja:
                 user_id: ユーザID
                 item_trade_id: アイテムトレードID
                 end_flag: 終了フラグ
+            item_trade_chat:
+                message: メッセージ
+                image: 画像
             user_game_rank:
                 game_id: ゲームID
                 rank: ランク
