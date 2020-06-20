@@ -1,7 +1,7 @@
 class CreateItemTradeChats < ActiveRecord::Migration[6.0]
   def change
     create_table :item_trade_chats do |t|
-      t.references :item_trade_detail, foreign_key: true, null: false
+      t.references :item_trade_detail, foreign_key: true, null: true
       t.boolean :sender_is_seller, null: false
       t.string :message, null: false, limit: 200
 

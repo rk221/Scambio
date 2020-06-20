@@ -6,7 +6,6 @@ window.onload = function(){
     return;
   }
 
-
   window.chatScrollBottom = () => { // functnion(){} と同義
     window.itemTradeChat.scroll(0, itemTradeChat.scrollHeight);
   };
@@ -27,15 +26,21 @@ window.onload = function(){
       // Called when there's incoming data on the websocket for this channel
       //チャットの最後にメッセージを加える
       itemTradeChat.insertAdjacentHTML('beforeend', data['message'])
+
       //スクロールを一番下に
       window.chatScrollBottom();
+
+      if(window.clickFormId == 'item_trade_chat_message_form'){// クリックされたIDがメッセージのフォームの場合
+        window.itemTradeMessage.value = ''; // メッセージをクリアする
+        window.clickFormId = ''; // フォームID
+      }
     }
   });
 
   // チャットの入力フォーム
   window.itemTradeMessage = document.getElementById('item_trade_chat_message');
   // 送信ボタン
-  const balloonButton = document.getElementById('balloon-button');
+  const balloonButton = document.getElementById('item_trade_chat_message_button');
 
   // フォームの最大行数は10とする
   const maxLineCount = 10;
