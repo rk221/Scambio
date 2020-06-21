@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_20_030036) do
+ActiveRecord::Schema.define(version: 2020_06_21_042018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,15 @@ ActiveRecord::Schema.define(version: 2020_06_20_030036) do
     t.index ["user_id"], name: "index_user_game_ranks_on_user_id"
   end
 
+  create_table "user_message_posts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "message", null: false
+    t.boolean "already_read_flag", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_message_posts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -181,4 +190,5 @@ ActiveRecord::Schema.define(version: 2020_06_20_030036) do
   add_foreign_key "play_station_network_ids", "users"
   add_foreign_key "user_game_ranks", "games"
   add_foreign_key "user_game_ranks", "users"
+  add_foreign_key "user_message_posts", "users"
 end
