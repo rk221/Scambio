@@ -13,4 +13,7 @@ class UserDecorator < Draper::Decorator
       "#{lastname} #{firstname}"
   end
 
+  decorates_association :play_station_network_id
+  decorates_association :nintendo_friend_code
+
 end

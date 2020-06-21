@@ -13,6 +13,17 @@ new Vue({
 });
 
 new Vue({
+    el: '#item_trade_chat_code_form',
+    data: {
+    },
+    methods:{
+        onChange(e){
+            document.getElementById('item_trade_chat_code_form_submit').click()// 画像を送信
+        }
+    }
+});
+
+new Vue({
     el: '#item_trade_chat_message_form',
     data: {
     },

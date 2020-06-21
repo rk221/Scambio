@@ -126,6 +126,7 @@ ja:
             item_trade_chat:
                 chat: チャット
                 image_upload: 画像をアップロード
+                send_code: コード送信
                 
     activerecord:
         attributes:
@@ -136,7 +137,7 @@ ja:
                 name:  アイテムジャンル名
                 default_unit_name: デフォルトの単位名
             nintendo_friend_code: 
-                friend_code: フレンドコード
+                friend_code: 任天堂フレンドコード
             play_station_network_id:
                 psn_id: PSN_ID
             item_trade:
