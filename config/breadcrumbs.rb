@@ -11,6 +11,16 @@ crumb :edit_user do
   parent :mypage
 end
 
+crumb :user_message_posts do
+  link t('users.user_message_posts.index.title'), user_user_message_posts_path(current_user)
+  parent :mypage
+end
+
+crumb :user_message_post do |user_message_post_id|
+  link t('users.user_message_posts.show.title'), user_user_message_post_path(id: user_message_post_id, user_id: current_user.id)
+  parent :mypage
+end
+
 crumb :user_item_trades do
   link t('users.user_item_trades.index.title'), user_user_item_trades_path(current_user)
   parent :mypage

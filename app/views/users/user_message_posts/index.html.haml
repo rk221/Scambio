@@ -1,0 +1,32 @@
+- breadcrumb :user_message_posts
+%h1.mb-5
+    = t '.title'
+
+%table.table.table-hover.table-bordered.text-nowrap
+    %thead
+        %th 
+            = UserMessagePost.human_attribute_name(:subject)
+        %th 
+            = UserMessagePost.human_attribute_name(:created_at)
+        %th 
+            = ""
+    %tbody
+        - @user_message_posts.each do |user_message_post|
+            - if user_message_post.already_read_flag
+                %tr{bgcolor: '#CCCCCC', "data-user-message-post-id": user_message_post.id}
+                    %td
+                        = user_message_post.subject
+                    %td
+                        = user_message_post.created_at
+                    %td 
+                        -# 後々リンク変更
+                        = link_to t('link_to.show'), user_user_message_post_path(id: user_message_post.id, user_id: current_user.id)
+            - else 
+                %tr{"data-user-message-post-id": user_message_post.id}
+                    %td
+                        = user_message_post.subject
+                    %td
+                        = user_message_post.created_at
+                    %td 
+                        -# 後々リンク変更
+                        = link_to t('link_to.show'), user_user_message_post_path(id: user_message_post.id, user_id: current_user.id)

@@ -45,8 +45,7 @@ class Users::UserItemTradesController < UsersController
                 UserMessagePost.create_message_approve!(@item_trade_queue)
 
                 # Detailsを生成
-                item_trade_detail = ItemTradeDetail.new(item_trade_queue_id: @item_trade_queue.id)
-                item_trade_detail.save!
+                ItemTradeDetail.create(item_trade_queue_id: @item_trade_queue.id)
                 
                 redirect_to action: 'show', id: @item_trade.id, user_id: current_user.id, notice: t('.establish')
             else

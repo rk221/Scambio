@@ -29,7 +29,10 @@ class Users::ItemTradeQueuesController < UsersController
 
         if item_trade_queue.update(user_id: current_user.id, lock_version: item_trade_queue.lock_version)
             # 成立メッセージを相手に送信
-            UserMessagePost.create_message_sell!(@item_trade_queue)
+            UserMessagePost.create_message_sell!(item_trade_queue)
+            # ゲームランクを生成する user_idとgame_idで一意でなければvalidationで弾く。
+            user_game_rank = UserGameRank.new(user_id: current_user.id, game_id: item_trade_queue.item_trade.game_id)
+            user_game_rank.save
 
             return redirect_to action: 'show', id: item_trade_queue.id, user_id: current_user.id, warning: t('.success_message')
         else
