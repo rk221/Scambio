@@ -17,6 +17,8 @@ class Users::ItemTradeQueuesController < UsersController
             @item_trade_chat = ItemTradeChat.new(item_trade_detail_id: @item_trade_queue.item_trade_detail.id, sender_is_seller: false)
             @item_trade_chats = @item_trade_queue.item_trade_detail.item_trade_chats.order(created_at: :asc).decorate
         end
+        
+        @user = current_user.decorate
     end
 
     def buy # アイテムトレード一覧から購入を押すことで飛んでくる
