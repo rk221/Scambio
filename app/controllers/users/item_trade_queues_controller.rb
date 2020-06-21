@@ -26,9 +26,14 @@ class Users::ItemTradeQueuesController < UsersController
 
         return redirect_back(fallback_location: root_path, warning: t('.another_user_already_exists')) if item_trade_queue.user_id # 既に購入待ちが居る場合
         return redirect_to root_path, t('flash.error') if item_trade_queue.item_trade.user_id == current_user.id # ユーザIDと購入者ユーザIDが一致していると不正
-        # 既に同じユーザに購入されている場合、showに飛ばした方がいいかも
 
         if item_trade_queue.update(user_id: current_user.id, lock_version: item_trade_queue.lock_version)
+            # 成立メッセージを相手に送信
+            UserMessagePost.create_message_sell!(item_trade_queue)
+            # ゲームランクを生成する user_idとgame_idで一意でなければvalidationで弾く。
+            user_game_rank = UserGameRank.new(user_id: current_user.id, game_id: item_trade_queue.item_trade.game_id)
+            user_game_rank.save
+
             return redirect_to action: 'show', id: item_trade_queue.id, user_id: current_user.id, warning: t('.success_message')
         else
             return redirect_to root_path, warning: t('flash.error')

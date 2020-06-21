@@ -41,13 +41,17 @@ class Users::UserItemTradesController < UsersController
 
         if @item_trade_queue.update(respond_params)
             if @item_trade_queue.establish_flag # 成立→引き続き詳細画面 不成立→編集画面
+                # 成立メッセージを相手に送信
+                UserMessagePost.create_message_approve!(@item_trade_queue)
+
                 # Detailsを生成
-                item_trade_detail = ItemTradeDetail.new(item_trade_queue_id: @item_trade_queue.id)
-                item_trade_detail.save!
+                ItemTradeDetail.create(item_trade_queue_id: @item_trade_queue.id)
                 
                 redirect_to action: 'show', id: @item_trade.id, user_id: current_user.id, notice: t('.establish')
             else
-                # 不成立メッセージを相手に送信（仮）
+                # 不成立メッセージを相手に送信
+                UserMessagePost.create_message_reject!(@item_trade_queue)
+
                 # 取引を終了する。
                 @item_trade.update!(enable_flag: false)
                 @item_trade_queue.update!(enable_flag: false, lock_version: @item_trade_queue.lock_version)

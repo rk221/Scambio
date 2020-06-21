@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
       resources :item_trade_queues, only: [:index, :show]
       post '/item_trade_queues/:id/buy' => 'item_trade_queues#buy', as: 'buy_item_trade_queue'
+
+      resources :user_message_posts, only: [:index, :show]
     end
   end
 
