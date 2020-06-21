@@ -2,31 +2,29 @@
 %h1.mb-5
     = t '.title'
 
-%table.table.table-hover.table-bordered.text-nowrap
+%table.table.table-hover.table-bordered.text-nowrap#user_message_posts
     %thead
         %th 
             = UserMessagePost.human_attribute_name(:subject)
         %th 
             = UserMessagePost.human_attribute_name(:created_at)
-        %th 
-            = ""
     %tbody
         - @user_message_posts.each do |user_message_post|
             - if user_message_post.already_read_flag
-                %tr{bgcolor: '#CCCCCC', "data-user-message-post-id": user_message_post.id}
+                %tr{bgcolor: '#CCCCCC', "@click": "onClick($event)", "data-href": user_user_message_post_path(id: user_message_post.id, user_id: current_user.id)}
                     %td
                         = user_message_post.subject
                     %td
                         = user_message_post.created_at
-                    %td 
                         -# 後々リンク変更
-                        = link_to t('link_to.show'), user_user_message_post_path(id: user_message_post.id, user_id: current_user.id)
+                        = link_to t('link_to.show'), user_user_message_post_path(id: user_message_post.id, user_id: current_user.id), style: 'display: none;'
             - else 
-                %tr{"data-user-message-post-id": user_message_post.id}
+                %tr{"@click": "onClick($event)", "data-href": user_user_message_post_path(id: user_message_post.id, user_id: current_user.id)}
                     %td
                         = user_message_post.subject
                     %td
                         = user_message_post.created_at
-                    %td 
                         -# 後々リンク変更
-                        = link_to t('link_to.show'), user_user_message_post_path(id: user_message_post.id, user_id: current_user.id)
+                        = link_to t('link_to.show'), user_user_message_post_path(id: user_message_post.id, user_id: current_user.id), style: 'display: none;'
+
+= javascript_pack_tag 'user_message_posts'
