@@ -122,6 +122,11 @@ ja:
             buy:
                 another_user_already_exists: 既に他のユーザが購入しています。
                 success_message: 登録しました。
+        user_message_posts:
+            shared:
+                approve_item_trade: 取引が承認されました。
+                reject_item_trade: 取引が拒否されました。
+                sell_item_trade: 取引が購入されました。
         shared:
             item_trade_chat:
                 chat: チャット

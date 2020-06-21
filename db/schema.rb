@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 2020_06_21_042018) do
 
   create_table "user_message_posts", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.string "subject", limit: 100, null: false
     t.text "message", null: false
     t.boolean "already_read_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
