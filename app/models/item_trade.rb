@@ -10,6 +10,8 @@ class ItemTrade < ApplicationRecord
 
     belongs_to :enable_item_trade_queue, class_name: "ItemTradeQueue", foreign_key: "enable_item_trade_queue_id", optional: true
 
+    belongs_to :user_game_rank
+
     validates :buy_item_quantity, presence: true, numericality: {greater_than_or_equal_to: 1}
     validates :sale_item_quantity, presence: true, numericality: {greater_than_or_equal_to: 1}
 
@@ -19,6 +21,9 @@ class ItemTrade < ApplicationRecord
     validates :sale_item_id, presence: true
     validates :enable_flag, inclusion: {in: [true, false]}
     validates :trade_deadline, presence: true
+
+    validates :user_game_rank_id, presence: true
+
     # 取引が有効化どうか
     scope :enabled, -> {where("item_trades.enable_flag = true and trade_deadline > ?", Time.zone.now)}
     scope :disabled, -> {where("item_trades.enable_flag = false or trade_deadline <= ?", Time.zone.now)}

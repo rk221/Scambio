@@ -6,7 +6,8 @@ RSpec.describe ItemTradeChat, type: :model do
   let!(:game){FactoryBot.create(:game)}
   let!(:buy_item){FactoryBot.create(:buy_item, item_genre_id: item_genre.id, game_id: game.id)}
   let!(:sale_item){FactoryBot.create(:sale_item, item_genre_id: item_genre.id, game_id: game.id)}
-  let!(:item_trade){FactoryBot.create(:item_trade, user_id: user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id)}
+  let!(:user_game_rank){FactoryBot.create(:user_game_rank, user_id: user.id, game_id: game.id)}
+  let!(:item_trade){FactoryBot.create(:item_trade, user_id: user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, user_game_rank_id: user_game_rank.id)}
   let!(:item_trade_queue){FactoryBot.create(:item_trade_queue, user_id: user.id, item_trade_id: item_trade.id)}
   let!(:item_trade_detail){FactoryBot.create(:item_trade_detail, item_trade_queue_id: item_trade_queue.id)}
 

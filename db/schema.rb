@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_042018) do
+ActiveRecord::Schema.define(version: 2020_06_22_133859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,10 +85,12 @@ ActiveRecord::Schema.define(version: 2020_06_21_042018) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "enable_item_trade_queue_id"
+    t.bigint "user_game_rank_id"
     t.index ["buy_item_id"], name: "index_item_trades_on_buy_item_id"
     t.index ["enable_item_trade_queue_id"], name: "index_item_trades_on_enable_item_trade_queue_id"
     t.index ["game_id"], name: "index_item_trades_on_game_id"
     t.index ["sale_item_id"], name: "index_item_trades_on_sale_item_id"
+    t.index ["user_game_rank_id"], name: "index_item_trades_on_user_game_rank_id"
     t.index ["user_id"], name: "index_item_trades_on_user_id"
   end
 
@@ -184,6 +186,7 @@ ActiveRecord::Schema.define(version: 2020_06_21_042018) do
   add_foreign_key "item_trades", "item_trade_queues", column: "enable_item_trade_queue_id"
   add_foreign_key "item_trades", "items", column: "buy_item_id"
   add_foreign_key "item_trades", "items", column: "sale_item_id"
+  add_foreign_key "item_trades", "user_game_ranks"
   add_foreign_key "item_trades", "users"
   add_foreign_key "items", "games"
   add_foreign_key "items", "item_genres"

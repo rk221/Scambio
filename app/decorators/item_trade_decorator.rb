@@ -25,6 +25,8 @@ class ItemTradeDecorator < Draper::Decorator
     return trade_deadline_message + "#{subtract_second}秒"
   end
 
+  decorates_association :user_game_rank
+
   private
   def calc_second_to_hour(second)
     return (second / (60 * 60)).floor
