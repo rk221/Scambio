@@ -23,7 +23,15 @@ class Games::ItemTradesController < ApplicationController
         game = Game.find_by(id: params[:game_id])
         return redirect_to games_path, danger: t('flash.item_trades.game_does_not_exist') if game.nil?
         @selectable_item_genres = selectable_item_genres(game.id)
-        @regist_item_trade_form = RegistItemTradeForm.new(game_id: game.id)
+
+        user_game_rank = UserGameRank.find_by(user_id: current_user.id, game_id: game.id)
+        if user_game_rank.nil?
+            # ゲームランクを生成する 
+            user_game_rank = UserGameRank.new(user_id: current_user.id, game_id: game.id)
+            user_game_rank.save
+        end
+
+        @regist_item_trade_form = RegistItemTradeForm.new(game_id: game.id, user_game_rank_id: user_game_rank.id)
     end
 
     def create 
@@ -33,9 +41,6 @@ class Games::ItemTradesController < ApplicationController
         @regist_item_trade_form = RegistItemTradeForm.new(create_params)
 
         if @regist_item_trade_form.save 
-            # ゲームランクを生成する user_idとgame_idで一意でなければvalidationで弾く。
-            user_game_rank = UserGameRank.new(user_id: current_user.id, game_id: @regist_item_trade_form.game_id)
-            user_game_rank.save
             # アイテムトレードキューを生成する
             item_trade_queue = create_item_trade_queue(@regist_item_trade_form.id)
             # アイテムトレードに、有効なキューを格納する
@@ -79,7 +84,7 @@ class Games::ItemTradesController < ApplicationController
 
     private
     def item_trade_params 
-        params.require(:item_trade).permit(:id, :user_id, :game_id, :buy_item_id, :buy_item_quantity, :sale_item_id, :sale_item_quantity, :enable_flag, :trade_deadline)
+        params.require(:item_trade).permit(:id, :user_id, :game_id, :buy_item_id, :buy_item_quantity, :sale_item_id, :sale_item_quantity, :enable_flag, :trade_deadline, :user_game_rank_id)
     end
 
     def calc_trade_deadline(trade_deadline)
@@ -91,7 +96,7 @@ class Games::ItemTradesController < ApplicationController
     end
 
     def regist_item_trade_form_params 
-        params.require(:regist_item_trade_form).permit(:user_id, :game_id, :buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :enable_flag, :trade_deadline, :buy_item_genre_id, :sale_item_genre_id)
+        params.require(:regist_item_trade_form).permit(:user_id, :game_id, :buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :enable_flag, :trade_deadline, :buy_item_genre_id, :sale_item_genre_id, :user_game_rank_id)
     end
 
     # ページを変更する際の << < 1 2 3 4 5 > >> を表示するために、リンクとページ数を保持するためのもの valueがfalseの場合はリンクとして使用しない。順序は大事なので注意

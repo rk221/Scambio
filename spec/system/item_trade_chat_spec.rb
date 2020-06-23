@@ -21,7 +21,7 @@ RSpec.describe ItemTradeChat, type: :system do
         include_context '売却ユーザがログイン状態になる', :logout
             
         context 'アイテムトレードが登録されている場合' do
-            let(:item_trade){FactoryBot.build(:item_trade, user_id: sale_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since)}
+            let(:item_trade){FactoryBot.build(:item_trade, user_id: sale_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since, user_game_rank_id: sale_user_game_rank.id)}
 
             include_context 'アイテムトレードを登録する'
             it_behaves_like 'アイテムトレード一覧で取引が表示されていることを確認する'

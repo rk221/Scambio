@@ -8,5 +8,6 @@ FactoryBot.define do
     sale_item_id {0}
     enable_flag{false}
     trade_deadline{Time.zone.now}
+    user_game_rank{1}
   end
 end
