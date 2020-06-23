@@ -30,7 +30,12 @@
     - @item_trades.each do |item_trade|
         %table.table.table-hover.table-bordered.text-nowrap
             %tbody
-                %tr 
+                %tr{"class": "user-game-rank-#{item_trade.user_game_rank.rank}"} 
+                    %td 
+                        = UserGameRank.human_attribute_name(:rank)
+                    %td 
+                        = item_trade.user_game_rank.rank_name
+                %tr
                     %td 
                         = ItemTrade.human_attribute_name(:user_nickname)
                     %td 

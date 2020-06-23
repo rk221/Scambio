@@ -5,12 +5,12 @@ class Users::ItemTradeQueuesController < UsersController
         @item_trade_queues = ItemTradeQueue
             .exist_user_enabled
             .where(item_trade_queues: {user_id: current_user.id})
-            .includes(:item_trade, :item_trade_detail)
+            .includes({item_trade: [:user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank, :game]}, :item_trade_detail)
             .order("item_trade_queues.updated_at DESC").decorate
     end
 
     def show 
-        @item_trade_queue = ItemTradeQueue.find(params[:id])
+        @item_trade_queue = ItemTradeQueue.find(params[:id]).decorate
         redirect_to root_path, warning: t('flash.error') unless @item_trade_queue.user_id == current_user.id && @item_trade_queue.enable_flag
 
         if @item_trade_queue.item_trade_detail
