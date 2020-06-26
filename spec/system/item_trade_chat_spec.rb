@@ -17,6 +17,9 @@ RSpec.describe ItemTradeChat, type: :system do
     let!(:buy_user_game_rank){FactoryBot.create(:user_game_rank, user_id: buy_user.id, game_id: game.id)}
     let!(:sale_user_game_rank){FactoryBot.create(:user_game_rank, user_id: sale_user.id, game_id: game.id)}
 
+    let!(:sale_fixed_phrase){FactoryBot.create(:fixed_phrase, user_id: sale_user.id)}
+    let!(:buy_fixed_phrase){FactoryBot.create(:fixed_phrase, user_id: buy_user.id)}
+
     describe 'アイテムトレード購入処理' do
         include_context '売却ユーザがログイン状態になる', :logout
             
@@ -47,6 +50,20 @@ RSpec.describe ItemTradeChat, type: :system do
 
                             it 'チャットが表示されている' do
                                 expect(page).to have_content 'チャット'
+                            end
+
+                            context '売却ユーザで定形文を送信する' do
+                                before do
+                                    find("#fixed_phrases_dropdown").click
+                                    sleep 2
+                                    find(".dropdown-item").click
+                                    sleep 2
+                                end
+
+                                it '定形文が反映されている' do
+                                    sleep 2
+                                    expect(page).to have_content sale_fixed_phrase.text
+                                end
                             end
 
                             context '売却ユーザでチャットを送信する' do
@@ -90,6 +107,20 @@ RSpec.describe ItemTradeChat, type: :system do
                                             it 'チャットが反映されている' do
                                                 sleep 2
                                                 expect(page).to have_content '購入テストメッセージ'
+                                            end
+                                        end
+
+                                        context '購入ユーザで定形文を送信する' do
+                                            before do
+                                                find("#fixed_phrases_dropdown").click
+                                                sleep 2
+                                                find(".dropdown-item").click
+                                                sleep 2
+                                            end
+
+                                            it '定形文が反映されている' do
+                                                sleep 2
+                                                expect(page).to have_content buy_fixed_phrase.text
                                             end
                                         end
                                     end

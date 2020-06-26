@@ -153,6 +153,7 @@ ja:
                 chat: チャット
                 image_upload: 画像をアップロード
                 send_code: コード送信
+                send_fixed_phrase: 定形文送信
     activerecord:
         attributes:
             game:

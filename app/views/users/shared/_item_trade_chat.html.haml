@@ -7,7 +7,7 @@
 #item_trade_chat_forms
     .row.mb-3
         -# 画像送信用フォーム
-        .col-3
+        .col-3.d-block
             = form_with model: item_trade_chat, url: item_trade_detail_item_trade_chats_path(item_trade_detail_id: item_trade_chat.item_trade_detail_id), id: 'item_trade_chat_image_form' do |f|
                 = f.hidden_field :item_trade_detail_id, id: ''
                 = f.hidden_field :sender_is_seller, id: ''
@@ -33,7 +33,21 @@
                             = f.radio_button(:message, "#{PlayStationNetworkId.human_attribute_name(:psn_id)}:#{@user.play_station_network_id.psn_id}", style: 'display: none', "@change": "onChange($event)")
                             = f.label :message, PlayStationNetworkId.human_attribute_name(:psn_id), value: "#{PlayStationNetworkId.human_attribute_name(:psn_id)}:#{@user.play_station_network_id.psn_id}", class: 'dropdown-item'
                 = f.submit nil, style: 'display:none;', id: 'item_trade_chat_code_form_submit'
-        .col-6
+        -# 定形文用フォーム
+        .col-3.d-block
+            = form_with model: item_trade_chat, url: item_trade_detail_item_trade_chats_path(item_trade_detail_id: item_trade_chat.item_trade_detail_id), id: 'item_trade_chat_fixed_phrase_form' do |f|
+                = f.hidden_field :item_trade_detail_id
+                = f.hidden_field :sender_is_seller
+
+                .dropdown
+                    %button.dropdown-toggle.btn.btn-outline-dark#fixed_phrases_dropdown.w-100{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+                        = t('.send_fixed_phrase')
+                    .dropdown-menu.w-100{"aria-labelledby": "fixed_phrases_dropdown"}
+                        - @user.fixed_phrases.each do |fixed_phrase|
+                            = f.radio_button(:message, fixed_phrase.text, style: 'display: none', "@change": "onChange($event)")
+                            = f.label :message, fixed_phrase.name, value: fixed_phrase.text, class: 'dropdown-item'
+                = f.submit nil, style: 'display:none;', id: 'item_trade_chat_fixed_phrase_form_submit'
+        .col-3.d-block
     
     .row
         .col
