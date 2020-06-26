@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     post '/item_genre_games/disable/:id' => 'item_genre_games#disable', as: 'disable_item_genre_game'
   end
 
+  resources :fixed_phrases
+  
   resources :codes, only: [:index]
   namespace :codes do
     resources :nintendo_friend_codes, only: [:new, :create, :edit, :update, :destroy]

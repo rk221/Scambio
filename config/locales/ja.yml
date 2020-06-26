@@ -42,6 +42,15 @@ ja:
                 title: PlayStationNetworkID登録
             edit:
                 title: PlayStationNetworkID編集
+    fixed_phrases:
+        index:
+            title: 定形文一覧
+        show:
+            title: 定形文詳細
+        new:
+            title: 定形文登録
+        edit:
+            title: 定形文編集
     games: 
         index:
             title: ゲーム一覧
@@ -77,6 +86,7 @@ ja:
         show:
             title: マイページ
             codes: コード一覧
+            fixed_phrases: 定形文一覧
             edit_user: ユーザ情報変更
             user_message_posts: 受信メッセージ一覧
             user_item_trades: あなたのアイテムトレード一覧
@@ -143,7 +153,6 @@ ja:
                 chat: チャット
                 image_upload: 画像をアップロード
                 send_code: コード送信
-                
     activerecord:
         attributes:
             game:
@@ -156,6 +165,9 @@ ja:
                 friend_code: 任天堂フレンドコード
             play_station_network_id:
                 psn_id: PSN_ID
+            fixed_phrase:
+                name: 登録名
+                text: 定形文
             item_trade:
                 user_id: ユーザID
                 user_nickname: ユーザ名
@@ -192,6 +204,7 @@ ja:
             item_genre: アイテムジャンル
             nintendo_friend_code: 任天堂フレンドコード
             play_station_network_id: PlayStationNetworkID
+            fixed_phrase: 定形文
             item_trade: アイテムトレード
             item_trade_queue: アイテムトレードキュー
             user_game_rank: ユーザゲームランク

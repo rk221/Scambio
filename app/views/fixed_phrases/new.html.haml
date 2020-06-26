@@ -1,0 +1,15 @@
+- breadcrumb :new_fixed_phrase
+
+%h1.mb-5
+    = t('.title')
+
+= form_with(model: [@fixed_phrase], url: fixed_phrases_path, local: true) do |f|
+    = render 'shared/error_messages', model: f.object
+    .form-group
+        = f.label :name
+        = f.text_field :name, maxlength: 30, class: 'form-control'
+    .form-group
+        = f.label :text
+        = f.text_area :text, maxlength: 100, rows: 10, class: 'form-control'
+    .form-group
+        = f.submit nil, class:'btn btn-primary'

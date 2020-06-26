@@ -106,6 +106,26 @@ crumb :edit_play_station_network_id do |play_station_network_id_id|
   parent :codes
 end
 
+crumb :fixed_phrases do
+  link t('fixed_phrases.index.title'), fixed_phrases_path
+  parent :mypage
+end
+
+crumb :fixed_phrase do |fixed_phrase_id|
+  link t('fixed_phrases.show.title'), fixed_phrase_path(fixed_phrase_id)
+  parent :fixed_phrases
+end
+
+crumb :new_fixed_phrase do
+  link t('fixed_phrases.show.title'), new_fixed_phrase_path
+  parent :fixed_phrases
+end
+
+crumb :edit_fixed_phrase do |fixed_phrase_id|
+  link t('fixed_phrases.show.title'), edit_fixed_phrase_path(fixed_phrase_id)
+  parent :fixed_phrase, fixed_phrase_id
+end
+
 crumb :games do
   link t('games.index.title'), games_path
 end
