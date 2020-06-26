@@ -7,7 +7,10 @@
     = link_to t('.edit_user'), edit_user_registration_path(@user), class: 'btn btn-success'
 
 %p
-    = link_to t('.codes'),codes_path, class: 'btn btn-primary'
+    = link_to t('.codes'), codes_path, class: 'btn btn-primary'
+
+%p
+    = link_to t('.fixed_phrases'), fixed_phrases_path, class: 'btn btn-primary'
 
 %p
     = link_to t('.user_message_posts'), user_user_message_posts_path(@user), class: 'btn btn-outline-secondary'

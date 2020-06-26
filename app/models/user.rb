@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_one :nintendo_friend_code
   has_one :play_station_network_id
+  has_many :fixed_phrases
 
   has_many :user_message_posts
   
