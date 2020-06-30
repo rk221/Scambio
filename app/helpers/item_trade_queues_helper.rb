@@ -1,0 +1,2 @@
+module ItemTradeQueuesHelper
+end

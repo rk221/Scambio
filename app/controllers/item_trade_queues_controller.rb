@@ -1,6 +1,7 @@
-class Users::ItemTradeQueuesController < UsersController
-    before_action :user_auth
-    
+class ItemTradeQueuesController < ApplicationController
+    include Errors 
+    include Users
+
     def index
         @item_trade_queues = current_user.item_trade_queues
             .exist_user_enabled
@@ -10,7 +11,7 @@ class Users::ItemTradeQueuesController < UsersController
 
     def show 
         @item_trade_queue = current_user.item_trade_queues.find(params[:id]).decorate
-        redirect_to_permit_error unless  @item_trade_queue.enable_flag
+        redirect_to_permit_error unless @item_trade_queue.enable_flag
 
         if @item_trade_queue.item_trade_detail
             @item_trade_chat = ItemTradeChat.new(item_trade_detail_id: @item_trade_queue.item_trade_detail.id, sender_is_seller: false)
@@ -32,7 +33,7 @@ class Users::ItemTradeQueuesController < UsersController
             # ゲームランクを生成する user_idとgame_idで一意でなければvalidationで弾く。
             UserGameRank.create(user_id: current_user.id, game_id: item_trade_queue.item_trade.game_id)
 
-            redirect_to action: 'show', id: item_trade_queue.id, user_id: current_user.id, warning: t('.success_message')
+            redirect_to action: 'show', id: item_trade_queue.id, warning: t('.success_message')
         else
             redirect_to_error
         end
