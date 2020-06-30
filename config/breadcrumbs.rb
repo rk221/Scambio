@@ -31,14 +31,14 @@ crumb :user_item_trade do |item_trade_id|
   parent :user_item_trades
 end
 
-crumb :user_item_trade_queues do
-  link t('users.item_trade_queues.index.title'), user_item_trade_queues_path(current_user)
+crumb :item_trade_queues do
+  link t('item_trade_queues.index.title'), item_trade_queues_path
   parent :mypage
 end
 
-crumb :user_item_trade_queue do |item_trade_queue_id|
-  link t('users.item_trade_queues.show.title'), user_item_trade_queue_path(id: item_trade_queue_id, user_id: current_user.id)
-  parent :user_item_trade_queues
+crumb :item_trade_queue do |item_trade_queue_id|
+  link t('item_trade_queues.show.title'), item_trade_queue_path(id: item_trade_queue_id)
+  parent :item_trade_queues
 end
 
 crumb :edit_buy_item_trade_detail do |item_trade_detail_id|

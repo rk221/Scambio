@@ -8,12 +8,12 @@ Rails.application.routes.draw do
       resources :user_item_trades, only: [:index, :show]
       post '/user_item_trade/:id/respond' => 'user_item_trades#respond', as: 'respond_user_item_trade'
 
-      resources :item_trade_queues, only: [:index, :show]
-      post '/item_trade_queues/:id/buy' => 'item_trade_queues#buy', as: 'buy_item_trade_queue'
-
       resources :user_message_posts, only: [:index, :show]
     end
   end
+
+  resources :item_trade_queues, only: [:index, :show]
+  post '/item_trade_queues/:id/buy' => 'item_trade_queues#buy', as: 'buy_item_trade_queue'
 
   namespace :admin do
     resources :games
