@@ -1,6 +1,4 @@
 class Users::UserItemTradesController < UsersController
-    include ItemTrades
-
     helper_method :page_redirect_params    
     before_action :user_auth
 
@@ -21,9 +19,7 @@ class Users::UserItemTradesController < UsersController
     end
 
     def show 
-        @item_trade = ItemTrade.find(params[:id]).decorate
-        return redirect_to root_path, warning: t('flash.error') unless confirm_item_trade(@item_trade)
-        @item_trade_queue = @item_trade.enable_item_trade_queue
+        @item_trade_queue = current_user.item_trades.find(params[:id]).enable_item_trade_queue.decorate
 
         if @item_trade_queue.item_trade_detail
             @item_trade_chat = ItemTradeChat.new(item_trade_detail_id: @item_trade_queue.item_trade_detail.id, sender_is_seller: true) 
@@ -34,39 +30,31 @@ class Users::UserItemTradesController < UsersController
     end
 
     def respond # 購入応答 POST で 売却可否を受け取る
-        @item_trade = ItemTrade.find(params[:id])
+        @item_trade = current_user.item_trades.find(params[:id])
         @item_trade_queue = @item_trade.enable_item_trade_queue
         
-        return redirect_to root_path, warning: t('flash.error') unless confirm_item_trade(@item_trade)
-
         if @item_trade_queue.update(respond_params)
             if @item_trade_queue.establish_flag # 成立→引き続き詳細画面 不成立→編集画面
                 # 成立メッセージを相手に送信
                 UserMessagePost.create_message_approve!(@item_trade_queue)
-
                 # Detailsを生成
-                ItemTradeDetail.create(item_trade_queue_id: @item_trade_queue.id)
+                ItemTradeDetail.create!(item_trade_queue_id: @item_trade_queue.id)
                 
                 redirect_to action: 'show', id: @item_trade.id, user_id: current_user.id, notice: t('.establish')
             else
                 # 不成立メッセージを相手に送信
-                UserMessagePost.create_message_reject!(@item_trade_queue)
-
+                UserMessagePost.create_message_reject!(@item_trade_queue.decorate)
                 # 取引を終了する。
                 @item_trade.update!(enable_flag: false)
                 @item_trade_queue.update!(enable_flag: false, lock_version: @item_trade_queue.lock_version)
                 redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('.not_establish')
             end
         else
-            redirect_to root_path, warning: t('flash.error')
+            redirect_to_error 
         end
     end
 
     private
-
-    def item_trade_params 
-        params.require(:item_trade).permit(:id, :user_id, :game_id, :buy_item_id, :buy_item_quantity, :sale_item_id, :sale_item_quantity, :enable_flag, :trade_deadline)
-    end
 
     def respond_params
         params.require(:item_trade_queue).permit(:id, :establish_flag, :lock_version)
@@ -128,9 +116,5 @@ class Users::UserItemTradesController < UsersController
         item_trades = item_trades.search_buy_item_genre_id(search_params[:buy_item_item_genre_id]) if search_params[:buy_item_item_genre_id].present?
         item_trades = item_trades.search_sale_item_genre_id(search_params[:sale_item_item_genre_id]) if search_params[:sale_item_item_genre_id].present?
         return item_trades
-    end
-
-    def selectable_item_genres(game_id = nil)
-        ItemGenreGame.enabled.where(game_id: game_id).joins(:item_genre).select(:item_genre_id, :name)
     end
 end

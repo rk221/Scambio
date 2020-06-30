@@ -14,24 +14,21 @@ class ItemTrade < ApplicationRecord
 
     validates :buy_item_quantity, presence: true, numericality: {greater_than_or_equal_to: 1}
     validates :sale_item_quantity, presence: true, numericality: {greater_than_or_equal_to: 1}
-
     validates :user_id, presence: true
     validates :game_id, presence: true
     validates :buy_item_id, presence: true
     validates :sale_item_id, presence: true
     validates :enable_flag, inclusion: {in: [true, false]}
     validates :trade_deadline, presence: true
-
     validates :user_game_rank_id, presence: true
 
-    # 取引が有効化どうか
+    # 取引が有効 かつ 期限が有効
     scope :enabled, -> {where("item_trades.enable_flag = true and trade_deadline > ?", Time.zone.now)}
+    # 取引が無効 か 期限が無効
     scope :disabled, -> {where("item_trades.enable_flag = false or trade_deadline <= ?", Time.zone.now)}
 
     # 取引が有効な時
     scope :enabled_or_during_trade, -> {eager_load(:item_trade_queues).where("item_trades.enable_flag = true AND (item_trades.trade_deadline > ? OR item_trade_queues.user_id IS NOT NULL)", Time.zone.now)}
-    # 有効なキューが存在するかどうか(取引中の状態があるかどうか（待ちを含む）)
-    scope :exist_queues, -> {joins(:item_trade_queues).where("item_trade_queues.enable_flag = true AND item_trade_queues.user_id IS NOT NULL")}
 
     scope :left_join_buy_item, -> {
         joins("LEFT OUTER JOIN items as buy_items ON item_trades.buy_item_id = buy_items.id")

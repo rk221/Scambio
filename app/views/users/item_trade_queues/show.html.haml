@@ -3,7 +3,7 @@
     = t '.title'
 
 .container.mb-5
-    = render(partial: 'users/shared/item_trade_show', locals: {item_trade: @item_trade_queue.item_trade, item_trade_queue: @item_trade_queue}) 
+    = render(partial: 'users/shared/item_trade_show', locals: {item_trade_queue: @item_trade_queue}) 
 
 -# 取引の状態や、操作を行う
 .container.mb-5
@@ -26,4 +26,4 @@
 -# チャット機能
 - if @item_trade_queue.item_trade_detail
     .container
-        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat, item_trade_chats: @item_trade_chats, item_trade_queue: @item_trade_queue}) 
+        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat, item_trade_chats: @item_trade_chats, item_trade_queue: @item_trade_queue, user: @user}) 
