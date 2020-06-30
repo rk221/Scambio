@@ -1,4 +1,4 @@
--# チャット機能 locals item_trade_queue, item_trade_chat
+-# チャット機能 locals item_trade_queue, item_trade_chat user
 %h5.mb-3
     = t('.chat')
 #item_trade_chat.overflow-auto.mb-3{"data-item_trade_detail_id": item_trade_queue.item_trade_detail.id}
@@ -26,12 +26,12 @@
                     %button.dropdown-toggle.btn.btn-outline-dark#codes_dropdown.w-100{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
                         = t('.send_code')
                     .dropdown-menu.w-100{"aria-labelledby": "codes_dropdown"}
-                        - if @user.nintendo_friend_code
-                            = f.radio_button(:message, "#{NintendoFriendCode.human_attribute_name(:friend_code)}:#{@user.nintendo_friend_code.friend_code}", style: 'display: none', "@change": "onChange($event)")
-                            = f.label :message, NintendoFriendCode.human_attribute_name(:friend_code), value: "#{NintendoFriendCode.human_attribute_name(:friend_code)}:#{@user.nintendo_friend_code.friend_code}", class: 'dropdown-item'
-                        - if @user.play_station_network_id
-                            = f.radio_button(:message, "#{PlayStationNetworkId.human_attribute_name(:psn_id)}:#{@user.play_station_network_id.psn_id}", style: 'display: none', "@change": "onChange($event)")
-                            = f.label :message, PlayStationNetworkId.human_attribute_name(:psn_id), value: "#{PlayStationNetworkId.human_attribute_name(:psn_id)}:#{@user.play_station_network_id.psn_id}", class: 'dropdown-item'
+                        - if user.nintendo_friend_code
+                            = f.radio_button(:message, "#{NintendoFriendCode.human_attribute_name(:friend_code)}:#{user.nintendo_friend_code.friend_code}", style: 'display: none', "@change": "onChange($event)")
+                            = f.label :message, NintendoFriendCode.human_attribute_name(:friend_code), value: "#{NintendoFriendCode.human_attribute_name(:friend_code)}:#{user.nintendo_friend_code.friend_code}", class: 'dropdown-item'
+                        - if user.play_station_network_id
+                            = f.radio_button(:message, "#{PlayStationNetworkId.human_attribute_name(:psn_id)}:#{user.play_station_network_id.psn_id}", style: 'display: none', "@change": "onChange($event)")
+                            = f.label :message, PlayStationNetworkId.human_attribute_name(:psn_id), value: "#{PlayStationNetworkId.human_attribute_name(:psn_id)}:#{user.play_station_network_id.psn_id}", class: 'dropdown-item'
                 = f.submit nil, style: 'display:none;', id: 'item_trade_chat_code_form_submit'
         -# 定形文用フォーム
         .col-3.d-block
@@ -43,7 +43,7 @@
                     %button.dropdown-toggle.btn.btn-outline-dark#fixed_phrases_dropdown.w-100{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
                         = t('.send_fixed_phrase')
                     .dropdown-menu.w-100{"aria-labelledby": "fixed_phrases_dropdown"}
-                        - @user.fixed_phrases.each do |fixed_phrase|
+                        - user.fixed_phrases.each do |fixed_phrase|
                             = f.radio_button(:message, fixed_phrase.text, style: 'display: none', "@change": "onChange($event)")
                             = f.label :message, fixed_phrase.name, value: fixed_phrase.text, class: 'dropdown-item'
                 = f.submit nil, style: 'display:none;', id: 'item_trade_chat_fixed_phrase_form_submit'

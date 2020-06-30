@@ -11,8 +11,8 @@ class Admin::ItemGenresController < AdminController
         @item_genre = ItemGenre.new(item_genre_params)
         if @item_genre.save 
             #ItemGenreGameを追加する
-            Game.all.each do |game|
-                ItemGenreGame.create(item_genre_id: @item_genre.id, game_id: game.id, enable_flag: false) 
+            Game.find_each do |game|
+                ItemGenreGame.create!(item_genre_id: @item_genre.id, game_id: game.id, enable_flag: false) 
             end
             redirect_to admin_item_genres_path, notice: t('flash.create')
         else
@@ -35,7 +35,7 @@ class Admin::ItemGenresController < AdminController
 
     def destroy 
         @item_genre = ItemGenre.find(params[:id])
-        @item_genre.destroy
+        @item_genre.destroy!
 
         redirect_to admin_item_genres_path, notice: t('flash.destroy')
     end

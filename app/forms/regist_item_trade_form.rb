@@ -20,11 +20,11 @@ class RegistItemTradeForm
         # 購入アイテム、売却アイテムなければ作成、有ればidを格納する
         buy_item = Item.find_by(name: buy_item_name, item_genre_id: buy_item_genre_id, game_id: game_id)
         if buy_item.nil?
-            buy_item = Item.create(name: buy_item_name, item_genre_id: buy_item_genre_id, game_id: game_id)
+            buy_item = Item.create!(name: buy_item_name, item_genre_id: buy_item_genre_id, game_id: game_id)
         end
         sale_item = Item.find_by(name: sale_item_name, item_genre_id: sale_item_genre_id, game_id: game_id)
         if sale_item.nil?
-            sale_item = Item.create(name: sale_item_name, item_genre_id: sale_item_genre_id, game_id: game_id)
+            sale_item = Item.create!(name: sale_item_name, item_genre_id: sale_item_genre_id, game_id: game_id)
         end
        
         itemtrade = ItemTrade.new(user_id: user_id, game_id: game_id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, buy_item_quantity: buy_item_quantity, sale_item_quantity: sale_item_quantity, trade_deadline: trade_deadline.to_i.hours.since, enable_flag: true, user_game_rank_id: user_game_rank_id)

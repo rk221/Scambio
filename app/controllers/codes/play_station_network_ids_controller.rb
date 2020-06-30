@@ -5,7 +5,6 @@ class Codes::PlayStationNetworkIdsController < ApplicationController
 
     def create 
         @play_station_network_id = PlayStationNetworkId.new(play_station_network_id_params)
-        @play_station_network_id.user_id = current_user.id
 
         if @play_station_network_id.save
             redirect_to codes_path, notice: t('flash.regist')
@@ -15,11 +14,11 @@ class Codes::PlayStationNetworkIdsController < ApplicationController
     end
 
     def edit 
-        @play_station_network_id = PlayStationNetworkId.find(params[:id])
+        @play_station_network_id = current_user.play_station_network_id
     end
 
     def update 
-        @play_station_network_id = PlayStationNetworkId.find(params[:id])
+        @play_station_network_id = current_user.play_station_network_id
 
         if @play_station_network_id.update(play_station_network_id_params)
             redirect_to codes_path, notice: t('flash.update')
@@ -29,8 +28,9 @@ class Codes::PlayStationNetworkIdsController < ApplicationController
     end
 
     def destroy 
-        @play_station_network_code = PlayStationNetworkId.find(params[:id])
-        @play_station_network_code.destroy
+        @play_station_network_id = current_user.play_station_network_id
+        
+        @play_station_network_id.destroy!
 
         redirect_to codes_path, notice: t('flash.destroy')
     end
@@ -38,6 +38,6 @@ class Codes::PlayStationNetworkIdsController < ApplicationController
     private
 
     def play_station_network_id_params 
-        params.require(:play_station_network_id).permit(:id, :psn_id, :user_id)
+        params.require(:play_station_network_id).permit(:id, :psn_id).merge(user_id: current_user.id)
     end
 end
