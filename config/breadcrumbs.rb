@@ -2,38 +2,38 @@ crumb :root do
   link "Home", root_path
 end
 
-crumb :mypage do 
+crumb :user do 
   link t('users.show.title'), user_path(current_user)
 end
 
-crumb :edit_user do
+crumb :edit_user_registration do
   link t('users.registrations.edit.edit'), edit_user_registration_path
-  parent :mypage
+  parent :user
 end
 
-crumb :user_message_posts do
+crumb :user_user_message_posts do
   link t('users.user_message_posts.index.title'), user_user_message_posts_path(current_user)
-  parent :mypage
+  parent :user
 end
 
-crumb :user_message_post do |user_message_post_id|
+crumb :user_user_message_post do |user_message_post_id|
   link t('users.user_message_posts.show.title'), user_user_message_post_path(id: user_message_post_id, user_id: current_user.id)
-  parent :mypage
+  parent :user_user_message_posts
 end
 
-crumb :user_item_trades do
+crumb :user_user_item_trades do
   link t('users.user_item_trades.index.title'), user_user_item_trades_path(current_user)
-  parent :mypage
+  parent :user
 end
 
-crumb :user_item_trade do |item_trade_id|
+crumb :user_user_item_trade do |item_trade_id|
   link t('users.user_item_trades.show.title'), user_user_item_trade_path(id: item_trade_id, user_id: current_user.id)
-  parent :user_item_trades
+  parent :user_user_item_trades
 end
 
 crumb :item_trade_queues do
   link t('item_trade_queues.index.title'), item_trade_queues_path
-  parent :mypage
+  parent :user
 end
 
 crumb :item_trade_queue do |item_trade_queue_id|
@@ -53,33 +53,33 @@ crumb :admin_games do
   link t('admin.games.index.title'), admin_games_path
 end
 
-crumb :admin_new_game do 
+crumb :new_admin_game do 
   link t('admin.games.new.title'), new_admin_game_path
   parent :admin_games
 end
 
-crumb :admin_edit_game do |game_id|
+crumb :edit_admin_game do |game_id|
   link t('admin.games.edit.title'), edit_admin_game_path(game_id: game_id)
   parent :admin_games
 end
 
-crumb :item_genres do 
+crumb :admin_item_genres do 
   link t('admin.item_genres.index.title'), admin_item_genres_path
 end
 
-crumb :new_item_genre do 
+crumb :new_admin_item_genre do 
   link t('admin.item_genres.new.title'), new_admin_item_genre_path
-  parent :item_genres
+  parent :admin_item_genres
 end
 
-crumb :edit_item_genre do |item_genre_id|
+crumb :edit_admin_item_genre do |item_genre_id|
   link t('admin.item_genres.edit.title'), edit_admin_item_genre_path(id: item_genre_id)
-  parent :item_genres
+  parent :admin_item_genres
 end
 
-crumb :item_genre_games do |game_id|
-  link t('admin.item_genre_games.index.title'), admin_item_genres_path(id: game_id)
-  parent :games
+crumb :admin_item_genre_games do |game_id|
+  link t('admin.item_genre_games.index.title'), admin_item_genre_games_path(id: game_id)
+  parent :admin_games
 end
 
 crumb :codes do 
@@ -108,7 +108,7 @@ end
 
 crumb :fixed_phrases do
   link t('fixed_phrases.index.title'), fixed_phrases_path
-  parent :mypage
+  parent :user
 end
 
 crumb :fixed_phrase do |fixed_phrase_id|
@@ -142,7 +142,7 @@ end
 
 crumb :edit_game_item_trade do |item_trade|
   link t('games.item_trades.edit.title'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id)
-  parent :game_item_trades, item_trade.game_id
+  parent :user_user_item_trade, item_trade.id
 end
 
 # crumb :projects do
