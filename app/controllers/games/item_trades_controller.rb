@@ -73,9 +73,8 @@ class Games::ItemTradesController < ApplicationController
         p = params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity).merge(enable_flag: true, trade_deadline: calc_trade_deadline(params[:item_trade][:trade_deadline]))
     end
 
-    def calc_trade_deadline(trade_deadline)
-        return nil if trade_deadline.blank?
-        return trade_deadline.to_i.hours.since
+    def calc_trade_deadline(trade_deadline)# 空文字列の時もnilを返す
+        trade_deadline.blank? ? nil : trade_deadline.to_i.hours.since
     end
 
     def regist_item_trade_form_params 

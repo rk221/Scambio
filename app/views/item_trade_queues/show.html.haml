@@ -9,7 +9,7 @@
 .container.mb-5
     %h3.mb-3
         = t('.now_state')
-    - if  @item_trade_queue.item_trade_detail && @item_trade_queue.item_trade_detail.sale_popuarity # 自分が評価していて、相手が評価していない
+    - if  @item_trade_queue.item_trade_detail&.sale_popuarity # 自分が評価していて、相手が評価していない
         %h5.mb-3
             = t('.your_evaluate_wait')
     - elsif @item_trade_queue.establish_flag #true 取引が成立している
