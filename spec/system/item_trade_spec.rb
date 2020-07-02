@@ -112,10 +112,8 @@ RSpec.describe ItemTrade, type: :system do
                         click_button '登録'
                     end
 
-                    it 'アイテム登録画面でエラーメッセージが表示されている' do
+                    it 'アイテム登録画面から遷移出来ずにいる' do
                         expect(page).to have_content 'アイテムトレード登録'
-                        expect(page).to have_content "購入アイテム名を入力してください"
-                        expect(page).to have_content "売却アイテム名を入力してください"
                     end
                 end
             end
