@@ -62,7 +62,7 @@ RSpec.describe UserMessagePost, type: :system do
                                     expect(page).to have_content '取引が購入されました'
                                     expect(page).to have_content UserMessagePost.human_attribute_name(:message)
                                     expect(page).to have_content '取引が購入されました。売却画面へ遷移してください。'
-                                    expect(page).to have_content '詳細へ移動する'
+                                    expect(page).to have_content '詳細'
                                 end
                             end
                         end
