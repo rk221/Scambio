@@ -8,7 +8,13 @@ class ItemTradeQueue < ApplicationRecord
     validates :enable_flag, inclusion: {in: [true, false]}
     validates :establish_flag, inclusion: {in: [true, false, nil]}
 
-    scope :exist_user_enabled, -> {where("item_trade_queues.enable_flag = true AND item_trade_queues.user_id IS NOT NULL")}
+    scope :exist_user_enabled, -> {where.not(item_trade_queues: {user_id: nil}).where(item_trade_queues: {enable_flag: true})}
+
+    scope :reaction_wait_item_trade_queues, -> (current_user_id) do 
+        exist_user_enabled
+        .includes({item_trade: [:game, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank]}, :item_trade_detail)
+        .where(item_trades: {user_id: current_user_id})
+    end
 
     # アイテムトレードに対応する購入待機用枠を作成する
     def self.create_enabled(item_trade_id)
