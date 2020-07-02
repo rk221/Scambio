@@ -4,7 +4,7 @@
 
 .item_trades
     - @item_trade_queues.each do |item_trade_queue|
-        - next if item_trade_queue.item_trade_detail && item_trade_queue.item_trade_detail.sale_popuarity
+        - next if item_trade_queue.item_trade_detail&.sale_popuarity
         %table.table.table-hover.table-bordered.text-nowrap
             %tbody
                 %tr{"class": "user-game-rank-#{item_trade_queue.item_trade.user_game_rank.rank}"} 
