@@ -1,4 +1,4 @@
 - if item_genre_game.enable_flag?
-    = link_to '有効', admin_disable_item_genre_game_path(item_genre_game), method: :post, remote: true, class: 'btn btn-success'
+    = link_to t('link_to.enable'), admin_disable_item_genre_game_path(item_genre_game), method: :post, remote: true, class: 'btn btn-success'
 - else  
-    = link_to '無効', admin_enable_item_genre_game_path(item_genre_game), method: :post, remote: true, class: 'btn btn-danger'
+    = link_to t('link_to.disable'), admin_enable_item_genre_game_path(item_genre_game), method: :post, remote: true, class: 'btn btn-danger'

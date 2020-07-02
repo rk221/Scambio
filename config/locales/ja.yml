@@ -4,10 +4,13 @@ ja:
         destroy: "%{model}「%{name}」を削除しますか？"
         simple_destroy: "%{name}を削除しますか？"
     link_to:
-        create: 登録
+        create: 作成
         edit: 編集
-        delete: 削除
+        destroy: 削除
         show: 詳細
+        regist: 登録
+        enable: 有効
+        disable: 無効
     admin:
         games:
             index:

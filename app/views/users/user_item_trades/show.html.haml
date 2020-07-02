@@ -34,7 +34,7 @@
             = t('.state_for_sale')
         -# 編集 OR 削除
         = link_to t('link_to.edit'), edit_game_item_trade_path(id: @item_trade_queue.item_trade.id, game_id: @item_trade_queue.item_trade.game_id), class: 'btn btn-success mr-2'
-        = link_to t('link_to.delete'), game_item_trade_path(id: @item_trade_queue.item_trade.id, game_id: @item_trade_queue.item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
+        = link_to t('link_to.destroy'), game_item_trade_path(id: @item_trade_queue.item_trade.id, game_id: @item_trade_queue.item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
 
 -# チャット機能
 - if @item_trade_queue.item_trade_detail
