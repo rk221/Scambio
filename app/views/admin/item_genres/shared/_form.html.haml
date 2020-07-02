@@ -2,10 +2,10 @@
     = render 'shared/error_messages', model: f.object
     .form-group
         = f.label :name
-        = f.text_field :name, class: 'form-control'
+        = f.text_field :name, maxlength: 30, class: 'form-control'
     .form-group
         = f.label :default_unit_name
-        = f.text_field :default_unit_name, class: 'form-control'
+        = f.text_field :default_unit_name, maxlength: 10, class: 'form-control'
     
     .form-group
         = f.submit nil, class:'btn btn-primary'

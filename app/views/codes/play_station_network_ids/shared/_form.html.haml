@@ -2,7 +2,7 @@
     = render 'shared/error_messages', model: f.object
     .form-group
         = f.label :psn_id
-        = f.text_field :psn_id, class: 'form-control'
+        = f.text_field :psn_id, minlength: 3, maxlength: 16, class: 'form-control'
 
     .form-group
         = f.submit nil, class:'btn btn-primary'
