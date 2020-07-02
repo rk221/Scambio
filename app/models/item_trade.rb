@@ -28,7 +28,10 @@ class ItemTrade < ApplicationRecord
     scope :disabled, -> {where("item_trades.enable_flag = false or trade_deadline <= ?", Time.zone.now)}
 
     # 取引が有効な時
-    scope :enabled_or_during_trade, -> {eager_load(:item_trade_queues).where("item_trades.enable_flag = true AND (item_trades.trade_deadline > ? OR item_trade_queues.user_id IS NOT NULL)", Time.zone.now)}
+    scope :enabled_or_during_trade, -> do 
+        eager_load(:item_trade_queues)
+        .where("item_trades.enable_flag = true AND (item_trades.trade_deadline > ? OR item_trade_queues.user_id IS NOT NULL)", Time.zone.now)
+    end
 
     scope :left_join_buy_item, -> {
         joins("LEFT OUTER JOIN items as buy_items ON item_trades.buy_item_id = buy_items.id")
