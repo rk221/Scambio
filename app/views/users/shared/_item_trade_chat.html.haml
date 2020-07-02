@@ -1,4 +1,4 @@
--# チャット機能 locals item_trade_queue, item_trade_chat user
+-# チャット機能 locals item_trade_queue, item_trade_chat, user, url
 %h5.mb-3
     = t('.chat')
 #item_trade_chat.overflow-auto.mb-3{"data-item_trade_detail_id": item_trade_queue.item_trade_detail.id}
@@ -8,9 +8,8 @@
     .row.mb-3
         -# 画像送信用フォーム
         .col-3.d-block
-            = form_with model: item_trade_chat, url: item_trade_detail_item_trade_chats_path(item_trade_detail_id: item_trade_chat.item_trade_detail_id), id: 'item_trade_chat_image_form' do |f|
+            = form_with model: item_trade_chat, url: url, id: 'item_trade_chat_image_form' do |f|
                 = f.hidden_field :item_trade_detail_id, id: ''
-                = f.hidden_field :sender_is_seller, id: ''
                 = f.hidden_field :message, value: nil, id: ''
                 = f.label :image, t('.image_upload'), class: 'btn btn-outline-dark w-100'
                 = f.file_field :image, accept: 'image/*', "@change": "onFileChange($event)"
@@ -18,10 +17,8 @@
             
         -# フレンドコード、PSNIDなど登録済みID用フォーム
         .col-3.d-block
-            = form_with model: item_trade_chat, url: item_trade_detail_item_trade_chats_path(item_trade_detail_id: item_trade_chat.item_trade_detail_id), id: 'item_trade_chat_code_form' do |f|
+            = form_with model: item_trade_chat, url: url, id: 'item_trade_chat_code_form' do |f|
                 = f.hidden_field :item_trade_detail_id
-                = f.hidden_field :sender_is_seller
-
                 .dropdown
                     %button.dropdown-toggle.btn.btn-outline-dark#codes_dropdown.w-100{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
                         = t('.send_code')
@@ -35,10 +32,8 @@
                 = f.submit nil, style: 'display:none;', id: 'item_trade_chat_code_form_submit'
         -# 定形文用フォーム
         .col-3.d-block
-            = form_with model: item_trade_chat, url: item_trade_detail_item_trade_chats_path(item_trade_detail_id: item_trade_chat.item_trade_detail_id), id: 'item_trade_chat_fixed_phrase_form' do |f|
+            = form_with model: item_trade_chat, url: url, id: 'item_trade_chat_fixed_phrase_form' do |f|
                 = f.hidden_field :item_trade_detail_id
-                = f.hidden_field :sender_is_seller
-
                 .dropdown
                     %button.dropdown-toggle.btn.btn-outline-dark#fixed_phrases_dropdown.w-100{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
                         = t('.send_fixed_phrase')
@@ -52,9 +47,8 @@
     .row
         .col
             -# メッセージ送信用フォーム
-            = form_with model: item_trade_chat, url: item_trade_detail_item_trade_chats_path(item_trade_detail_id: item_trade_chat.item_trade_detail_id), id: 'item_trade_chat_message_form' do |f|
+            = form_with model: item_trade_chat, url: url, id: 'item_trade_chat_message_form' do |f|
                 = f.hidden_field :item_trade_detail_id
-                = f.hidden_field :sender_is_seller
                 .form-group
                     = f.text_area :message, class: 'form-control', rows: '1', maxlength: '200'
                 .form-group

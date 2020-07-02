@@ -33,26 +33,18 @@ class ItemTrade < ApplicationRecord
         .where("item_trades.enable_flag = true AND (item_trades.trade_deadline > ? OR item_trade_queues.user_id IS NOT NULL)", Time.zone.now)
     end
 
-    scope :left_join_buy_item, -> {
-        joins("LEFT OUTER JOIN items as buy_items ON item_trades.buy_item_id = buy_items.id")
-    }
-
-    scope :left_join_sale_item, -> {
-        joins("LEFT OUTER JOIN items as sale_items ON item_trades.sale_item_id = sale_items.id")
-    }
-
     # 上記の結合を行なってから検索を行うこと！
     scope :search_buy_item_name, -> (search_name){
-        where('buy_items.name like ?', "%" + search_name + "%")
+        where(buy_item_id: Item.where('items.name like ?', "%" + search_name + "%").ids)
     }
     scope :search_buy_item_genre_id, -> (search_genre_id){
-        where('buy_items.item_genre_id = ?', search_genre_id)
+        where(buy_item_id: Item.where(item_genre_id: search_genre_id).ids)
     }
     scope :search_sale_item_name, -> (search_name){
-        where('sale_items.name like ?', "%" + search_name + "%")
+        where(sale_item_id: Item.where('items.name like ?', "%" + search_name + "%").ids)
     }
     scope :search_sale_item_genre_id, -> (search_genre_id){
-        where('sale_items.item_genre_id = ?', search_genre_id)
+        where(sale_item_id: Item.where(item_genre_id: search_genre_id).ids)
     }
 
     def self.ransackable_scopes(auth_object = nil)

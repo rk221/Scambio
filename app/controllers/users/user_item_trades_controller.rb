@@ -11,7 +11,7 @@ class Users::UserItemTradesController < UsersController
         @q = ItemTrade.ransack(search_params)
         @item_trades = search_item_trades(@q.result(distinct: true), search_params).where(user_id: current_user.id) # ユーザの物だけ抽出する
         # ページリンク用オブジェクト
-        @hash_pages = hash_pages((@item_trades.count() + NUMBER_OF_OUTPUT_LINES - 1) / NUMBER_OF_OUTPUT_LINES)
+        @hash_pages = hash_pages((@item_trades.size + NUMBER_OF_OUTPUT_LINES - 1) / NUMBER_OF_OUTPUT_LINES)
         # デコレータ　ページ(1 <= :page <=page_count) # includes enable
         @item_trades = @item_trades.limit(NUMBER_OF_OUTPUT_LINES).offset((page - 1) * NUMBER_OF_OUTPUT_LINES).includes(:enable_item_trade_queue, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank, :game).decorate
         # ジャンル一覧を取得
@@ -22,7 +22,7 @@ class Users::UserItemTradesController < UsersController
         @item_trade_queue = current_user.item_trades.find(params[:id]).enable_item_trade_queue.decorate
 
         if @item_trade_queue.item_trade_detail
-            @item_trade_chat = ItemTradeChat.new(item_trade_detail_id: @item_trade_queue.item_trade_detail.id, sender_is_seller: true) 
+            @item_trade_chat = ItemTradeChat.new(item_trade_detail_id: @item_trade_queue.item_trade_detail.id) 
             @item_trade_chats = @item_trade_queue.item_trade_detail.item_trade_chats.order(created_at: :asc).decorate
         end
 
@@ -109,8 +109,8 @@ class Users::UserItemTradesController < UsersController
         {page: page, q: search_params}
     end
 
-    def search_item_trades (item_trades, search_params) #　自作の検索を行う
-        item_trades = item_trades.left_join_buy_item.left_join_sale_item
+    #　自作の検索を行う
+    def search_item_trades (item_trades, search_params) 
         item_trades = item_trades.search_buy_item_name(search_params[:buy_item_name]) if search_params[:buy_item_name].present?
         item_trades = item_trades.search_sale_item_name(search_params[:sale_item_name]) if search_params[:sale_item_name].present?
         item_trades = item_trades.search_buy_item_genre_id(search_params[:buy_item_item_genre_id]) if search_params[:buy_item_item_genre_id].present?
