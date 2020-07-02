@@ -46,7 +46,8 @@ Rails.application.routes.draw do
 
   resources :item_trade_details, only: [] do
     scope module: :item_trade_details do
-      resources :item_trade_chats, only: [:create]
+      post '/item_trade_chats/sale' => 'item_trade_chats#sale_create', as: 'sale_item_trade_chats'
+      post '/item_trade_chats/buy' => 'item_trade_chats#buy_create', as: 'buy_item_trade_chats'
     end
   end
 

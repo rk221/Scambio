@@ -5,9 +5,6 @@
 = form_with(model: [@regist_item_trade_form], url: game_item_trades_path, method: :post, local: true) do |f|
     = render 'shared/error_messages', model: f.object
 
-    = f.hidden_field :game_id
-    = f.hidden_field :user_game_rank_id
-
     .form-group
         = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_name)
         = f.select :buy_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.item_genre_id]}, {}, class: 'form-control'

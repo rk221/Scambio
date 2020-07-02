@@ -26,4 +26,4 @@
 -# チャット機能
 - if @item_trade_queue.item_trade_detail
     .container
-        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat, item_trade_chats: @item_trade_chats, item_trade_queue: @item_trade_queue, user: @user}) 
+        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat, item_trade_chats: @item_trade_chats, item_trade_queue: @item_trade_queue, user: @user, url: item_trade_detail_buy_item_trade_chats_path(item_trade_detail_id: @item_trade_chat.item_trade_detail_id)}) 

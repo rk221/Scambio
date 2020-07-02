@@ -17,6 +17,10 @@ class RegistItemTradeForm
     def save 
         return false if invalid?
 
+        # ジャンルIDがそのゲームでは使用できない物の場合
+        return false unless ItemGenreGame.find_by(item_genre_id: buy_item_genre_id, game_id: game_id).enable_flag
+        return false unless ItemGenreGame.find_by(item_genre_id: sale_item_genre_id, game_id: game_id).enable_flag
+
         # 購入アイテム、売却アイテムなければ作成、有ればidを格納する
         buy_item = Item.find_by(name: buy_item_name, item_genre_id: buy_item_genre_id, game_id: game_id)
         if buy_item.nil?

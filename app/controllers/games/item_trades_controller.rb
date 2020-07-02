@@ -12,7 +12,7 @@ class Games::ItemTradesController < ApplicationController
         # 検索に会うもの + 有効な取引 + 購入されていない取引 + ゲームに一致している
         @item_trades = search_item_trades(@q.result(distinct: true), search_params).enabled.includes(:enable_item_trade_queue).joins(:game).where(item_trade_queues: {user_id: nil, enable_flag: true}, game_id: params[:game_id])
         # ページリンク用オブジェクト
-        @hash_pages = hash_pages((@item_trades.count() + NUMBER_OF_OUTPUT_LINES - 1) / NUMBER_OF_OUTPUT_LINES)
+        @hash_pages = hash_pages((@item_trades.size + NUMBER_OF_OUTPUT_LINES - 1) / NUMBER_OF_OUTPUT_LINES)
         # デコレータ　ページ(1 <= :page <=page_count)
         @item_trades = @item_trades.limit(NUMBER_OF_OUTPUT_LINES).offset((page - 1) * NUMBER_OF_OUTPUT_LINES).includes(:user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank).decorate
         # ジャンル一覧を取得
@@ -20,14 +20,10 @@ class Games::ItemTradesController < ApplicationController
     end
 
     def new 
-        game = Game.find_by(id: params[:game_id])
-        return redirect_to games_path, danger: t('flash.item_trades.game_does_not_exist') if game.nil?
+        game = Game.find(params[:game_id])
         @selectable_item_genres = ItemGenreGame.selectable_item_genres(game.id)
 
-        # ゲームランクが存在しなければを生成する 
-        user_game_rank = UserGameRank.find_or_create_by(user_id: current_user.id, game_id: game.id)
-
-        @regist_item_trade_form = RegistItemTradeForm.new(game_id: game.id, user_game_rank_id: user_game_rank.id)
+        @regist_item_trade_form = RegistItemTradeForm.new(game_id: game.id)
     end
 
     def create 
@@ -70,7 +66,7 @@ class Games::ItemTradesController < ApplicationController
 
     private
     def update_item_trade_params 
-        p = params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity).merge(enable_flag: true, trade_deadline: calc_trade_deadline(params[:item_trade][:trade_deadline]))
+        params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity).merge(enable_flag: true, trade_deadline: calc_trade_deadline(params[:item_trade][:trade_deadline]))
     end
 
     def calc_trade_deadline(trade_deadline)# 空文字列の時もnilを返す
@@ -78,7 +74,9 @@ class Games::ItemTradesController < ApplicationController
     end
 
     def regist_item_trade_form_params 
-        params.require(:regist_item_trade_form).permit(:game_id, :buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :trade_deadline, :buy_item_genre_id, :sale_item_genre_id, :user_game_rank_id).merge(user_id: current_user.id)
+        params.require(:regist_item_trade_form)
+        .permit(:buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :trade_deadline, :buy_item_genre_id, :sale_item_genre_id)
+        .merge(user_id: current_user.id, user_game_rank_id: UserGameRank.find_or_create_by(user_id: current_user.id, game_id: params[:game_id]).id, game_id: params[:game_id])
     end
 
     # ページを変更する際の << < 1 2 3 4 5 > >> を表示するために、リンクとページ数を保持するためのもの valueがfalseの場合はリンクとして使用しない。順序は大事なので注意
@@ -131,7 +129,6 @@ class Games::ItemTradesController < ApplicationController
     end
     #　自作の検索を行う
     def search_item_trades (item_trades, search_params) 
-        item_trades = item_trades.left_join_buy_item.left_join_sale_item
         item_trades = item_trades.search_buy_item_name(search_params[:buy_item_name]) if search_params[:buy_item_name].present?
         item_trades = item_trades.search_sale_item_name(search_params[:sale_item_name]) if search_params[:sale_item_name].present?
         item_trades = item_trades.search_buy_item_genre_id(search_params[:buy_item_item_genre_id]) if search_params[:buy_item_item_genre_id].present?

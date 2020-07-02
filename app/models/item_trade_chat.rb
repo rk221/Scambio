@@ -5,7 +5,7 @@ class ItemTradeChat < ApplicationRecord
 
     validates :sender_is_seller, inclusion: {in: [true, false]}
     validates :item_trade_detail_id, presence: true
-    validates :message, length: {maximum: 200}, allow_nil: true
+    validates :message, length: {maximum: 200}
 
     validate :object_not_empty
 
