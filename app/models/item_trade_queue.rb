@@ -17,7 +17,7 @@ class ItemTradeQueue < ApplicationRecord
     end
 
     # アイテムトレードに対応する購入待機用枠を作成する
-    def self.create_enabled(item_trade_id)
+    def self.create_enabled!(item_trade_id)
         # 既に、登録済みで、有効な購入待ちが存在する場合
         if item_trade_queues = self.where(item_trade_id: item_trade_id, enable_flag: true)
             # 購入待ちを無効にし、無効にした場合、メッセージを記録する。

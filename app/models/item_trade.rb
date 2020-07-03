@@ -50,4 +50,25 @@ class ItemTrade < ApplicationRecord
     def self.ransackable_scopes(auth_object = nil)
         %i(enabled_or_during_trade)
     end
+
+    # アイテムトレードを、数量と期限のみ編集し直し、再登録する(後々取引自体のカウントが追加され信用が上がる)
+    def re_regist(update_params)
+        ItemTrade.transaction do
+            update!(buy_item_quantity: update_params[:buy_item_quantity], sale_item_quantity: update_params[:sale_item_quantity], enable_flag: true, trade_deadline: calc_trade_deadline(update_params[:trade_deadline]))
+            self.set_enable_item_trade_queue!
+        end 
+        true
+        rescue => e
+        false
+    end
+
+    def set_enable_item_trade_queue! # アイテムトレードに、有効なキューを格納する
+        item_trade_queue = ItemTradeQueue.create_enabled!(self.id)
+        update!(enable_item_trade_queue_id: item_trade_queue.id)
+    end
+
+    private
+    def calc_trade_deadline(trade_deadline)# 空文字列の時もnilを返す
+        trade_deadline.blank? ? nil : trade_deadline.to_i.hours.since
+    end
 end
