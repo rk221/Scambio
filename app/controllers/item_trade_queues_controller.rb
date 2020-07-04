@@ -6,7 +6,7 @@ class ItemTradeQueuesController < ApplicationController
         @item_trade_queues = current_user.item_trade_queues
             .exist_user_enabled
             .includes({item_trade: [:user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank, :game]}, :item_trade_detail)
-            .order("item_trade_queues.updated_at DESC").decorate
+            .where(item_trade_details: {sale_popuarity: nil}).order("item_trade_queues.updated_at DESC").decorate
     end
 
     def show 
