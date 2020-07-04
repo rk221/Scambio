@@ -1,6 +1,6 @@
 class ItemTrade < ApplicationRecord
     before_validation :set_trade_deadline
-    attr_accessor :numeric_of_trade_deadline
+    attr_accessor :numeric_of_trade_deadline # 1~24の値を格納し、現時点から何時間有効なのか設定する
 
     belongs_to :user
     belongs_to :game
@@ -62,33 +62,50 @@ class ItemTrade < ApplicationRecord
             set_enable_item_trade_queue!
         end 
         true
-        rescue => e
+        rescue
         false
     end
 
     # アイテムトレード正常終了処理
     def disable_trade
-        self.transaction do # 両方更新が完了できれば正常
-            update_attribute(:enable_flag, false) # before_validationは呼ばれないのでcolumnではなくattribute
+        self.transaction do                         # 両方更新が完了できれば正常
+            update_attribute(:enable_flag, false)   # before_validationは呼ばれないのでcolumnではなくattribute
             enable_item_trade_queue.update!(enable_flag: false)
         end
         true
-        rescue => e
+        rescue
         false
     end
 
-    # アイテムトレードに、有効なキューを格納する
+    # 購入応答を処理する
+    def respond(respond_params)
+        self.transaction do
+            enable_item_trade_queue.update!(respond_params)
+            if enable_item_trade_queue.establish_flag
+                UserMessagePost.create_message_approve!(enable_item_trade_queue)            # 成立メッセージを相手に送信
+                ItemTradeDetail.create!(item_trade_queue_id: enable_item_trade_queue.id)    # Detailsを生成
+            else
+                UserMessagePost.create_message_reject!(enable_item_trade_queue.decorate)    # 不成立メッセージを相手に送信
+                raise ActiveRecord::RecordInvalid unless disable_trade                      # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
+            end
+        end
+        true
+        rescue
+        false
+    end
+
+    # アイテムトレードに、有効なキューを格納する 例外を投げ、呼び出し元で補足する
     def set_enable_item_trade_queue! 
         item_trade_queue = ItemTradeQueue.create_enabled!(self.id)
         update!(enable_item_trade_queue_id: item_trade_queue.id)
     end
 
     private
-    def set_trade_deadline
+    def set_trade_deadline 
         self.trade_deadline = calc_trade_deadline(@numeric_of_trade_deadline)
     end
-
-    def calc_trade_deadline(numeric_of_trade_deadline)# 空文字列の時もnilを返す
+    # 日付を1~24の値からTimeWithZoneに変換する 数値が入っていない場合nilを返す
+    def calc_trade_deadline(numeric_of_trade_deadline)
         numeric_of_trade_deadline.blank? ? nil : numeric_of_trade_deadline.to_i.hours.since
     end
 end

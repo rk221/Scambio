@@ -31,21 +31,11 @@ class Users::UserItemTradesController < UsersController
 
     def respond # 購入応答 POST で 売却可否を受け取る
         @item_trade = current_user.item_trades.find(params[:id])
-        @item_trade_queue = @item_trade.enable_item_trade_queue
         
-        if @item_trade_queue.update(respond_params)
-            if @item_trade_queue.establish_flag # 成立→引き続き詳細画面 不成立→編集画面
-                # 成立メッセージを相手に送信
-                UserMessagePost.create_message_approve!(@item_trade_queue)
-                # Detailsを生成
-                ItemTradeDetail.create!(item_trade_queue_id: @item_trade_queue.id)
-                
+        if @item_trade.respond(respond_params)
+            if @item_trade.enable_item_trade_queue.establish_flag # 成立→引き続き詳細画面 不成立→編集画面
                 redirect_to action: 'show', id: @item_trade.id, user_id: current_user.id, notice: t('.establish')
             else
-                # 不成立メッセージを相手に送信
-                UserMessagePost.create_message_reject!(@item_trade_queue.decorate)
-                # 取引を終了する。
-                @item_trade.disable_trade
                 redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('.not_establish')
             end
         else

@@ -21,7 +21,7 @@ class ItemTradeDetailsController < ApplicationController
         return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue.item_trade)
         
         if @item_trade_detail.update(buy_evaluate_params)
-            end_trade(@item_trade_detail) if @item_trade_detail.sale_popuarity # 両者評価しているなら取引を終了させる
+            @item_trade_detail.item_trade_queue.item_trade.disable_trade if @item_trade_detail.sale_popuarity # 両者評価しているなら取引を終了させる
 
             # 購入側のRANKを更新
             buy_user_game_rank = UserGameRank.find_by(user_id: @item_trade_detail.item_trade_queue.user_id, game_id: @item_trade_detail.item_trade_queue.item_trade.game_id)
@@ -39,7 +39,7 @@ class ItemTradeDetailsController < ApplicationController
         return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue)
 
         if @item_trade_detail.update(sale_evaluate_params)
-            end_trade(@item_trade_detail) if @item_trade_detail.buy_popuarity # 両者評価しているなら取引を終了させる
+            @item_trade_detail.item_trade_queue.item_trade.disable_trade if @item_trade_detail.buy_popuarity # 両者評価しているなら取引を終了させる
 
             # 購入側のRANKを更新
             sale_user_game_rank = UserGameRank.find_by(user_id: @item_trade_detail.item_trade_queue.item_trade.user_id, game_id: @item_trade_detail.item_trade_queue.item_trade.game_id)
@@ -52,11 +52,6 @@ class ItemTradeDetailsController < ApplicationController
     end
 
     private
-
-    def end_trade(item_trade_detail) # 取引を終了する
-        item_trade_detail.item_trade_queue.update!(enable_flag: false)
-        item_trade_detail.item_trade_queue.item_trade.update!(enable_flag: false)
-    end
 
     def buy_evaluate_params
         params.require(:item_trade_detail).permit(:buy_popuarity)
