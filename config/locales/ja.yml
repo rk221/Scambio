@@ -183,6 +183,7 @@ ja:
                 sale_item_name: 売却アイテム名
                 sale_item_quantity: 売却数量
                 trade_deadline: 取引期限
+                numeric_of_trade_deadline: 取引期限
                 buy_item_genre_id: 購入アイテムジャンルID
                 sale_item_genre_id: 売却アイテムジャンルID
                 buy_item_genre_name: 購入アイテムジャンル名
@@ -220,6 +221,7 @@ ja:
                 sale_item_name: 売却アイテム名
                 sale_item_quantity: 売却数量
                 trade_deadline: 取引期限
+                numeric_of_trade_deadline: 取引期限
                 buy_item_genre_id: 購入アイテムジャンル
                 sale_item_genre_id: 売却アイテムジャンル
 
@@ -251,3 +253,4 @@ ja:
     errors:
         messages:
             psn_id_head_alphabet: は先頭英字で入力してください
+            numeric_of_trade_deadline_out_of_range: は1~24の範囲で入力してください

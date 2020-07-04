@@ -33,7 +33,7 @@ RSpec.describe ItemTrade, type: :system do
                 end
 
                 context '期限、有効フラグ共に有効なアイテムトレードを登録する' do
-                    let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since, user_game_rank_id: user_game_rank.id)}
+                    let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, numeric_of_trade_deadline: 1, user_game_rank_id: user_game_rank.id)}
                     before do 
                         @item_trade = item_trade
                         @item_trade.save
@@ -46,21 +46,8 @@ RSpec.describe ItemTrade, type: :system do
                     it_behaves_like 'アイテムトレード一覧で取引が表示されていることを確認する'
                 end
 
-                context '期限が無効なアイテムトレードを登録する' do
-                    let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.ago, user_game_rank_id: user_game_rank.id)}
-                    before do 
-                        @item_trade = item_trade
-                        @item_trade.save
-                        @item_trade_queue = FactoryBot.create(:item_trade_queue, user_id: nil, enable_flag: true, item_trade_id: @item_trade.id)
-                        @item_trade.update!(enable_item_trade_queue_id: @item_trade_queue.id)
-                        visit current_path
-                    end
-
-                    it_behaves_like 'アイテムトレード一覧で取引が非表示になっていることを確認する'
-                end
-
                 context '有効フラグが無効なアイテムトレードを登録する' do
-                    let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: false, trade_deadline: 1.hours.ago, user_game_rank_id: user_game_rank.id)}
+                    let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: false, numeric_of_trade_deadline: 1, user_game_rank_id: user_game_rank.id)}
                     before do 
                         @item_trade = item_trade
                         @item_trade.save
@@ -74,7 +61,7 @@ RSpec.describe ItemTrade, type: :system do
             end
 
             describe 'アイテムトレード登録' do
-                let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since, user_game_rank_id: user_game_rank.id)}
+                let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, numeric_of_trade_deadline: 1, user_game_rank_id: user_game_rank.id)}
                 before do
                     click_link 'ゲーム'
                     click_link 'アイテムトレード一覧'
@@ -119,7 +106,7 @@ RSpec.describe ItemTrade, type: :system do
             end
 
             describe 'アイテムトレード編集' do
-                let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since, user_game_rank_id: user_game_rank.id)}
+                let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, numeric_of_trade_deadline: 1, user_game_rank_id: user_game_rank.id)}
                 include_context 'アイテムトレードを登録する'
 
                 context 'アイテムトレードを編集する' do
@@ -170,7 +157,7 @@ RSpec.describe ItemTrade, type: :system do
             end
 
             describe 'アイテムトレード削除' do
-                let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since, user_game_rank_id: user_game_rank.id)}
+                let(:item_trade){FactoryBot.build(:item_trade, user_id: login_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, numeric_of_trade_deadline: 1, user_game_rank_id: user_game_rank.id)}
                 include_context 'アイテムトレードを登録する'
 
                 context 'アイテムトレードを削除する' do
@@ -204,7 +191,7 @@ RSpec.describe ItemTrade, type: :system do
         include_context '売却ユーザがログイン状態になる', :logout
             
         context 'アイテムトレードが登録されている場合' do
-            let(:item_trade){FactoryBot.build(:item_trade, user_id: sale_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, trade_deadline: 1.hours.since, user_game_rank_id: sale_user_game_rank.id)}
+            let(:item_trade){FactoryBot.build(:item_trade, user_id: sale_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, numeric_of_trade_deadline: 1, user_game_rank_id: sale_user_game_rank.id)}
 
             include_context 'アイテムトレードを登録する'
 

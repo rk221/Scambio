@@ -45,8 +45,7 @@ class Users::UserItemTradesController < UsersController
                 # 不成立メッセージを相手に送信
                 UserMessagePost.create_message_reject!(@item_trade_queue.decorate)
                 # 取引を終了する。
-                @item_trade.update!(enable_flag: false)
-                @item_trade_queue.update!(enable_flag: false, lock_version: @item_trade_queue.lock_version)
+                @item_trade.disable_trade
                 redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('.not_establish')
             end
         else

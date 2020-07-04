@@ -1,4 +1,7 @@
 class ItemTrade < ApplicationRecord
+    before_validation :set_trade_deadline
+    attr_accessor :numeric_of_trade_deadline
+
     belongs_to :user
     belongs_to :game
 
@@ -20,6 +23,7 @@ class ItemTrade < ApplicationRecord
     validates :sale_item_id, presence: true
     validates :enable_flag, inclusion: {in: [true, false]}
     validates :trade_deadline, presence: true
+    validates :numeric_of_trade_deadline, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 24}
     validates :user_game_rank_id, presence: true
 
     # 取引が有効 かつ 期限が有効
@@ -54,21 +58,37 @@ class ItemTrade < ApplicationRecord
     # アイテムトレードを、数量と期限のみ編集し直し、再登録する(後々取引自体のカウントが追加され信用が上がる)
     def re_regist(update_params)
         ItemTrade.transaction do
-            update!(buy_item_quantity: update_params[:buy_item_quantity], sale_item_quantity: update_params[:sale_item_quantity], enable_flag: true, trade_deadline: calc_trade_deadline(update_params[:trade_deadline]))
-            self.set_enable_item_trade_queue!
+            update!(buy_item_quantity: update_params[:buy_item_quantity], sale_item_quantity: update_params[:sale_item_quantity], enable_flag: true, numeric_of_trade_deadline: update_params[:numeric_of_trade_deadline])
+            set_enable_item_trade_queue!
         end 
         true
         rescue => e
         false
     end
 
-    def set_enable_item_trade_queue! # アイテムトレードに、有効なキューを格納する
+    # アイテムトレード正常終了処理
+    def disable_trade
+        self.transaction do # 両方更新が完了できれば正常
+            update_attribute(:enable_flag, false) # before_validationは呼ばれないのでcolumnではなくattribute
+            enable_item_trade_queue.update!(enable_flag: false)
+        end
+        true
+        rescue => e
+        false
+    end
+
+    # アイテムトレードに、有効なキューを格納する
+    def set_enable_item_trade_queue! 
         item_trade_queue = ItemTradeQueue.create_enabled!(self.id)
         update!(enable_item_trade_queue_id: item_trade_queue.id)
     end
 
     private
-    def calc_trade_deadline(trade_deadline)# 空文字列の時もnilを返す
-        trade_deadline.blank? ? nil : trade_deadline.to_i.hours.since
+    def set_trade_deadline
+        self.trade_deadline = calc_trade_deadline(@numeric_of_trade_deadline)
+    end
+
+    def calc_trade_deadline(numeric_of_trade_deadline)# 空文字列の時もnilを返す
+        numeric_of_trade_deadline.blank? ? nil : numeric_of_trade_deadline.to_i.hours.since
     end
 end
