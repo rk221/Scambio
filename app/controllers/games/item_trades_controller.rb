@@ -30,9 +30,6 @@ class Games::ItemTradesController < ApplicationController
         @regist_item_trade_form = RegistItemTradeForm.new(regist_item_trade_form_params)
 
         if @regist_item_trade_form.save 
-            # アイテムトレードに、有効なキューを格納する
-            ItemTrade.find(@regist_item_trade_form.id).update!(enable_item_trade_queue_id: ItemTradeQueue.create_enabled(@regist_item_trade_form.id).id)
-
             redirect_to user_user_item_trades_path(id: @regist_item_trade_form.id, user_id: current_user.id), notice: t('flash.regist')
         else
             @selectable_item_genres = ItemGenreGame.selectable_item_genres(@regist_item_trade_form.game_id)
@@ -47,10 +44,8 @@ class Games::ItemTradesController < ApplicationController
     def update 
         @item_trade = current_user.item_trades.find(params[:id])
         
-        if @item_trade.update(update_item_trade_params)
-            # アイテムトレードに、有効なキューを格納する
-            @item_trade.update!(enable_item_trade_queue_id: ItemTradeQueue.create_enabled(@item_trade.id).id)
-            
+        # 取引を再登録
+        if @item_trade.re_regist(update_item_trade_params)
             redirect_to user_user_item_trade_path(id: @item_trade.id, user_id: current_user.id), notice: t('flash.update')
         else
             render :edit
@@ -59,24 +54,19 @@ class Games::ItemTradesController < ApplicationController
 
     def destroy
         @item_trade = current_user.item_trades.find(params[:id])
-
-        @item_trade.update!(enable_flag: false)
+        @item_trade.disable_trade
         redirect_to user_user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
     end
 
     private
-    def update_item_trade_params 
-        params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity).merge(enable_flag: true, trade_deadline: calc_trade_deadline(params[:item_trade][:trade_deadline]))
-    end
-
-    def calc_trade_deadline(trade_deadline)# 空文字列の時もnilを返す
-        trade_deadline.blank? ? nil : trade_deadline.to_i.hours.since
-    end
-
     def regist_item_trade_form_params 
         params.require(:regist_item_trade_form)
-        .permit(:buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :trade_deadline, :buy_item_genre_id, :sale_item_genre_id)
+        .permit(:buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :numeric_of_trade_deadline, :buy_item_genre_id, :sale_item_genre_id)
         .merge(user_id: current_user.id, user_game_rank_id: UserGameRank.find_or_create_by(user_id: current_user.id, game_id: params[:game_id]).id, game_id: params[:game_id])
+    end
+
+    def update_item_trade_params 
+        params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity, :numeric_of_trade_deadline)
     end
 
     # ページを変更する際の << < 1 2 3 4 5 > >> を表示するために、リンクとページ数を保持するためのもの valueがfalseの場合はリンクとして使用しない。順序は大事なので注意

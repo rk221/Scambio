@@ -7,7 +7,7 @@ FactoryBot.define do
     buy_item_id {0}
     sale_item_id {0}
     enable_flag{false}
-    trade_deadline{Time.zone.now}
+    numeric_of_trade_deadline{10}
     user_game_rank{1}
   end
 end

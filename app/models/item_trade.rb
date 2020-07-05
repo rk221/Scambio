@@ -1,4 +1,7 @@
 class ItemTrade < ApplicationRecord
+    before_validation :set_trade_deadline
+    attr_accessor :numeric_of_trade_deadline # 1~24の値を格納し、現時点から何時間有効なのか設定する
+
     belongs_to :user
     belongs_to :game
 
@@ -20,6 +23,7 @@ class ItemTrade < ApplicationRecord
     validates :sale_item_id, presence: true
     validates :enable_flag, inclusion: {in: [true, false]}
     validates :trade_deadline, presence: true
+    validates :numeric_of_trade_deadline, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 24}
     validates :user_game_rank_id, presence: true
 
     # 取引が有効 かつ 期限が有効
@@ -49,5 +53,59 @@ class ItemTrade < ApplicationRecord
 
     def self.ransackable_scopes(auth_object = nil)
         %i(enabled_or_during_trade)
+    end
+
+    # アイテムトレードを、数量と期限のみ編集し直し、再登録する(後々取引自体のカウントが追加され信用が上がる)
+    def re_regist(update_params)
+        self.transaction do
+            update!(buy_item_quantity: update_params[:buy_item_quantity], sale_item_quantity: update_params[:sale_item_quantity], enable_flag: true, numeric_of_trade_deadline: update_params[:numeric_of_trade_deadline])
+            set_enable_item_trade_queue!
+        end 
+        true
+        rescue
+        false
+    end
+
+    # アイテムトレード正常終了処理
+    def disable_trade
+        self.transaction do                         # 両方更新が完了できれば正常
+            update_attribute(:enable_flag, false)   # before_validationは呼ばれないのでcolumnではなくattribute
+            enable_item_trade_queue.update!(enable_flag: false)
+        end
+        true
+        rescue
+        false
+    end
+
+    # 購入応答を処理する
+    def respond(respond_params)
+        self.transaction do
+            enable_item_trade_queue.update!(respond_params)
+            if enable_item_trade_queue.establish_flag
+                UserMessagePost.create_message_approve!(enable_item_trade_queue)            # 成立メッセージを相手に送信
+                ItemTradeDetail.create!(item_trade_queue_id: enable_item_trade_queue.id)    # Detailsを生成
+            else
+                UserMessagePost.create_message_reject!(enable_item_trade_queue.decorate)    # 不成立メッセージを相手に送信
+                raise ActiveRecord::RecordInvalid unless disable_trade                      # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
+            end
+        end
+        true
+        rescue
+        false
+    end
+
+    # アイテムトレードに、有効なキューを格納する 例外を投げ、呼び出し元で補足する
+    def set_enable_item_trade_queue! 
+        item_trade_queue = ItemTradeQueue.create_enabled!(self.id)
+        update!(enable_item_trade_queue_id: item_trade_queue.id)
+    end
+
+    private
+    def set_trade_deadline 
+        self.trade_deadline = calc_trade_deadline(@numeric_of_trade_deadline)
+    end
+    # 日付を1~24の値からTimeWithZoneに変換する 数値が入っていない場合nilを返す
+    def calc_trade_deadline(numeric_of_trade_deadline)
+        numeric_of_trade_deadline.blank? ? nil : numeric_of_trade_deadline.to_i.hours.since
     end
 end

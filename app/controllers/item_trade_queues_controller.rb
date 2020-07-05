@@ -3,10 +3,7 @@ class ItemTradeQueuesController < ApplicationController
     include Users
 
     def index
-        @item_trade_queues = current_user.item_trade_queues
-            .exist_user_enabled
-            .includes({item_trade: [:user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank, :game]}, :item_trade_detail)
-            .order("item_trade_queues.updated_at DESC").decorate
+        @item_trade_queues = ItemTradeQueue.trade_under_purchases(current_user.id).order("item_trade_queues.updated_at DESC").decorate
     end
 
     def show 
@@ -27,12 +24,7 @@ class ItemTradeQueuesController < ApplicationController
         return redirect_back(fallback_location: root_path, warning: t('.another_user_already_exists')) if item_trade_queue.user_id # 既に購入待ちが居る場合
         return redirect_to redirect_to_permit_error if confirm_user(item_trade_queue.item_trade) # ユーザIDと売却者ユーザIDが一致していると不正
 
-        if item_trade_queue.update(user_id: current_user.id, lock_version: item_trade_queue.lock_version)
-            # 成立メッセージを相手に送信
-            UserMessagePost.create_message_sell!(item_trade_queue)
-            # ゲームランクを生成する user_idとgame_idで一意でなければvalidationで弾く。
-            UserGameRank.create(user_id: current_user.id, game_id: item_trade_queue.item_trade.game_id)
-
+        if item_trade_queue.buy(current_user.id)
             redirect_to action: 'show', id: item_trade_queue.id, warning: t('.success_message')
         else
             redirect_to_error

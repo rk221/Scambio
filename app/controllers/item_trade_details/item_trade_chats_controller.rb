@@ -19,8 +19,6 @@ class ItemTradeDetails::ItemTradeChatsController < ApplicationController
 
     private
     def item_trade_chat_params(sender_is_seller)
-        p = params.require(:item_trade_chat).permit(:item_trade_detail_id, :message, :image).merge(sender_is_seller: sender_is_seller)
-        p[:message] = "" if p[:image].present? # 不正にメッセージも格納されている場合、消去する
-        p
+        params.require(:item_trade_chat).permit(:item_trade_detail_id, :message, :image).merge(sender_is_seller: sender_is_seller)
     end
 end
