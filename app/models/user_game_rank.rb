@@ -14,26 +14,26 @@ class UserGameRank < ApplicationRecord
     after_update :update_rank
 
     def buy_item_trade_update!(add_popularity)
-        self.update!(popularity: popularity + add_popularity, buy_trade_count: buy_trade_count + 1)
+        update!(popularity: self.popularity + add_popularity, buy_trade_count: self.buy_trade_count + 1)
     end
 
     def sale_item_trade_update!(add_popularity)
-        self.update!(popularity: popularity + add_popularity, sale_trade_count: sale_trade_count + 1)
+        update!(popularity: self.popularity + add_popularity, sale_trade_count: self.sale_trade_count + 1)
     end
     
     private 
 
     def update_rank # 更新時、ランクを更新する
-        return if buy_trade_count + sale_trade_count < 10 # 取引が１０回未満なのでグレー
-        if popularity <= -40 # レッド
+        return if self.buy_trade_count + self.sale_trade_count < 10 # 取引が１０回未満なのでグレー
+        if self.popularity <= -40 # レッド
             rank = -2
-        elsif popularity <= -20 # オレンジ
+        elsif self.popularity <= -20 # オレンジ
             rank = -1
-        elsif popularity <= 10 # ホワイト
+        elsif self.popularity <= 10 # ホワイト
             rank = 1
-        elsif popularity <= 40 # グリーン
+        elsif self.popularity <= 40 # グリーン
             rank = 2
-        elsif popularity <= 70 # ゴールド
+        elsif self.popularity <= 70 # ゴールド
             rank = 3
         else # ダイヤ
             rank = 4

@@ -4,29 +4,20 @@ class ItemTradeDetailsController < ApplicationController
 
     def edit_buy # 取引登録者が評価
         @item_trade_detail = ItemTradeDetail.find(params[:id])
-        # ユーザID確認
-        return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue.item_trade)
+        return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue.item_trade) # ユーザID確認
     end
 
     def edit_sale # 取引購入者が評価
         @item_trade_detail = ItemTradeDetail.find(params[:id])
-        # ユーザID確認
-        return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue)
+        return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue)    # ユーザID確認
     end
 
 
     def buy_evaluate # buy_popuarityを更新（取引登録者が評価）
         @item_trade_detail = ItemTradeDetail.find(params[:id])
-        # ユーザID確認
-        return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue.item_trade)
+        return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue.item_trade) # ユーザID確認
         
-        if @item_trade_detail.update(buy_evaluate_params)
-            @item_trade_detail.item_trade_queue.item_trade.disable_trade if @item_trade_detail.sale_popuarity # 両者評価しているなら取引を終了させる
-
-            # 購入側のRANKを更新
-            buy_user_game_rank = UserGameRank.find_by(user_id: @item_trade_detail.item_trade_queue.user_id, game_id: @item_trade_detail.item_trade_queue.item_trade.game_id)
-            buy_user_game_rank.buy_item_trade_update!(@item_trade_detail.buy_popuarity)
-
+        if @item_trade_detail.buy_evaluate(buy_evaluate_params)
             redirect_to user_path(current_user), success: t('.success_message')
         else
             render :edit_buy
@@ -35,16 +26,9 @@ class ItemTradeDetailsController < ApplicationController
 
     def sale_evaluate# sale_popuarityを更新 (取引購入者が評価)
         @item_trade_detail = ItemTradeDetail.find(params[:id])
-        # ユーザID確認
-        return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue)
+        return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue)    # ユーザID確認
 
-        if @item_trade_detail.update(sale_evaluate_params)
-            @item_trade_detail.item_trade_queue.item_trade.disable_trade if @item_trade_detail.buy_popuarity # 両者評価しているなら取引を終了させる
-
-            # 購入側のRANKを更新
-            sale_user_game_rank = UserGameRank.find_by(user_id: @item_trade_detail.item_trade_queue.item_trade.user_id, game_id: @item_trade_detail.item_trade_queue.item_trade.game_id)
-            sale_user_game_rank.sale_item_trade_update!(@item_trade_detail.sale_popuarity)
-
+        if @item_trade_detail.sale_evaluate(sale_evaluate_params)
             redirect_to user_path(current_user), success: t('.success_message')
         else
             render :edit_sale
