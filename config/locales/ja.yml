@@ -248,6 +248,7 @@ ja:
         regist: 登録しました
         item_trades:
             game_does_not_exist: 選択されたゲームが存在しません
+            end_item_trade: 取引は既に終了しています
         permit_error: このページを見る権限がありません
         error: エラーが発生しました
     errors:

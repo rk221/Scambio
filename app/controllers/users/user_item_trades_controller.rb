@@ -20,6 +20,7 @@ class Users::UserItemTradesController < UsersController
 
     def show 
         @item_trade_queue = current_user.item_trades.find(params[:id]).enable_item_trade_queue.decorate
+        redirect_to_error t('flash.item_trades.end_item_trade') unless @item_trade_queue.enable_flag
 
         if @item_trade_queue.item_trade_detail
             @item_trade_chat = ItemTradeChat.new(item_trade_detail_id: @item_trade_queue.item_trade_detail.id) 
