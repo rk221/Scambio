@@ -1,9 +1,9 @@
 class User < ApplicationRecord
-  has_one :nintendo_friend_code
-  has_one :play_station_network_id
-  has_many :fixed_phrases
+  has_one :nintendo_friend_code, dependent: :destroy
+  has_one :play_station_network_id, dependent: :destroy
+  has_many :fixed_phrases, dependent: :destroy
 
-  has_many :user_message_posts
+  has_many :user_message_posts, dependent: :destroy
   
   has_many :user_game_ranks
   has_many :user_game_rank_games, through: :user_game_ranks, source: :game

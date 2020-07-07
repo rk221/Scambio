@@ -8,7 +8,7 @@ class ItemTrade < ApplicationRecord
     belongs_to :buy_item, class_name: "Item", foreign_key: 'buy_item_id'
     belongs_to :sale_item, class_name: "Item", foreign_key: 'sale_item_id'
 
-    has_many :item_trade_queues
+    has_many :item_trade_queues, dependent: :destroy
     has_many :item_trade_queue_users, through: :item_trade_queues, source: :user
 
     belongs_to :enable_item_trade_queue, class_name: "ItemTradeQueue", foreign_key: "enable_item_trade_queue_id", optional: true
