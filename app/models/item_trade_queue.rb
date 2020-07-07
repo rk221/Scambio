@@ -1,7 +1,7 @@
 class ItemTradeQueue < ApplicationRecord
     belongs_to :user, optional: true
     belongs_to :item_trade
-    has_one :item_trade_detail
+    has_one :item_trade_detail, dependent: :destroy
     has_one :enable_item_trade, class_name: "ItemTrade", foreign_key: "enable_item_trade_queue_id"
 
     validates :item_trade_id, presence: true
