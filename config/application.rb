@@ -30,6 +30,13 @@ module Myapp
     # the framework and any gems in your application.
     config.generators do |g|
       g.assets false
+      g.decorator false
+      g.helper false
+      g.test_frame_work :rspec, # RSpecを使用
+        controller_specs: false, # controller specは作らない
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false
     end
 
     #ja

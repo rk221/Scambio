@@ -1,0 +1,10 @@
+%nav{"aria-label": "ページネーション"}
+    %ul.pagination
+        - pagenations.each do |link_name, page|
+            - if page
+                %li.page-item
+                    = link_to link_name, url_for(page_redirect_params(page)), class: 'page-link'
+            - else
+                %li.page-item.active
+                    %a.page-link
+                        = link_name 

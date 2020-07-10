@@ -82,16 +82,7 @@
                         - else
                             = link_to t('.buy_queue'), buy_item_trade_queue_path(id: item_trade.enable_item_trade_queue.id), method: :post, class: 'btn btn-primary'
 
-%nav{"aria-label": "ページネーション"}
-    %ul.pagination
-        - @hash_pages.each do |key, value|
-            - if value
-                %li.page-item
-                    = link_to key, game_item_trades_path(page_redirect_params(value)), class: 'page-link'
-            - else
-                %li.page-item.active
-                    %a.page-link
-                        = key
+= pagenate(@page_item_trades)
 
 = javascript_pack_tag 'select_sort'
 
