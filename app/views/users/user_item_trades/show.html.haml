@@ -9,7 +9,7 @@
 .container.mb-5
     %h3.mb-3
         = t('.now_state')
-    - if  @item_trade_queue.item_trade_detail && @item_trade_queue.item_trade_detail.buy_popuarity # 自分が評価していて、相手が評価していない
+    - if  @item_trade_queue.item_trade_detail&.buy_popuarity # 自分が評価していて、相手が評価していない
         %h5.mb-3
             = t('.your_evaluate_wait')
         - if @item_trade_queue.item_trade_detail.last_update_1_hour_passed? #自分が評価してから1時間経過
@@ -20,7 +20,10 @@
             = t('.1_hour_has_not_passed_yet')
     - elsif @item_trade_queue.establish_flag # true 取引が成立している場合
         %h5.mb-3
-            = t('.state_during_trade')
+            - if @item_trade_queue.item_trade_detail&.sale_popuarity # 相手が既に評価を終えている場合
+                = t('.buyer_end_evaluate')
+            - else
+                = t('.state_during_trade')
         -# 評価する
         = link_to t('.edit_buy'), edit_buy_item_trade_detail_path(@item_trade_queue.item_trade_detail.id), class: 'btn btn-primary' 
     - elsif @item_trade_queue.establish_flag.nil? && @item_trade_queue.user_id # nil 取引の応答待ちの場合
