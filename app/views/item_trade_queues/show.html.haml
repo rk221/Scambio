@@ -9,18 +9,18 @@
 .container.mb-5
     %h3.mb-3
         = t('.now_state')
-    - if  @item_trade_queue.item_trade_detail&.sale_popuarity # 自分が評価していて、相手が評価していない
+    - if @item_trade_queue.establish_flag #true 取引が成立している
         %h5.mb-3
-            = t('.your_evaluate_wait')
-    - elsif @item_trade_queue.establish_flag #true 取引が成立している
-        %h5.mb-3
-            = t('.during_trade')
+            - if @item_trade_queue.item_trade_detail&.buy_popuarity # 相手が既に評価を終えている場合
+                = t('.buyer_end_evaluate')
+            - else
+                = t('.state_during_trade')
         -# 評価する 
         = link_to t('.edit_sale'), edit_sale_item_trade_detail_path(id: @item_trade_queue.item_trade_detail.id), class: 'btn btn-primary'
-        
     - elsif @item_trade_queue.establish_flag.nil? #nil 相手の応答待ち
         %h5.mb-3
             = t('.state_wait_reaction')
+
 
 
 -# チャット機能
