@@ -4,6 +4,6 @@ class AdminController < ApplicationController
     private
 
     def admin_user
-        redirect_to root_path unless current_user.admin_flag?
+        redirect_to root_path unless current_user.admin?
     end
 end

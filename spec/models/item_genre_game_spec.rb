@@ -4,7 +4,7 @@ RSpec.describe ItemGenreGame, type: :model do
   let(:item_genre){FactoryBot.create(:item_genre)}
   let(:game){FactoryBot.create(:game)}
   it "アイテムジャンルIDとゲームIDと有効化フラグがある場合、有効である" do
-    item_genre_game = FactoryBot.build(:item_genre_game, item_genre_id: item_genre.id, game_id: game.id, enable_flag: false)
+    item_genre_game = FactoryBot.build(:item_genre_game, item_genre_id: item_genre.id, game_id: game.id, enable: false)
     expect(item_genre_game).to be_valid
   end
 
@@ -28,8 +28,8 @@ RSpec.describe ItemGenreGame, type: :model do
   end
 
   it "有効化フラグがない場合、無効である" do
-    item_genre_game = FactoryBot.build(:item_genre_game, enable_flag: nil, item_genre_id: item_genre.id, game_id: game.id)
+    item_genre_game = FactoryBot.build(:item_genre_game, enable: nil, item_genre_id: item_genre.id, game_id: game.id)
     item_genre_game.valid?
-    expect(item_genre_game.errors[:enable_flag]).to include("は一覧にありません")
+    expect(item_genre_game.errors[:enable]).to include("は一覧にありません")
   end
 end

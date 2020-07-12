@@ -5,22 +5,20 @@ class ItemTradeQueue < ApplicationRecord
     has_one :enable_item_trade, class_name: "ItemTrade", foreign_key: "enable_item_trade_queue_id"
 
     validates :item_trade_id, presence: true
-    validates :enable_flag, inclusion: {in: [true, false]}
-    validates :establish_flag, inclusion: {in: [true, false, nil]}
+    validates :establish, inclusion: {in: [true, false, nil]}
 
-    # キューが購入されていて、かつ、有効（取引中）の状態
-    scope :exist_user_enabled, -> {where.not(item_trade_queues: {user_id: nil}).where(item_trade_queues: {enable_flag: true})}
+    # キューが購入されている状態
+    scope :exist_user, -> {where.not(item_trade_queues: {user_id: nil})}
     # 売却中の取引一覧（ユーザが存在する）
     scope :reaction_wait_item_trade_queues, -> (current_user_id) do 
-        exist_user_enabled
-        .includes({item_trade: [:game, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank]}, :item_trade_detail)
-        .where(item_trades: {user_id: current_user_id}, item_trade_details: {buy_popuarity: nil})
+        includes({item_trade: [:game, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank]}, :item_trade_detail)
+        .where(item_trades: {user_id: current_user_id, enable: true}, item_trade_details: {buy_popuarity: nil})
+        .exist_user
     end
     # 購入中の取引一覧
     scope :trade_under_purchases, -> (current_user_id) do
-        exist_user_enabled
-        .includes({item_trade: [:user, :game, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank]}, :item_trade_detail)
-        .where(item_trade_queues: {user_id: current_user_id}, item_trade_details: {sale_popuarity: nil})
+        includes({item_trade: [:user, :game, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank]}, :item_trade_detail)
+        .where(item_trade_queues: {user_id: current_user_id}, item_trades: {enable: true}, item_trade_details: {sale_popuarity: nil})
     end
 
     def buy(current_user_id)
@@ -32,17 +30,13 @@ class ItemTradeQueue < ApplicationRecord
             UserGameRank.create(user_id: current_user_id, game_id: self.item_trade.game_id)
         end
         true
-        rescue
+    rescue
         false
     end
 
     # アイテムトレードに対応する購入待機用枠を作成する
     def self.create_enabled!(item_trade_id)
         # 既に、登録済みで、有効な購入待ちが存在する場合
-        if item_trade_queues = self.where(item_trade_id: item_trade_id, enable_flag: true)
-            item_trade_queues.update_all(enable_flag: false)
-        end
-
-        self.create!(item_trade_id: item_trade_id, user_id: nil, enable_flag: true, establish_flag: nil)
+        self.create!(item_trade_id: item_trade_id, user_id: nil, establish: nil)
     end
 end

@@ -7,7 +7,7 @@ class Users::UserMessagePostsController < UsersController
 
     def show 
         @user_message_post = current_user.user_message_posts.find(params[:id])
-        @user_message_post.update!(already_read_flag: true)
+        @user_message_post.update!(already_read: true)
         @user_message_post = @user_message_post.decorate
     end
 end

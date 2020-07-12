@@ -4,7 +4,7 @@ class CreateItemTrades < ActiveRecord::Migration[6.0]
       t.integer :buy_item_quantity, null: false
       t.integer :sale_item_quantity, null: false
 
-      t.boolean :enable_flag, null: false
+      t.boolean :enable, null: false
       t.datetime :trade_deadline, null: false
 
       t.references :user, foreign_key: true, null: false

@@ -1,7 +1,7 @@
 class CreateItemGenreGames < ActiveRecord::Migration[6.0]
   def change
     create_table :item_genre_games do |t|
-      t.boolean :enable_flag, null: false, default: false
+      t.boolean :enable, null: false, default: false
 
       t.references :item_genre, foreign_key: true, null: false
       t.references :game, foreign_key: true, null: false

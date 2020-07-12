@@ -63,9 +63,9 @@ RSpec.describe ItemTrade, type: :model do
   end
 
   it "有効化フラグがない場合、無効である" do
-    item_trade = FactoryBot.build(:item_trade, enable_flag: nil, user_id: user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, user_game_rank_id: user_game_rank.id)
+    item_trade = FactoryBot.build(:item_trade, enable: nil, user_id: user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, user_game_rank_id: user_game_rank.id)
     item_trade.valid?
-    expect(item_trade.errors[:enable_flag]).to include("は一覧にありません")
+    expect(item_trade.errors[:enable]).to include("は一覧にありません")
   end
 
   it "取引期限がない場合、無効である" do

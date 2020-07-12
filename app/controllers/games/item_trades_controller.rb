@@ -6,9 +6,12 @@ class Games::ItemTradesController < ApplicationController
         params[:q] = {sorts: 'updated_at desc'} if params[:q].blank?
         @q = ItemTrade.ransack(search_params)
         # 検索に会うもの + 有効な取引 + 購入されていない取引 + ゲームに一致している
-        @item_trades = search_item_trades(@q.result(distinct: true), search_params).enabled.includes(:enable_item_trade_queue).joins(:game).where(item_trade_queues: {user_id: nil, enable_flag: true}, game_id: params[:game_id])
-        @page_item_trades = @item_trades.page(params[:page])
-        @item_trades = @page_item_trades.includes(:user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank).decorate
+        @page_item_trades = search_item_trades(@q.result(distinct: true), search_params)
+            .enabled # 有効な取引
+            .includes(:enable_item_trade_queue, :game, :user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank)
+            .where(item_trade_queues: {user_id: nil}, game_id: params[:game_id]) # 購入されていない ゲーム一致
+            .page(params[:page])
+        @item_trades = @page_item_trades.decorate
         @selectable_item_genres = ItemGenreGame.selectable_item_genres(params[:game_id])
     end
 
@@ -32,12 +35,12 @@ class Games::ItemTradesController < ApplicationController
 
     def edit 
         @item_trade = current_user.item_trades.find(params[:id])
-        return redirect_to_permit_error if @item_trade.enable_flag && @item_trade&.enable_item_trade_queue.user_id
+        return redirect_to_permit_error if @item_trade.enable && @item_trade&.enable_item_trade_queue.user_id
     end
 
     def update 
         @item_trade = current_user.item_trades.find(params[:id])
-        return redirect_to_permit_error if @item_trade.enable_flag && @item_trade&.enable_item_trade_queue.user_id
+        return redirect_to_permit_error if @item_trade.enable && @item_trade&.enable_item_trade_queue.user_id
         
         # 取引を再登録
         if @item_trade.re_regist(update_item_trade_params)
@@ -49,8 +52,8 @@ class Games::ItemTradesController < ApplicationController
 
     def destroy
         @item_trade = current_user.item_trades.find(params[:id])
-        return redirect_to_permit_error if @item_trade.enable_flag && @item_trade&.enable_item_trade_queue.user_id
-        @item_trade.disable_trade
+        return redirect_to_permit_error if @item_trade.enable && @item_trade&.enable_item_trade_queue.user_id
+        @item_trade.disable_trade!
         redirect_to user_user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
     end
 

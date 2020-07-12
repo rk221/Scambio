@@ -12,7 +12,7 @@ class Admin::ItemGenresController < AdminController
         if @item_genre.save 
             #ItemGenreGameを追加する
             Game.find_each do |game|
-                ItemGenreGame.create!(item_genre_id: @item_genre.id, game_id: game.id, enable_flag: false) 
+                ItemGenreGame.create!(item_genre_id: @item_genre.id, game_id: game.id, enable: false) 
             end
             redirect_to admin_item_genres_path, notice: t('flash.create')
         else

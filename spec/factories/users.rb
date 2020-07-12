@@ -8,7 +8,7 @@ FactoryBot.define do
         password { 'password' }
         password_confirmation { 'password'}
         confirmed_at {Time.zone.now}
-        admin_flag{false}
+        admin{false}
     end
 
     factory :admin_user, class: User do
@@ -20,7 +20,7 @@ FactoryBot.define do
         password { 'password' }
         password_confirmation { 'password'}
         confirmed_at {Time.zone.now}
-        admin_flag{true}
+        admin{true}
     end
 
     factory :general_user, class: User do
@@ -32,7 +32,7 @@ FactoryBot.define do
         password { 'password' }
         password_confirmation { 'password'}
         confirmed_at {Time.zone.now}
-        admin_flag{false}
+        admin{false}
     end
 
     factory :sale_user, class: User do
@@ -44,7 +44,7 @@ FactoryBot.define do
         password { 'password' }
         password_confirmation { 'password'}
         confirmed_at {Time.zone.now}
-        admin_flag{false}
+        admin{false}
     end
 
     factory :buy_user, class: User do
@@ -56,7 +56,7 @@ FactoryBot.define do
         password { 'password' }
         password_confirmation { 'password'}
         confirmed_at {Time.zone.now}
-        admin_flag{false}
+        admin{false}
     end
 
     factory :default_login_user, class: User do
@@ -68,6 +68,6 @@ FactoryBot.define do
         password { 'password' }
         password_confirmation { 'password'}
         confirmed_at {Time.zone.now}
-        admin_flag{true}
+        admin{true}
     end
 end
