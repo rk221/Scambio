@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     scope module: :users do
       resources :user_item_trades, only: [:index, :show]
       post '/user_item_trade/:id/respond' => 'user_item_trades#respond', as: 'respond_user_item_trade'
-      post '/user_item_trade/:id/force' => 'user_item_trades#force', as: 'force_user_item_trade'
+      post '/user_item_trade/:id/forced' => 'user_item_trades#forced', as: 'forced_user_item_trade'
 
       resources :user_message_posts, only: [:index, :show]
     end

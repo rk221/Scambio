@@ -32,12 +32,12 @@ class Games::ItemTradesController < ApplicationController
 
     def edit 
         @item_trade = current_user.item_trades.find(params[:id])
-        redirect_to_permit_error if @item_trade.enable_flag
+        return redirect_to_permit_error if @item_trade.enable_flag && @item_trade&.enable_item_trade_queue.user_id
     end
 
     def update 
         @item_trade = current_user.item_trades.find(params[:id])
-        return redirect_to_permit_error if @item_trade.enable_flag
+        return redirect_to_permit_error if @item_trade.enable_flag && @item_trade&.enable_item_trade_queue.user_id
         
         # 取引を再登録
         if @item_trade.re_regist(update_item_trade_params)
@@ -49,7 +49,7 @@ class Games::ItemTradesController < ApplicationController
 
     def destroy
         @item_trade = current_user.item_trades.find(params[:id])
-        return redirect_to_permit_error if @item_trade.enable_flag
+        return redirect_to_permit_error if @item_trade.enable_flag && @item_trade&.enable_item_trade_queue.user_id
         @item_trade.disable_trade
         redirect_to user_user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
     end
