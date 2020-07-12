@@ -285,7 +285,7 @@ RSpec.describe ItemTrade, type: :system do
                                             end
 
                                             it '取引中になっている' do
-                                                expect(page).to have_content '取引中'
+                                                expect(page).to have_content '取引が成立しています。チャットを行い、取引してください。'
                                                 expect(page).to have_content '取引を完了'
                                             end
 
