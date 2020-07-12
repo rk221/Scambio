@@ -18,6 +18,9 @@ class UserMessagePost < ApplicationRecord
         self.create!(user_id: item_trade_queue.user_id, subject: I18n.t('users.user_message_posts.shared.approve_item_trade.subject'), message: message_template('approve_item_trade', item_trade_queue: item_trade_queue))
     end
 
+    def self.create_message_forced!(item_trade_queue)
+        self.create!(user_id: item_trade_queue.user_id, subject: I18n.t('users.user_message_posts.shared.forced_item_trade.subject'), message: message_template('forced_item_trade', item_trade_queue: item_trade_queue))
+    end
     private
 
     def self.message_template(partial_name, locals)

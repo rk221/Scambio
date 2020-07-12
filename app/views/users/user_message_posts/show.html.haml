@@ -17,4 +17,4 @@
             %td 
                 = @user_message_post.created_at
 
-= simple_format(@user_message_post.message)
+= raw(@user_message_post.message)

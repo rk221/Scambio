@@ -153,6 +153,9 @@ ja:
                 sell_item_trade:
                     subject: 取引が購入されました
                     message: 取引が購入されました。売却画面へ遷移してください。
+                forced_item_trade:
+                    subject: 取引が強制終了されました
+                    message: 取引の評価が行われなかったため、強制終了されました。
         shared:
             item_trade_chat:
                 chat: チャット

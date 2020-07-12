@@ -1,5 +1,6 @@
 class Users::UserItemTradesController < UsersController
     before_action :user_auth
+    include Errors
 
     # ユーザの取引一覧
     def index #page paramsを受け取るとページ切り替え可能
@@ -39,7 +40,20 @@ class Users::UserItemTradesController < UsersController
         end
     end
 
-    private
+
+    # 相手の取引評価が行われない場合、強制更新、強制終了を行う
+    def forced
+        @item_trade = current_user.item_trades.find(params[:id])
+        return redirect_to_permit_error unless  @item_trade.enable_item_trade_queue.item_trade_detail&.buy_popuarity && @item_trade.enable_item_trade_queue.item_trade_detail.last_update_1_hour_passed?
+
+        UserMessagePost.create_message_forced!(@item_trade.enable_item_trade_queue.decorate)
+        @item_trade.disable_trade
+        if params[:to_edit]
+            redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('flash.destroy')
+        else
+            redirect_to user_user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
+        end
+    end
 
     def respond_params
         params.require(:item_trade_queue).permit(:id, :establish_flag, :lock_version)
