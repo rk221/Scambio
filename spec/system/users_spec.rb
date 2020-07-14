@@ -6,7 +6,7 @@ RSpec.describe User, type: :system do
     
     let!(:game){FactoryBot.create(:game)}
     let!(:item_genre){FactoryBot.create(:item_genre)}
-    let!(:item_genre_game){FactoryBot.create(:item_genre_game, item_genre_id: item_genre.id, game_id: game.id, enable_flag: true)}
+    let!(:item_genre_game){FactoryBot.create(:item_genre_game, item_genre_id: item_genre.id, game_id: game.id, enable: true)}
     let!(:buy_item){FactoryBot.create(:buy_item, item_genre_id: item_genre.id, game_id: game.id)}
     let!(:sale_item){FactoryBot.create(:sale_item, item_genre_id: item_genre.id, game_id: game.id)}
 

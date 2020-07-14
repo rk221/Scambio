@@ -8,7 +8,7 @@
             = f.label :game_title, Game.human_attribute_name(:title)
             = f.search_field :game_title_cont, class: 'form-control'
         .form-group 
-            = f.label :enabled_or_during_trade, ItemTrade.human_attribute_name(:enable_flag)
+            = f.label :enabled_or_during_trade, ItemTrade.human_attribute_name(:enable)
             = f.check_box :enabled_or_during_trade, {checked: params[:q][:enabled_or_during_trade].present?,class: 'form-check'}, checked_value = true, unchecked_value = false
         .form-group
             = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_name)
@@ -69,18 +69,18 @@
                     %td 
                         = item_trade.sale_item_quantity
 
-                - if item_trade.enable_flag && item_trade.trade_deadline != "ERROR" && item_trade.enable_item_trade_queue.user_id.nil? # 取引有効 AND 期限有効 AND 購入されていない
+                - if item_trade.enable && item_trade.trade_deadline != "ERROR" && item_trade.enable_item_trade_queue.user_id.nil? # 取引有効 AND 期限有効 AND 購入されていない
                     %tr 
                         %td
                             = ItemTrade.human_attribute_name(:trade_deadline)
                         %td
                             = item_trade.trade_deadline
                 - item_trade_enable_or_sold =(item_trade.trade_deadline != "ERROR" || item_trade.enable_item_trade_queue.user_id)
-                - if item_trade.enable_flag &&  item_trade_enable_or_sold# 取引有効 AND (期限有効 OR 購入されている)
+                - if item_trade.enable &&  item_trade_enable_or_sold# 取引有効 AND (期限有効 OR 購入されている)
                     %tr
                         %td{colspan: 2}
                             = link_to t('link_to.show'), user_user_item_trade_path(id: item_trade.id), class: 'btn btn-primary'
-                - if !item_trade.enable_flag || !item_trade_enable_or_sold # 取引無効 OR !(期限有効 OR 購入されている)
+                - if !item_trade.enable || !item_trade_enable_or_sold # 取引無効 OR !(期限有効 OR 購入されている)
                     %tr
                         %td{colspan: 2}
                             = link_to t('.edit'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id), class: 'btn btn-success'

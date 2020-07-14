@@ -10,17 +10,17 @@ RSpec.describe ItemTradeQueue, type: :model do
   let!(:item_trade){FactoryBot.create(:item_trade, user_id: user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, user_game_rank_id: user_game_rank.id)}
   
   it "ユーザIDとアイテムトレードIDと有効化フラグと成立フラグがある場合、有効である" do
-    item_trade_queue = FactoryBot.build(:item_trade_queue, user_id: user.id, item_trade_id: item_trade.id, enable_flag: true, establish_flag: false)
+    item_trade_queue = FactoryBot.build(:item_trade_queue, user_id: user.id, item_trade_id: item_trade.id, establish: false)
     expect(item_trade_queue).to be_valid
   end
 
   it "ユーザIDとアイテムトレードIDと有効化フラグがある場合、有効である" do
-    item_trade_queue = FactoryBot.build(:item_trade_queue, user_id: user.id, item_trade_id: item_trade.id, enable_flag: true, establish_flag: nil)
+    item_trade_queue = FactoryBot.build(:item_trade_queue, user_id: user.id, item_trade_id: item_trade.id, establish: nil)
     expect(item_trade_queue).to be_valid
   end
 
   it "ユーザIDがない場合、有効である" do
-    item_trade_queue = FactoryBot.build(:item_trade_queue, user_id: nil, item_trade_id: item_trade.id, enable_flag: true, establish_flag: false)
+    item_trade_queue = FactoryBot.build(:item_trade_queue, user_id: nil, item_trade_id: item_trade.id, establish: false)
     expect(item_trade_queue).to be_valid
   end
 
@@ -28,11 +28,5 @@ RSpec.describe ItemTradeQueue, type: :model do
     item_trade_queue = FactoryBot.build(:item_trade_queue, user_id: user.id, item_trade_id: nil)
     item_trade_queue.valid?
     expect(item_trade_queue.errors[:item_trade_id]).to include("を入力してください")
-  end
-
-  it "有効化フラグがない場合、無効である" do
-    item_trade_queue = FactoryBot.build(:item_trade_queue, user_id: user.id, item_trade_id: item_trade.id, enable_flag: nil)
-    item_trade_queue.valid?
-    expect(item_trade_queue.errors[:enable_flag]).to include("は一覧にありません")
   end
 end

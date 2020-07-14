@@ -10,7 +10,7 @@
             = UserMessagePost.human_attribute_name(:created_at)
     %tbody
         - @user_message_posts.each do |user_message_post|
-            - if user_message_post.already_read_flag
+            - if user_message_post.already_read
                 %tr{bgcolor: '#CCCCCC', "@click": "onClick($event)", "data-href": user_user_message_post_path(id: user_message_post.id, user_id: current_user.id)}
                     %td
                         = user_message_post.subject

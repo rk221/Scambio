@@ -18,8 +18,8 @@ class RegistItemTradeForm
         return false if invalid?
 
         # ジャンルIDがそのゲームでは使用できない物の場合
-        return false unless ItemGenreGame.find_by(item_genre_id: buy_item_genre_id, game_id: game_id).enable_flag
-        return false unless ItemGenreGame.find_by(item_genre_id: sale_item_genre_id, game_id: game_id).enable_flag
+        return false unless ItemGenreGame.find_by(item_genre_id: buy_item_genre_id, game_id: game_id).enable
+        return false unless ItemGenreGame.find_by(item_genre_id: sale_item_genre_id, game_id: game_id).enable
 
         # 購入アイテム、売却アイテムなければ作成、有ればidを格納する
         buy_item = Item.find_by(name: buy_item_name, item_genre_id: buy_item_genre_id, game_id: game_id)
@@ -31,7 +31,7 @@ class RegistItemTradeForm
             sale_item = Item.create!(name: sale_item_name, item_genre_id: sale_item_genre_id, game_id: game_id)
         end
        
-        item_trade = ItemTrade.new(user_id: user_id, game_id: game_id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, buy_item_quantity: buy_item_quantity, sale_item_quantity: sale_item_quantity, numeric_of_trade_deadline: numeric_of_trade_deadline, enable_flag: true, user_game_rank_id: user_game_rank_id)
+        item_trade = ItemTrade.new(user_id: user_id, game_id: game_id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, buy_item_quantity: buy_item_quantity, sale_item_quantity: sale_item_quantity, numeric_of_trade_deadline: numeric_of_trade_deadline, enable: true, user_game_rank_id: user_game_rank_id)
 
         # item_tradeの保存、ItemTradequeueの生成 購入待機用QueueIDを保存 の3つが成功した時に、trueを返す
         item_trade.transaction do

@@ -21,20 +21,20 @@ class ItemTrade < ApplicationRecord
     validates :game_id, presence: true
     validates :buy_item_id, presence: true
     validates :sale_item_id, presence: true
-    validates :enable_flag, inclusion: {in: [true, false]}
+    validates :enable, inclusion: {in: [true, false]}
     validates :trade_deadline, presence: true
     validates :numeric_of_trade_deadline, numericality: {greater_than_or_equal_to: 1, less_than_or_equal_to: 24}
     validates :user_game_rank_id, presence: true
 
     # 取引が有効 かつ 期限が有効
-    scope :enabled, -> {where("item_trades.enable_flag = true and trade_deadline > ?", Time.zone.now)}
+    scope :enabled, -> {where("item_trades.enable = true and trade_deadline > ?", Time.zone.now)}
     # 取引が無効 か 期限が無効
-    scope :disabled, -> {where("item_trades.enable_flag = false or trade_deadline <= ?", Time.zone.now)}
+    scope :disabled, -> {where("item_trades.enable = false or trade_deadline <= ?", Time.zone.now)}
 
     # 取引が有効な時
     scope :enabled_or_during_trade, -> do 
         eager_load(:item_trade_queues)
-        .where("item_trades.enable_flag = true AND (item_trades.trade_deadline > ? OR item_trade_queues.user_id IS NOT NULL)", Time.zone.now)
+        .where("item_trades.enable = true AND (item_trades.trade_deadline > ? OR item_trade_queues.user_id IS NOT NULL)", Time.zone.now)
     end
 
     # 上記の結合を行なってから検索を行うこと！
@@ -58,7 +58,7 @@ class ItemTrade < ApplicationRecord
     # アイテムトレードを、数量と期限のみ編集し直し、再登録する(後々取引自体のカウントが追加され信用が上がる)
     def re_regist(update_params)
         self.transaction do
-            update!(buy_item_quantity: update_params[:buy_item_quantity], sale_item_quantity: update_params[:sale_item_quantity], enable_flag: true, numeric_of_trade_deadline: update_params[:numeric_of_trade_deadline])
+            update!(buy_item_quantity: update_params[:buy_item_quantity], sale_item_quantity: update_params[:sale_item_quantity], enable: true, numeric_of_trade_deadline: update_params[:numeric_of_trade_deadline])
             set_enable_item_trade_queue!
         end 
         true
@@ -67,28 +67,32 @@ class ItemTrade < ApplicationRecord
     end
 
     # アイテムトレード正常終了処理
-    def disable_trade
-        self.transaction do                         # 両方更新が完了できれば正常
-            update_attribute(:enable_flag, false)   # before_validationは呼ばれないのでcolumnではなくattribute
-            enable_item_trade_queue.update!(enable_flag: false)
+    def disable_trade!
+        update_attribute(:enable, false)   # before_validationは呼ばれないのでcolumnではなくattribute
+    end
+
+    def forced
+        self.transaction do
+            UserMessagePost.create_message_forced!(self.enable_item_trade_queue.decorate)
+            disable_trade!
         end
         true
-        rescue
+    rescue
         false
     end
 
     # 購入応答を処理する
     def respond(respond_params)
         self.transaction do
-            raise ActiveRecord::RecordInvalid if enable_item_trade_queue.establish_flag                                       # 既に評価済みの場合エラー
+            raise ActiveRecord::RecordInvalid if enable_item_trade_queue.establish                                       # 既に評価済みの場合エラー
 
             enable_item_trade_queue.update!(respond_params)
-            if enable_item_trade_queue.establish_flag
+            if enable_item_trade_queue.establish
                 UserMessagePost.create_message_approve!(enable_item_trade_queue)            # 成立メッセージを相手に送信
                 ItemTradeDetail.create!(item_trade_queue_id: enable_item_trade_queue.id)    # Detailsを生成
             else
                 UserMessagePost.create_message_reject!(enable_item_trade_queue.decorate)    # 不成立メッセージを相手に送信
-                raise ActiveRecord::RecordInvalid unless disable_trade                      # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
+                raise ActiveRecord::RecordInvalid unless disable_trade!                      # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
             end
         end
         true

@@ -3,6 +3,6 @@ FactoryBot.define do
     user_id {1}
     subject {"testsubject"}
     message {"<HTML>test</HTML>"}
-    already_read_flag {false}
+    already_read {false}
   end
 end

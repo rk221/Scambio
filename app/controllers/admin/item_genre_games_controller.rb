@@ -5,11 +5,11 @@ class Admin::ItemGenreGamesController < ApplicationController
 
     def enable
         @item_genre_game = ItemGenreGame.find(params[:id])
-        @item_genre_game.update_attribute(:enable_flag, true)
+        @item_genre_game.update_attribute(:enable, true)
     end
     
     def disable
         @item_genre_game = ItemGenreGame.find(params[:id])
-        @item_genre_game.update_attribute(:enable_flag, false)
+        @item_genre_game.update_attribute(:enable, false)
     end
 end

@@ -8,7 +8,7 @@ RSpec.describe UserMessagePost, type: :system do
 
     let!(:game){FactoryBot.create(:game)}
     let!(:item_genre){FactoryBot.create(:item_genre)}
-    let!(:item_genre_game){FactoryBot.create(:item_genre_game, item_genre_id: item_genre.id, game_id: game.id, enable_flag: true)}
+    let!(:item_genre_game){FactoryBot.create(:item_genre_game, item_genre_id: item_genre.id, game_id: game.id, enable: true)}
     let!(:buy_item){FactoryBot.create(:buy_item, item_genre_id: item_genre.id, game_id: game.id)}
     let!(:sale_item){FactoryBot.create(:sale_item, item_genre_id: item_genre.id, game_id: game.id)}
 
@@ -19,7 +19,7 @@ RSpec.describe UserMessagePost, type: :system do
         include_context '売却ユーザがログイン状態になる', :logout
             
         context 'アイテムトレードが登録されている場合' do
-            let(:item_trade){FactoryBot.build(:item_trade, user_id: sale_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable_flag: true, numeric_of_trade_deadline: 1, user_game_rank_id: sale_user_game_rank.id)}
+            let(:item_trade){FactoryBot.build(:item_trade, user_id: sale_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable: true, numeric_of_trade_deadline: 1, user_game_rank_id: sale_user_game_rank.id)}
 
             include_context 'アイテムトレードを登録する'
 

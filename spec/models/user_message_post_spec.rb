@@ -32,8 +32,8 @@ RSpec.describe UserMessagePost, type: :model do
   end
 
   it "既読フラグが無い場合、無効である" do
-    user_message_post = FactoryBot.build(:user_message_post, already_read_flag: nil, user_id: user.id)
+    user_message_post = FactoryBot.build(:user_message_post, already_read: nil, user_id: user.id)
     user_message_post.valid?
-    expect(user_message_post.errors[:already_read_flag]).to include("は一覧にありません") 
+    expect(user_message_post.errors[:already_read]).to include("は一覧にありません") 
   end
 end

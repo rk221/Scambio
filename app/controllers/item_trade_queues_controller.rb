@@ -8,7 +8,7 @@ class ItemTradeQueuesController < ApplicationController
 
     def show 
         @item_trade_queue = current_user.item_trade_queues.find(params[:id]).decorate
-        return redirect_to_error t('flash.item_trades.end_item_trade') unless @item_trade_queue.enable_flag
+        return redirect_to_error t('flash.item_trades.end_item_trade') unless @item_trade_queue.item_trade.enable
         return redirect_to_error t('flash.item_trades.evaluated_item_trade') if @item_trade_queue.item_trade_detail&.sale_popuarity
 
         if @item_trade_queue.item_trade_detail

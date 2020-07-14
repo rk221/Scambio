@@ -115,7 +115,7 @@ ja:
             index:
                 title: あなたのアイテムトレード一覧
                 edit: 取引を有効化
-                enable_flag: 有効な取引だけ表示
+                enable: 有効な取引だけ表示
             show:
                 title: あなたのアイテムトレード詳細
                 now_state: 現在の取引状態
@@ -193,11 +193,10 @@ ja:
                 sale_item_genre_id: 売却アイテムジャンルID
                 buy_item_genre_name: 購入アイテムジャンル名
                 sale_item_genre_name: 売却アイテムジャンル名
-                enable_flag: 有効フラグ
+                enable: 有効フラグ
             item_trade_queue:
                 user_id: ユーザID
                 item_trade_id: アイテムトレードID
-                end_flag: 終了フラグ
             item_trade_chat:
                 message: メッセージ
                 image: 画像
@@ -207,7 +206,7 @@ ja:
             user_message_post:
                 subject: 件名
                 message: メッセージ
-                already_read_flag: 既読
+                already_read: 既読
                 created_at: 投稿時間
         models:
             game: ゲーム

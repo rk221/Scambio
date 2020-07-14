@@ -1,7 +1,7 @@
 %nav.app-title.navbar.navbar-expand-md.navbar-light.bg-light
     - if user_signed_in?
         %ul.navbar-nav.ml-auto
-            - if current_user.admin_flag?
+            - if current_user.admin?
                 = render partial: 'admin/shared/navbar_admin'
             %li.navitem
                 = link_to t('navbar.games'), games_path, class: 'nav-link'

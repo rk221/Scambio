@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
   end
 
   create_table "item_genre_games", force: :cascade do |t|
-    t.boolean "enable_flag", default: false, null: false
+    t.boolean "enable", default: false, null: false
     t.bigint "item_genre_id", null: false
     t.bigint "game_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -71,8 +71,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
   end
 
   create_table "item_trade_queues", force: :cascade do |t|
-    t.boolean "enable_flag", default: true, null: false
-    t.boolean "establish_flag"
+    t.boolean "establish"
     t.bigint "item_trade_id", null: false
     t.bigint "user_id"
     t.integer "lock_version", default: 0
@@ -85,7 +84,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
   create_table "item_trades", force: :cascade do |t|
     t.integer "buy_item_quantity", null: false
     t.integer "sale_item_quantity", null: false
-    t.boolean "enable_flag", null: false
+    t.boolean "enable", null: false
     t.datetime "trade_deadline", null: false
     t.bigint "user_id", null: false
     t.bigint "game_id", null: false
@@ -148,7 +147,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
     t.bigint "user_id", null: false
     t.string "subject", limit: 100, null: false
     t.text "message", null: false
-    t.boolean "already_read_flag", default: false, null: false
+    t.boolean "already_read", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_user_message_posts_on_user_id"
@@ -178,7 +177,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
     t.datetime "locked_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "admin_flag", default: false, null: false
+    t.boolean "admin", default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -4,7 +4,7 @@ class UserMessagePost < ApplicationRecord
     validates :subject, presence: true, length: {maximum: 100}
     validates :message, presence: true
     validates :user_id, presence: true
-    validates :already_read_flag, inclusion: {in: [true, false]}
+    validates :already_read, inclusion: {in: [true, false]}
 
     def self.create_message_sell!(item_trade_queue)
         self.create!(user_id: item_trade_queue.item_trade.user_id, subject: I18n.t('users.user_message_posts.shared.sell_item_trade.subject'),message: message_template('sell_item_trade', item_trade_queue: item_trade_queue))
