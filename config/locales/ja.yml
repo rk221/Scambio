@@ -11,6 +11,7 @@ ja:
         regist: 登録
         enable: 有効
         disable: 無効
+        back: 戻る
     admin:
         games:
             index:
@@ -229,7 +230,6 @@ ja:
                 buy_item_genre_id: 購入アイテムジャンル
                 sale_item_genre_id: 売却アイテムジャンル
 
-
     helpers:
         submit:
             create: 登録
@@ -260,3 +260,4 @@ ja:
         messages:
             psn_id_head_alphabet: は先頭英字で入力してください
             numeric_of_trade_deadline_out_of_range: は1~24の範囲で入力してください
+            birthdate_cannot_be_in_the_future: "は正しい範囲で設定してください"

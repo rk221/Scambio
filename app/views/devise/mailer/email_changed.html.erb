@@ -1,4 +1,4 @@
-<p><%= t('users.mailer.email_changed.greeting', fullname: @resource.decorate.fullname) %></p>
+<p><%= t('.greeting', fullname: @resource.decorate.fullname) %></p>
 
 <% if @resource.try(:unconfirmed_email?) %>
   <p>We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.</p>
