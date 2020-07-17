@@ -10,13 +10,13 @@
     = stylesheet_pack_tag 'application'
 
   %body
-    %main.container
-      %nav
+    #header.mb-3
+      %nav#nav
         = render partial: 'navbar/navbar'
-      - breadcrumbs.tap do |links| 
-        - if links.any? 
-          .container
-            %ol.breadcrumb
+      #breadcrumb
+        - breadcrumbs.tap do |links| 
+          - if links.any? 
+            %ol.breadcrumb.mb-0
               - links.each do |link| 
                 - if link.current?
                   %li.breadcrumb-item
@@ -24,8 +24,10 @@
                 - else
                   %li.breadcrumb-item.active
                     = link_to_unless(link.current?, link.text, link.url)
-      - flash.each do |key, value|
-        - key = "info" if key == "notice"
-        - key = "danger"  if key == "alert"
-        = content_tag :div, value, class: "alert alert-#{key}"
+      #flash
+        - flash.each do |key, value|
+          - key = "info" if key == "notice"
+          - key = "danger"  if key == "alert"
+          = content_tag :div, value, class: "alert alert-#{key}"
+    #main.container
       = yield
