@@ -13,7 +13,7 @@ ja:
         birthdate: "生年月日"
     models:
       user: "ユーザ"
-  users:
+  devise:
     confirmations:
       new:
         resend_confirmation_instructions: "アカウント確認メール再送"
@@ -77,6 +77,3 @@ ja:
     unlocks:
       new:
         resend_unlock_instructions: "アカウントの凍結解除方法を再送する"
-  errors:
-    messages:
-      birthdate_cannot_be_in_the_future: "は正しい範囲で設定してください"
