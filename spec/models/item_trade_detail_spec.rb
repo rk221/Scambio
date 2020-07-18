@@ -1,39 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe ItemTradeDetail, type: :model do
-  let!(:user){FactoryBot.create(:user)}
-  let!(:item_genre){FactoryBot.create(:item_genre)}
-  let!(:game){FactoryBot.create(:game)}
-  let!(:buy_item){FactoryBot.create(:buy_item, item_genre_id: item_genre.id, game_id: game.id)}
-  let!(:sale_item){FactoryBot.create(:sale_item, item_genre_id: item_genre.id, game_id: game.id)}
-  let!(:user_game_rank){FactoryBot.create(:user_game_rank, user_id: user.id, game_id: game.id)}
-  let!(:item_trade){FactoryBot.create(:item_trade, user_id: user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, user_game_rank_id: user_game_rank.id)}
-  let!(:item_trade_queue){FactoryBot.create(:item_trade_queue, user_id: user.id, item_trade_id: item_trade.id)}
+  let!(:user){create(:user)}
+  let!(:item_genre){create(:item_genre)}
+  let!(:game){create(:game)}
+  let!(:buy_item){create(:buy_item, item_genre: item_genre, game: game)}
+  let!(:sale_item){create(:sale_item, item_genre: item_genre, game: game)}
+  let!(:user_game_rank){create(:user_game_rank, user: user, game: game)}
+  let!(:item_trade){create(:item_trade, user: user, game: game, buy_item: buy_item, sale_item: sale_item, user_game_rank: user_game_rank)}
+  let!(:item_trade_queue){create(:item_trade_queue, user: user, item_trade: item_trade)}
 
-  it "購入評価と売却評価とアイテムトレードキューIDがある場合、有効である" do
-    item_trade_detail = FactoryBot.build(:item_trade_detail, sale_popuarity: 0, buy_popuarity: 0, item_trade_queue_id: item_trade_queue.id)
+  it "is valid with valid attributes" do
+    item_trade_detail = build(:item_trade_detail, sale_popuarity: 0, buy_popuarity: 0, item_trade_queue: item_trade_queue)
     expect(item_trade_detail).to be_valid
   end
 
-  it "アイテムトレードキューIDだけある場合、有効である" do
-    item_trade_detail = FactoryBot.build(:item_trade_detail, sale_popuarity: nil, buy_popuarity: nil, item_trade_queue_id: item_trade_queue.id)
+  it "is valid with an item_trade_queue_id" do
+    item_trade_detail = build(:item_trade_detail, sale_popuarity: nil, buy_popuarity: nil, item_trade_queue: item_trade_queue)
     expect(item_trade_detail).to be_valid
   end
 
-  it "購入評価が3,0,-1以外の場合、無効である" do
-    item_trade_detail = FactoryBot.build(:item_trade_detail, sale_popuarity: 0, buy_popuarity: 2, item_trade_queue_id: item_trade_queue.id)
+  it "is not valid with an other than 3 and 0 and -1 buy_popuarity" do
+    item_trade_detail = build(:item_trade_detail, sale_popuarity: 0, buy_popuarity: 2, item_trade_queue: item_trade_queue)
     item_trade_detail.valid?
     expect(item_trade_detail.errors[:buy_popuarity]).to include("は一覧にありません")
   end
 
-  it "売却評価が3,0,-1未満の場合、無効である" do
-    item_trade_detail = FactoryBot.build(:item_trade_detail, sale_popuarity: -2, buy_popuarity: 0, item_trade_queue_id: item_trade_queue.id)
+  it "is not valid with an other than 3 and 0 and -1 sale_popuarity" do
+    item_trade_detail = build(:item_trade_detail, sale_popuarity: -2, buy_popuarity: 0, item_trade_queue: item_trade_queue)
     item_trade_detail.valid?
     expect(item_trade_detail.errors[:sale_popuarity]).to include("は一覧にありません")
   end
 
-  it "アイテムトレードキューIDがない場合、無効である" do
-    item_trade_detail = FactoryBot.build(:item_trade_detail, sale_popuarity: 0, buy_popuarity: 0, item_trade_queue_id: nil)
+  it "is not valid without an item_trade_queue_id" do
+    item_trade_detail = build(:item_trade_detail, sale_popuarity: 0, buy_popuarity: 0, item_trade_queue: nil)
     item_trade_detail.valid?
     expect(item_trade_detail.errors[:item_trade_queue_id]).to include("を入力してください")
   end

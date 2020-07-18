@@ -4,7 +4,7 @@ FactoryBot.define do
     buy_trade_count {0}
     sale_trade_count {0}
     popularity {0}
-    user_id {1}
-    game_id {1}
+    user
+    game
   end
 end
