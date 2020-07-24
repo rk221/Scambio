@@ -1,93 +1,91 @@
 require 'rails_helper'
-require 'support/user_shared_context'
 
 RSpec.describe PlayStationNetworkId, type: :system do
-    let(:general_user){FactoryBot.create(:general_user)}
+    let(:general_user){create(:general_user)}
 
     let(:login_user){general_user}
-    include_context 'ユーザがログイン状態になる'
+    include_context 'when user is logging in'
 
-    describe 'PSN_IDCRUD' do 
+    describe 'PSN_ID' do 
         before do
-            click_link 'マイページ'
-            click_link 'コード一覧'
+            click_link t('users.show.codes')
         end
 
 
-        describe 'PSN_ID登録' do 
+        describe 'Create' do 
             before do
                 within(:css, '#play-station-network-id') do 
-                    click_link('登録')
+                    click_link t_link_to(:regist)
                 end
             end
 
-            it '登録画面へ遷移している' do
-                expect(page).to have_content 'PlayStationNetworkID登録'
+            it 'a create of play station newtwork id is displayed' do
+                main_to_expect.to have_content t('codes.play_station_network_ids.new.title')
             end
 
-            context '登録画面へ遷移している' do
-                let(:play_station_network_id){FactoryBot.build(:play_station_network_id)}
+            context 'when transitioning to create of play station newtwork id' do
+                let(:play_station_network_id){build(:play_station_network_id)}
                 before do 
-                    fill_in 'PSN_ID', with: play_station_network_id.psn_id
-                    click_button '登録'
+                    fill_in t_model_attribute_name(PlayStationNetworkId, :psn_id), with: play_station_network_id.psn_id
+                    click_button t_submit(:create)
                 end
 
-                it 'コード一覧画面へ遷移している' do 
-                    expect(page).to have_content 'コード一覧'
+                it 'a codes is displayed' do 
+                    main_to_expect.to have_content t('codes.index.title')
                 end
 
-                it 'PlayStationNetworkIDが表示されている' do
-                    expect(page).to have_content play_station_network_id.psn_id
+                it 'a play station network id is displayed' do
+                    main_to_expect.to have_content play_station_network_id.psn_id
                 end
             end
         end
 
-        describe 'PSN_ID編集' do 
-            let!(:play_station_network_id){FactoryBot.create(:play_station_network_id, user_id: login_user.id)}
+        describe 'Edit' do 
+            let!(:play_station_network_id){create(:play_station_network_id, user: login_user)}
             before do
                 visit current_path
                 within(:css, '#play-station-network-id') do 
-                    click_link('編集')
+                    click_link t_link_to(:edit)
                 end
             end
 
-            it '編集画面へ遷移している' do
-                expect(page).to have_content 'PlayStationNetworkID編集'
+            it 'a edit of play station newtwork id is displayed' do
+                main_to_expect.to have_content t('codes.play_station_network_ids.edit.title')
             end
 
-            context '編集画面へ遷移している' do
-                let(:after_play_station_network_id){FactoryBot.build(:play_station_network_id, psn_id: 'afterid')}
+            context 'when transitioning to edit of play station newtwork id' do
+                let(:after_play_station_network_id){build(:play_station_network_id, psn_id: 'afterid')}
                 before do 
-                    fill_in 'PSN_ID', with: after_play_station_network_id.psn_id
-                    click_button '更新'
+                    fill_in t_model_attribute_name(PlayStationNetworkId, :psn_id), with: after_play_station_network_id.psn_id
+                    click_button t_submit(:update)
                 end
 
-                it 'コード一覧画面へ遷移している' do 
-                    expect(page).to have_content 'コード一覧'
+                it 'a codes is displayed' do 
+                    main_to_expect.to have_content t('codes.index.title')
                 end
 
-                it '更新後のPlayStationNetworkIDが表示されている' do
-                    expect(page).to have_content after_play_station_network_id.psn_id
+                it 'a after play station network id is displayed' do
+                    main_to_expect.to have_content after_play_station_network_id.psn_id
                 end
             end
         end
 
-        describe 'PSN_ID削除' do 
-            let!(:play_station_network_id){FactoryBot.create(:play_station_network_id, user_id: login_user.id)}
+        describe 'Destroy' do 
+            let!(:play_station_network_id){create(:play_station_network_id, user: login_user)}
             before do
                 visit current_path
                 within(:css, '#play-station-network-id') do 
-                    click_link('削除')
+                    click_link t_link_to(:destroy)
                 end
                 accept_confirm
             end
 
-            it 'コード一覧画面へ遷移している' do 
-                expect(page).to have_content 'コード一覧'
+            it 'a codes is displayed' do
+                main_to_expect.to have_content t('codes.index.title')
             end
 
-            it 'PlayStationNetworkIDが削除されている' do
-                expect(page).to_not have_content play_station_network_id.psn_id
+            it 'a play station network id is not displayed' do
+                main_to_expect.to_not have_content play_station_network_id.psn_id
             end
         end
     end

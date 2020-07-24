@@ -1,185 +1,129 @@
 require 'rails_helper'
-require 'support/user_shared_context'
 
 RSpec.describe ItemGenre, type: :system do
-    let(:admin_user){FactoryBot.create(:admin_user)}
-    let(:general_user){FactoryBot.create(:general_user)}
+    let(:admin_user){create(:admin_user)}
+    let(:general_user){create(:general_user)}
 
-    describe 'アイテムジャンルCRUD' do 
-        describe '管理ユーザでログインしている場合' do
+    describe 'Item Genre' do 
+        describe 'when admin user is logging in' do
             let(:login_user){admin_user}
-            include_context 'ユーザがログイン状態になる'
+            include_context 'when user is logging in'
 
-            context 'アイテムジャンル一覧画面へ遷移している場合' do
+            context 'when transitioning item genre list' do
                 before do
-                    click_link 'アイテムジャンル'
+                    click_link t_navbar(:item_genres)
                 end
 
-                it 'アイテムジャンル一覧画面が表示されている' do
-                    expect(page).to have_content 'アイテムジャンル一覧'
+                it 'item genre list is displayed' do
+                    main_to_expect.to have_content t('admin.item_genres.index.title')
                 end
             end
 
-            describe 'アイテムジャンル新規登録' do
+            describe 'Create' do
                 before do
-                    click_link 'アイテムジャンル'
-                    click_link '登録'
+                    click_link t_navbar(:item_genres)
+                    click_link t_link_to(:regist)
                 end
 
-                it 'アイテムジャンル新規登録画面が表示されている' do 
-                    expect(page).to have_content 'アイテムジャンル登録'
+                it 'create of item genre is displayed' do 
+                    main_to_expect.to have_content t('admin.item_genres.new.title') 
                 end
 
-                context 'アイテムジャンルの名前、デフォルトの単位名がある場合' do 
-                    let(:item_genre){FactoryBot.build(:item_genre)} 
+                context 'when create valid item genre' do 
+                    let(:item_genre){build(:item_genre)} 
                     before do 
-                        fill_in "アイテムジャンル名", with: item_genre.name 
-                        fill_in "デフォルトの単位名", with: item_genre.default_unit_name 
-                        click_button '登録'
+                        fill_in t_model_attribute_name(ItemGenre, :name), with: item_genre.name 
+                        fill_in t_model_attribute_name(ItemGenre, :default_unit_name), with: item_genre.default_unit_name 
+                        click_button t_submit(:create)
                     end
 
-                    it 'アイテムジャンル一覧画面に登録されたアイテムジャンルが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル一覧'
-                        expect(page).to have_content item_genre.name
-                        expect(page).to have_content item_genre.default_unit_name
+                    it 'a create of item genre is displayed' do
+                        main_to_expect.to have_content t('admin.item_genres.index.title')
+                        main_to_expect.to have_content item_genre.name
+                        main_to_expect.to have_content item_genre.default_unit_name
                     end
                 end
 
-                context 'アイテムジャンル名が無い場合' do 
+                context 'when create invalid item genre' do 
                     before do 
-                        fill_in "アイテムジャンル名", with: nil
-                        click_button '登録'
+                        fill_in t_model_attribute_name(ItemGenre, :name), with: nil
+                        click_button t_submit(:create)
                     end
 
-                    it 'アイテムジャンル新規登録画面でエラーメッセージが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル登録'
-                        expect(page).to have_content 'アイテムジャンル名を入力してください'
-                    end
-                end
-
-                context 'デフォルトの単位名が無い場合' do 
-                    before do 
-                        fill_in "デフォルトの単位名", with: nil
-                        click_button '登録'
+                    it 'create of item genre is displayed' do 
+                        main_to_expect.to have_content t('admin.item_genres.new.title') 
                     end
 
-                    it 'アイテムジャンル登録画面でエラーメッセージが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル登録'
-                        expect(page).to have_content 'デフォルトの単位名を入力してください'
-                    end
-                end
-   
-            end 
-
-            describe 'アイテムジャンル編集' do 
-                let!(:item_genre){FactoryBot.create(:item_genre)} 
-                before do
-                    click_link 'アイテムジャンル'
-                    click_link '編集'
-                end
-
-                it 'アイテムジャンル編集画面が表示されている' do 
-                    expect(page).to have_content 'アイテムジャンル編集'
-                end
-
-                context 'アイテムジャンル名、デフォルトの単位名がある場合' do 
-                    before do 
-                        fill_in "アイテムジャンル名", with: item_genre.name + "更新版"
-                        fill_in "デフォルトの単位名", with: item_genre.default_unit_name + "更新版"
-                        click_button '更新'
-                    end
-
-                    it 'アイテムジャンル一覧画面に更新されたアイテムジャンルが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル一覧'
-                        expect(page).to have_content item_genre.name + "更新版"
-                        expect(page).to have_content item_genre.default_unit_name + "更新版"
-                    end
-                end
-
-                context 'アイテムジャンル名を消した場合' do 
-                    before do 
-                        fill_in "アイテムジャンル名", with: "" 
-                        click_button '更新'
-                    end
-
-                    it 'アイテムジャンル編集画面でエラーメッセージが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル編集'
-                        expect(page).to have_content 'アイテムジャンル名を入力してください'
-                    end
-                end
-
-                context 'デフォルトの単位名を消した場合' do 
-                    before do 
-                        fill_in "デフォルトの単位名", with: "" 
-                        click_button '更新'
-                    end
-
-                    it 'アイテムジャンル編集画面でエラーメッセージが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル編集'
-                        expect(page).to have_content 'デフォルトの単位名を入力してください'
+                    it 'error message is displayed' do
+                        main_to_expect.to have_content 'アイテムジャンル名を入力してください'
                     end
                 end
             end 
 
-            describe 'アイテムジャンル編集' do 
-                let!(:item_genre){FactoryBot.create(:item_genre)} 
+            describe 'Edit' do 
+                let!(:item_genre){create(:item_genre)} 
                 before do
-                    click_link 'アイテムジャンル'
-                    click_link '編集'
+                    click_link t_navbar(:item_genres)
+                    click_link t_link_to(:edit)
                 end
 
-                it 'アイテムジャンル編集画面が表示されている' do 
-                    expect(page).to have_content 'アイテムジャンル編集'
+
+                it 'edit of item genre is displayed' do 
+                    main_to_expect.to have_content t('admin.item_genres.edit.title') 
                 end
 
-                context 'アイテムジャンル名、デフォルトの単位名がある場合' do 
+                context 'when update valid item genre' do 
                     before do 
-                        fill_in "アイテムジャンル名", with: item_genre.name + "更新版"
-                        fill_in "デフォルトの単位名", with: item_genre.default_unit_name + "更新版"
-                        click_button '更新'
+                        fill_in t_model_attribute_name(ItemGenre, :name), with: item_genre.name + "更新版"
+                        fill_in t_model_attribute_name(ItemGenre, :default_unit_name), with: item_genre.default_unit_name + "更新版"
+                        click_button t_submit(:update)
                     end
 
-                    it 'アイテムジャンル一覧画面に更新されたアイテムジャンルが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル一覧'
-                        expect(page).to have_content item_genre.name + "更新版"
-                        expect(page).to have_content item_genre.default_unit_name + "更新版"
+                    it 'a update of item genre is displayed' do
+                        main_to_expect.to have_content t('admin.item_genres.index.title')
+                        main_to_expect.to have_content item_genre.name + "更新版"
+                        main_to_expect.to have_content item_genre.default_unit_name + "更新版"
                     end
                 end
 
-                context 'アイテムジャンル名を消した場合' do 
+                context 'when update invalid item genre' do 
                     before do 
-                        fill_in "アイテムジャンル名", with: "" 
-                        click_button '更新'
+                        fill_in t_model_attribute_name(ItemGenre, :default_unit_name), with: ""
+                        click_button t_submit(:update)
                     end
 
-                    it 'アイテムジャンル編集画面でエラーメッセージが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル編集'
-                        expect(page).to have_content 'アイテムジャンル名を入力してください'
+                    it 'edit of item genre is displayed' do 
+                        main_to_expect.to have_content t('admin.item_genres.edit.title') 
                     end
-                end   
-            end
 
-            describe 'アイテムジャンル削除' do 
-                let!(:item_genre){FactoryBot.create(:item_genre)} 
+                    it 'error message is displayed' do
+                        main_to_expect.to have_content 'デフォルトの単位名を入力してください'
+                    end
+                end
+            end 
+
+            describe 'Destroy' do 
+                let!(:item_genre){create(:item_genre)} 
+
                 before do
-                    click_link 'アイテムジャンル'
-                    click_link '削除'
+                    click_link t_navbar(:item_genres)
+                    click_link t_link_to(:destroy)
                     accept_confirm
                 end
 
-                it 'アイテムジャンルが削除されている' do 
-                    expect(page).to have_content 'アイテムジャンル一覧'
-                    expect(page).to_not have_content item_genre.name
+                it 'item genre is not displayed' do 
+                    main_to_expect.to have_content t('admin.item_genres.index.title')
+                    main_to_expect.to_not have_content item_genre.name
                 end
             end
         end
     
-        describe '一般ユーザでログインしている場合' do
+        describe 'when general user is logging in' do
             let(:login_user){general_user}
-            include_context 'ユーザがログイン状態になる'
+            include_context 'when user is logging in'
 
-            it 'アイテムジャンルへのリンクが存在しない' do 
-                expect(page).to_not have_link 'アイテムジャンル'
+            it 'a link to item genre is not displayed' do 
+                main_to_expect.to_not have_link t_navbar(:item_genres)
             end
         end
     end

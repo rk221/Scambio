@@ -1,120 +1,125 @@
 require 'rails_helper'
-require 'support/user_shared_context'
 
 RSpec.describe Game, type: :system do
-    let(:admin_user){FactoryBot.create(:admin_user)}
-    let(:general_user){FactoryBot.create(:general_user)}
+    let(:admin_user){create(:admin_user)}
+    let(:general_user){create(:general_user)}
 
-    describe 'ゲームCRUD' do 
-        describe '管理ユーザでログインしている場合' do
+    describe 'Game' do 
+        describe 'when admin user is logging in' do
             let(:login_user){admin_user}
-            include_context 'ユーザがログイン状態になる'
+            include_context 'when user is logging in'
 
-            context 'ゲーム一覧画面へ遷移している場合' do
+            context 'when transitioning game list' do
                 before do
-                    click_link 'ゲーム管理'
+                    click_link t_navbar(:admin_games)
                 end
 
-                it 'ゲーム一覧画面が表示されている' do
-                    expect(page).to have_content 'ゲーム一覧'
+                it 'game list is displayed' do
+                    main_to_expect.to have_content t('admin.games.index.title')
                 end
             end
 
-            describe 'ゲーム新規登録' do
+            describe 'Create' do
                 before do
-                    click_link 'ゲーム管理'
-                    click_link '登録'
+                    click_link t_navbar(:admin_games)
+                    click_link t_link_to(:regist)
                 end
 
-                it 'ゲーム新規登録画面が表示されている' do 
-                    expect(page).to have_content 'ゲーム登録'
+                it 'create of game is displayed' do 
+                    main_to_expect.to have_content t('admin.games.new.title')
                 end
 
-                context 'ゲームタイトルがある場合' do 
-                    let(:game){FactoryBot.build(:game)} 
+                context 'when craete valid game' do 
+                    let(:game){build(:game)} 
                     before do 
-                        fill_in "ゲームタイトル", with: game.title 
-                        click_button '登録'
+                        fill_in t_model_attribute_name(Game, :title), with: game.title 
+                        click_button t_submit(:create)
                     end
 
-                    it 'ゲーム一覧画面に登録されたゲームが表示されている' do
-                        expect(page).to have_content 'ゲーム一覧'
-                        expect(page).to have_content game.title
+                    it 'a create of game is displayed' do
+                        main_to_expect.to have_content t('admin.games.index.title')
+                        main_to_expect.to have_content game.title
                     end
                 end
 
-                context 'ゲームタイトルが無い場合' do 
+                context 'when create invalid game' do 
                     before do 
-                        fill_in "ゲームタイトル", with: nil
-                        click_button '登録'
+                        fill_in t_model_attribute_name(Game, :title), with: nil
+                        click_button t_submit(:create)
                     end
 
-                    it 'ゲーム新規登録画面でエラーメッセージが表示されている' do
-                        expect(page).to have_content 'ゲーム登録'
-                        expect(page).to have_content 'ゲームタイトルを入力してください'
+                    it 'create of game is displayed' do 
+                        main_to_expect.to have_content t('admin.games.new.title')
+                    end
+
+                    it 'error message is displayed' do
+                        main_to_expect.to have_content 'ゲームタイトルを入力してください'
                     end
                 end
 
    
             end 
 
-            describe 'ゲーム編集' do 
-                let!(:game){FactoryBot.create(:game)} 
+            describe 'Edit' do 
+                let!(:game){create(:game)} 
                 before do
-                    click_link 'ゲーム管理'
-                    click_link '編集'
+                    click_link t_navbar(:admin_games)
+                    click_link t_link_to(:edit)
                 end
 
-                it 'ゲーム編集画面が表示されている' do 
-                    expect(page).to have_content 'ゲーム編集'
+                it 'edit of game is displayed' do 
+                    main_to_expect.to have_content t('admin.games.edit.title')
                 end
 
-                context 'ゲームタイトルがある場合' do 
+                context 'when update valid game' do 
                     before do 
-                        fill_in "ゲームタイトル", with: game.title + "更新版"
-                        click_button '更新'
+                        fill_in t_model_attribute_name(Game, :title), with: game.title + '更新版'
+                        click_button t_submit(:update)
                     end
 
-                    it 'ゲーム一覧画面に更新されたゲームが表示されている' do
-                        expect(page).to have_content 'ゲーム一覧'
-                        expect(page).to have_content game.title + "更新版"
+                    it 'a update of game is displayed' do
+                        main_to_expect.to have_content t('admin.games.index.title')
+                        main_to_expect.to have_content game.title + '更新版'
                     end
                 end
 
-                context 'ゲームタイトルを消した場合' do 
+                context 'when update invalid game' do 
                     before do 
-                        fill_in "ゲームタイトル", with: "" 
-                        click_button '更新'
+                        fill_in t_model_attribute_name(Game, :title), with: nil
+                        click_button t_submit(:update)
                     end
 
-                    it 'ゲーム編集画面でエラーメッセージが表示されている' do
-                        expect(page).to have_content 'ゲーム編集'
-                        expect(page).to have_content 'ゲームタイトルを入力してください'
+                    it 'edit of game is displayed' do 
+                        main_to_expect.to have_content t('admin.games.edit.title')
                     end
-                end   
+
+                    it 'error message is displayed' do
+                        main_to_expect.to have_content 'ゲームタイトルを入力してください'
+                    end
+                end
             end
 
-            describe 'ゲーム削除' do 
-                let!(:game){FactoryBot.create(:game)} 
+            describe 'Destroy' do 
+                let!(:game){create(:game)} 
                 before do
-                    click_link 'ゲーム管理'
-                    click_link '削除'
+                    click_link t_navbar(:admin_games)
+                    click_link t_link_to(:destroy)
                     accept_confirm
                 end
 
-                it 'ゲームが削除されている' do 
-                    expect(page).to have_content 'ゲーム一覧'
-                    expect(page).to_not have_content game.title
+                it 'game is not displayed' do
+                    main_to_expect.to have_content t('admin.games.index.title')
+                    main_to_expect.to_not have_content game.title
                 end
             end
         end
     
-        describe '一般ユーザでログインしている場合' do
+        describe 'when general user is logging in' do
             let(:login_user){general_user}
-            include_context 'ユーザがログイン状態になる'
+            include_context 'when user is logging in'
 
-            it 'ゲームへのリンクが存在しない' do 
-                expect(page).to_not have_link 'ゲーム管理'
+            it 'a link to admin games is not displayed' do 
+                main_to_expect.to_not have_link t_navbar(:admin_games)
             end
         end
     end

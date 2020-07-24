@@ -32,10 +32,10 @@ class Users::UserItemTradesController < UsersController
         @item_trade = current_user.item_trades.find(params[:id])
         
         if @item_trade.respond(respond_params)
-            if @item_trade.enable_item_trade_queue.establish # 成立→引き続き詳細画面 不成立→編集画面
-                redirect_to action: 'show', id: @item_trade.id, user_id: current_user.id, notice: t('.establish')
+            if @item_trade.enable_item_trade_queue.approve # 成立→引き続き詳細画面 不成立→編集画面
+                redirect_to action: 'show', id: @item_trade.id, user_id: current_user.id, notice: t('.approve')
             else
-                redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('.not_establish')
+                redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('.disapprove')
             end
         else
             redirect_to_error 
@@ -58,7 +58,7 @@ class Users::UserItemTradesController < UsersController
     end
 
     def respond_params
-        params.require(:item_trade_queue).permit(:id, :establish, :lock_version)
+        params.require(:item_trade_queue).permit(:id, :approve, :lock_version)
     end
 
     # 検索フォームのパラメータ（ソートも含む)

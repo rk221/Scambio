@@ -5,7 +5,7 @@ class ItemTradeQueue < ApplicationRecord
     has_one :enable_item_trade, class_name: "ItemTrade", foreign_key: "enable_item_trade_queue_id"
 
     validates :item_trade_id, presence: true
-    validates :establish, inclusion: {in: [true, false, nil]}
+    validates :approve, inclusion: {in: [true, false, nil]}
 
     # キューが購入されている状態
     scope :exist_user, -> {where.not(item_trade_queues: {user_id: nil})}
@@ -37,6 +37,6 @@ class ItemTradeQueue < ApplicationRecord
     # アイテムトレードに対応する購入待機用枠を作成する
     def self.create_enabled!(item_trade_id)
         # 既に、登録済みで、有効な購入待ちが存在する場合
-        self.create!(item_trade_id: item_trade_id, user_id: nil, establish: nil)
+        self.create!(item_trade_id: item_trade_id, user_id: nil, approve: nil)
     end
 end

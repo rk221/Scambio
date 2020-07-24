@@ -1,38 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe UserMessagePost, type: :model do
-  let(:user){FactoryBot.create(:user)}
-  it "ユーザID、件名、メッセージ、既読フラグがある場合、有効である" do 
-    user_message_post = FactoryBot.build(:user_message_post, user_id: user.id)
+  let(:user){create(:user)}
+  it "is valid with valid attributes" do
+    user_message_post = build(:user_message_post, user: user)
     expect(user_message_post).to be_valid
   end
 
-  it "ユーザIDが無い場合、無効である" do
-    user_message_post = FactoryBot.build(:user_message_post, user_id: nil)
+  it "is not valid without an user_id" do
+    user_message_post = build(:user_message_post, user: nil)
     user_message_post.valid?
     expect(user_message_post.errors[:user_id]).to include("を入力してください") 
   end
 
-  it "件名が無い場合、無効である" do
-    user_message_post = FactoryBot.build(:user_message_post, subject: nil, user_id: user.id)
+  it "is not valid without a subject" do
+    user_message_post = build(:user_message_post, subject: nil, user: user)
     user_message_post.valid?
     expect(user_message_post.errors[:subject]).to include("を入力してください") 
   end
 
-  it "件名が101文字以上場合、無効である" do
-    user_message_post = FactoryBot.build(:user_message_post, subject: 'a' * 101, user_id: user.id)
+  it "is not valid with a 101 characters or more subject" do
+    user_message_post = build(:user_message_post, subject: 'a' * 101, user: user)
     user_message_post.valid?
     expect(user_message_post.errors[:subject]).to include("は100文字以内で入力してください") 
   end
 
-  it "メッセージが無い場合、無効である" do
-    user_message_post = FactoryBot.build(:user_message_post, message: nil, user_id: user.id)
+  it "is not valid without a message" do
+    user_message_post = build(:user_message_post, message: nil, user: user)
     user_message_post.valid?
     expect(user_message_post.errors[:message]).to include("を入力してください") 
   end
 
-  it "既読フラグが無い場合、無効である" do
-    user_message_post = FactoryBot.build(:user_message_post, already_read: nil, user_id: user.id)
+  it "is not valid without an already_read" do
+    user_message_post = build(:user_message_post, already_read: nil, user: user)
     user_message_post.valid?
     expect(user_message_post.errors[:already_read]).to include("は一覧にありません") 
   end

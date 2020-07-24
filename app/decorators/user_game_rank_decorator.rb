@@ -12,19 +12,19 @@ class UserGameRankDecorator < Draper::Decorator
   def rank_name
     case object.rank
     when -2 then
-      'レッド'
+      UserGameRank.human_attribute_name(:red)
     when -1 then
-      'オレンジ'
+      UserGameRank.human_attribute_name(:orange)
     when 0 then
-      'グレー'
+      UserGameRank.human_attribute_name(:gray)
     when 1 then
-      'ホワイト'
+      UserGameRank.human_attribute_name(:white)
     when 2 then
-      'グリーン'
+      UserGameRank.human_attribute_name(:green)
     when 3 then
-      'ゴールド'
+      UserGameRank.human_attribute_name(:gold)
     when 4 then
-      'ダイヤ'
+      UserGameRank.human_attribute_name(:diamond)
     else
       nil
     end

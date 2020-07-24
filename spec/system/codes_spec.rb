@@ -1,36 +1,39 @@
 require 'rails_helper'
-require 'support/user_shared_context'
 
 RSpec.describe Codes, type: :system do
-    let(:general_user){FactoryBot.create(:general_user)}
+    let(:general_user){create(:general_user)}
 
-    describe 'コード一覧' do 
+    describe 'Code Index' do 
         let(:login_user){general_user}
-        include_context 'ユーザがログイン状態になる'
+        include_context 'when user is logging in'
 
-        context 'マイページに遷移している' do
-            before do 
-                click_link 'マイページ'
+        context 'when transitioning to mypage' do
+            before do
+                click_link t_navbar(:mypage)
             end
 
-            it 'コード一覧へのリンクが表示されている' do
-                expect(page).to have_content 'コード一覧'
+            it 'a link to codes is displayed' do
+                expect(page).to have_content t('users.show.codes')
             end
 
-            context 'コード一覧へ遷移している' do
-                let!(:nintendo_friend_code){FactoryBot.create(:nintendo_friend_code, user_id: login_user.id)}
-                let!(:play_station_network_id){FactoryBot.create(:play_station_network_id, user_id: login_user.id)}
+            context 'when transitioning to codes' do
+                let!(:nintendo_friend_code){create(:nintendo_friend_code, user: login_user)}
+                let!(:play_station_network_id){create(:play_station_network_id, user: login_user)}
                 before do
-                    click_link 'コード一覧'
+                    click_link t('users.show.codes')
                 end
 
-                it '任天堂フレンドコードが表示されている' do
+                it 'a codes is displayed' do 
+                    main_to_expect.to have_content t('codes.index.title')
+                end
+
+                it 'a nintendo friend code is displayed' do
                     split_codes = nintendo_friend_code.friend_code.scan(/.{1,#{4}}/)
-                    expect(page).to have_content "#{split_codes[0]}-#{split_codes[1]}-#{split_codes[2]}"
+                    main_to_expect.to have_content "#{split_codes[0]}-#{split_codes[1]}-#{split_codes[2]}"
                 end
 
-                it 'PSN_IDが表示されている' do
-                    expect(page).to have_content play_station_network_id.psn_id
+                it 'a play station network id is displayed' do
+                    main_to_expect.to have_content play_station_network_id.psn_id
                 end
             end
         end

@@ -1,58 +1,111 @@
 require 'rails_helper'
-require 'support/user_shared_context'
-require 'support/item_trade_shared_context'
 
 RSpec.describe ItemTradeChat, type: :system do
-    let!(:general_user){FactoryBot.create(:general_user)}
-    let!(:admin_user){FactoryBot.create(:admin_user)}
-    let!(:sale_user){FactoryBot.create(:sale_user)}
-    let!(:buy_user){FactoryBot.create(:buy_user)}
+    let!(:general_user){create(:general_user)}
+    let!(:admin_user){create(:admin_user)}
+    let!(:sale_user){create(:sale_user)}
+    let!(:buy_user){create(:buy_user)}
 
-    let!(:game){FactoryBot.create(:game)}
-    let!(:item_genre){FactoryBot.create(:item_genre)}
-    let!(:item_genre_game){FactoryBot.create(:item_genre_game, item_genre_id: item_genre.id, game_id: game.id, enable: true)}
-    let!(:buy_item){FactoryBot.create(:buy_item, item_genre_id: item_genre.id, game_id: game.id)}
-    let!(:sale_item){FactoryBot.create(:sale_item, item_genre_id: item_genre.id, game_id: game.id)}
+    let!(:game){create(:game)}
+    let!(:item_genre){create(:item_genre)}
+    let!(:item_genre_game){create(:item_genre_game, item_genre: item_genre, game: game, enable: true)}
+    let!(:buy_item){create(:buy_item, item_genre: item_genre, game: game)}
+    let!(:sale_item){create(:sale_item, item_genre: item_genre, game: game)}
 
-    let!(:buy_user_game_rank){FactoryBot.create(:user_game_rank, user_id: buy_user.id, game_id: game.id)}
-    let!(:sale_user_game_rank){FactoryBot.create(:user_game_rank, user_id: sale_user.id, game_id: game.id)}
+    let!(:buy_user_game_rank){create(:user_game_rank, user: buy_user, game: game)}
+    let!(:sale_user_game_rank){create(:user_game_rank, user: sale_user, game: game)}
 
-    let!(:sale_fixed_phrase){FactoryBot.create(:fixed_phrase, user_id: sale_user.id)}
-    let!(:buy_fixed_phrase){FactoryBot.create(:fixed_phrase, user_id: buy_user.id)}
+    let!(:sale_fixed_phrase){create(:fixed_phrase, user: sale_user)}
+    let!(:buy_fixed_phrase){create(:fixed_phrase, user: buy_user)}
 
-    describe 'アイテムトレード購入処理' do
-        include_context '売却ユーザがログイン状態になる', :logout
+    describe 'Item Trade Chat' do
+        include_context 'when sale user is logging in'
             
-        context 'アイテムトレードが登録されている場合' do
-            let(:item_trade){FactoryBot.build(:item_trade, user_id: sale_user.id, game_id: game.id, buy_item_id: buy_item.id, sale_item_id: sale_item.id, enable: true, numeric_of_trade_deadline: 1, user_game_rank_id: sale_user_game_rank.id)}
+        let(:item_trade){build(:item_trade, user: sale_user, game: game, buy_item: buy_item, sale_item: sale_item, enable: true, numeric_of_trade_deadline: 1, user_game_rank: sale_user_game_rank)}
+        include_context 'when registering a item trade'
 
-            include_context 'アイテムトレードを登録する'
-            it_behaves_like 'アイテムトレード一覧で取引が表示されていることを確認する'
+        include_context 'when user is logging out'
+        include_context 'when buy user is logging in'
 
-            context '購入ユーザでログインしている' do
-                include_context '購入ユーザがログイン状態になる', :login
+        context 'when buying' do
+            before do
+                click_link t_navbar(:games)
+                click_link t("games.index.item_trades")
+                click_link t("games.item_trades.index.buy_queue")
+            end
 
-                context '購入する' do
+            include_context 'when user is logging out'
+            include_context 'when sale user is logging in'
+
+            context 'when approving a item trade' do
+                before do
+                    click_link t_link_to(:show)
+                    click_link t('users.user_item_trades.show.approve')
+                end
+
+                it 'chats is displayed' do
+                    main_to_expect.to have_content t('users.shared.item_trade_chat.chat')
+                end
+
+                context 'when sending a fixed phrase' do
                     before do
-                        click_link 'ゲーム'
-                        click_link 'アイテムトレード一覧'
-                        click_link '購入'
+                        find("#fixed_phrases_dropdown").click
+                        sleep 2
+                        find(".dropdown-item").click
+                        sleep 2
                     end
 
-                    context '売却ユーザでログインする' do
-                        include_context '売却ユーザがログイン状態になる', :login
+                    it 'a fixed phrase is displayed' do
+                        sleep 2
+                        main_to_expect.to have_content sale_fixed_phrase.text
+                    end
+                end
 
-                        context '取引を承認する' do
+                context 'when sending a chat' do
+                    before do
+                        fill_in 'item_trade_chat_message',	with: "テストメッセージ" 
+                        sleep 1
+                        click_button t_submit(:send)
+                    end
+
+                    it 'a chat is displayed' do
+                        sleep 2
+                        main_to_expect.to have_content 'テストメッセージ'
+                    end
+
+                    context 'when buy user is logging in' do
+                        include_context 'when user is logging out'
+                        include_context 'when buy user is logging in'
+
+                        context 'when transitioning to detail of item trade queue' do
                             before do
-                                click_link '詳細'
-                                click_link '取引を承諾'
+                                click_link t('users.show.item_trade_queues')
+                                click_link t_link_to(:show)
                             end
 
-                            it 'チャットが表示されている' do
-                                expect(page).to have_content 'チャット'
+                            it 'chats is displayed' do
+                                main_to_expect.to have_content t('users.shared.item_trade_chat.chat')
                             end
 
-                            context '売却ユーザで定形文を送信する' do
+                            it 'a chat is displayed' do
+                                sleep 2
+                                main_to_expect.to have_content 'テストメッセージ'
+                            end
+
+                            context 'when sending a chat' do
+                                before do
+                                    fill_in 'item_trade_chat_message',	with: "購入テストメッセージ" 
+                                    sleep 1
+                                    click_button t_submit(:send)
+                                end
+
+                                it 'a chat is displayed' do
+                                    sleep 2
+                                    main_to_expect.to have_content '購入テストメッセージ'
+                                end
+                            end
+
+                            context 'when sending a fixed phrase' do
                                 before do
                                     find("#fixed_phrases_dropdown").click
                                     sleep 2
@@ -60,70 +113,9 @@ RSpec.describe ItemTradeChat, type: :system do
                                     sleep 2
                                 end
 
-                                it '定形文が反映されている' do
+                                it 'a fixed phrase is displayed' do
                                     sleep 2
-                                    expect(page).to have_content sale_fixed_phrase.text
-                                end
-                            end
-
-                            context '売却ユーザでチャットを送信する' do
-                                before do
-                                    fill_in 'item_trade_chat_message',	with: "テストメッセージ" 
-                                    sleep 1
-                                    click_button '送信'
-                                end
-
-                                it 'チャットが反映されている' do
-                                    sleep 2
-                                    expect(page).to have_content 'テストメッセージ'
-                                end
-
-                                context '購入ユーザでログインしている' do
-                                    include_context '購入ユーザがログイン状態になる', :login
-
-                                    context '購入待ちアイテムトレード詳細に遷移する' do
-                                        before do
-                                            click_link '購入待ちアイテムトレード一覧'
-                                            click_link '詳細'
-                                        end
-
-                                        it 'チャットが表示されている' do
-                                            expect(page).to have_content 'チャット'
-                                        end
-
-                                        it '売却ユーザで送信したチャットが表示されている' do
-                                            sleep 2
-                                            expect(page).to have_content 'テストメッセージ'
-                                        end
-
-                                        context '購入ユーザでチャットを送信する' do
-                                            before do
-                                                fill_in 'item_trade_chat_message',	with: "購入テストメッセージ" 
-                                                sleep 1
-                                                click_button '送信'
-                                                sleep 1
-                                            end
-
-                                            it 'チャットが反映されている' do
-                                                sleep 2
-                                                expect(page).to have_content '購入テストメッセージ'
-                                            end
-                                        end
-
-                                        context '購入ユーザで定形文を送信する' do
-                                            before do
-                                                find("#fixed_phrases_dropdown").click
-                                                sleep 2
-                                                find(".dropdown-item").click
-                                                sleep 2
-                                            end
-
-                                            it '定形文が反映されている' do
-                                                sleep 2
-                                                expect(page).to have_content buy_fixed_phrase.text
-                                            end
-                                        end
-                                    end
+                                    main_to_expect.to have_content buy_fixed_phrase.text
                                 end
                             end
                         end

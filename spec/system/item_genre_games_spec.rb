@@ -1,75 +1,55 @@
 require 'rails_helper'
-require 'support/user_shared_context'
 
 RSpec.describe ItemGenreGame, type: :system do
-    let(:admin_user){FactoryBot.create(:admin_user)}
-    let(:general_user){FactoryBot.create(:general_user)}
+    let(:admin_user){create(:admin_user)}
+    let(:general_user){create(:general_user)}
+    let(:game_data){build(:game)}
+    let(:item_genre_data){build(:item_genre)}
 
-    describe 'アイテムジャンルゲームCRUD' do 
-        describe '管理ユーザでログインしている場合' do
-            let(:game_data){FactoryBot.build(:game)}
-            let(:item_genre_data){FactoryBot.build(:item_genre)}
-            let(:login_user){admin_user}
-            include_context 'ユーザがログイン状態になる'
+    describe 'ItemGenreGame' do 
+        let(:login_user){admin_user}
+        include_context 'when user is logging in'
 
-
-            shared_context 'アイテムジャンルゲームへ遷移し、作成されていることを確認' do
-                before do
-                    visit admin_games_path
-                    click_link 'アイテムジャンル編集'
-                end
-
-                it '対応するアイテムジャンルゲームが表示されている' do
-                    expect(page).to have_content 'アイテムジャンル名';
-                    expect(page).to have_content '有効/無効';
-                    expect(page).to have_content item_genre_data.name;
-                    expect(page).to have_content '無効';
-                end
+        shared_examples 'a item genre game is displayed' do
+            before do
+                visit admin_games_path
+                click_link t('admin.games.index.edit_item_genre_games')
             end
 
-            describe 'アイテムジャンルゲーム新規登録' do
-                shared_context 'アイテムジャンルゲームへ遷移し、作成されていることを確認' do
-                    before do
-                        visit admin_games_path
-                        click_link 'アイテムジャンル編集'
-                    end
+            it 'a item genre game is displayed' do
+                main_to_expect.to have_content t('admin.item_genre_games.index.enable_or_disable')
+                main_to_expect.to have_content item_genre_data.name
+            end
+        end
 
-                    it '対応するアイテムジャンルゲームが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル名';
-                        expect(page).to have_content '有効/無効';
-                        expect(page).to have_content item_genre_data.name;
-                        expect(page).to have_content '無効';
-                    end
+        describe 'Create' do
+            context 'when the game is already registered and the item genre is added' do
+                before do 
+                    game_data.save
+                    click_link t_navbar(:item_genres)
+                    click_link t_link_to(:regist)
+                    fill_in t_model_attribute_name(ItemGenre, :name), with: item_genre_data.name
+                    fill_in t_model_attribute_name(ItemGenre, :default_unit_name), with: item_genre_data.default_unit_name
+                    click_button t_submit(:create)
                 end
 
-                context 'ゲームが登録済でアイテムジャンルを追加する場合' do
-                    before do 
-                        game_data.save
-                        click_link 'アイテムジャンル'
-                        click_link '登録'
-                        fill_in 'アイテムジャンル名', with: item_genre_data.name
-                        fill_in 'デフォルトの単位名', with: item_genre_data.default_unit_name
-                        click_button '登録'
-                    end
-
-                    include_context 'アイテムジャンルゲームへ遷移し、作成されていることを確認'
-                end
-
-                context 'アイテムジャンルが登録済でゲームを追加する場合' do
-                    before do 
-                        item_genre_data.save
-                        click_link 'ゲーム管理'
-                        click_link '登録'
-                        fill_in 'ゲームタイトル', with: game_data.title 
-                        click_button '登録'
-                    end
-
-                    include_context 'アイテムジャンルゲームへ遷移し、作成されていることを確認'
-                end
+                it_behaves_like 'a item genre game is displayed'
             end
 
-            describe 'アイテムジャンルゲーム有効化/無効化' do
-                let(:item_genre_game_data){FactoryBot.build(:item_genre_game)}
+            context 'when adding a game when the item genre has been registered' do
+                before do 
+                    item_genre_data.save
+                    click_link t_navbar(:admin_games)
+                    click_link t_link_to(:regist)
+                    fill_in t_model_attribute_name(Game, :title), with: game_data.title 
+                    click_button t_submit(:create)
+                end
+
+                it_behaves_like 'a item genre game is displayed'
+            end
+
+            describe 'Genre Enable/Disable' do
+                let(:item_genre_game_data){build(:item_genre_game)}
                 before do
                     item_genre_data.save
                     game_data.save
@@ -78,36 +58,37 @@ RSpec.describe ItemGenreGame, type: :system do
                     item_genre_game_data.save
                 end
 
-                context 'アイテムジャンルゲーム編集画面へ遷移している' do 
+                context 'when transitioning edit of item genre game' do 
                     before do
                         visit admin_games_path
-                        click_link 'アイテムジャンル編集'
+                        click_link t('admin.games.index.edit_item_genre_games')
                     end
 
-                    it '対応するアイテムジャンルゲームが表示されている' do
-                        expect(page).to have_content 'アイテムジャンル名';
-                        expect(page).to have_content '有効/無効';
-                        expect(page).to have_content item_genre_data.name;
-                        expect(page).to have_content '無効';
+                    it 'a item genre game is displayed' do
+                        main_to_expect.to have_content t('admin.item_genre_games.index.enable_or_disable')
+                        main_to_expect.to have_content item_genre_data.name;
                     end
 
-                    context '有効にする' do
+                    it_behaves_like 'a item genre game is displayed'
+
+                    context 'when disable' do
                         before do 
-                            click_link '無効'
+                            click_link t_link_to(:disable)
                         end
 
-                        it '有効になり、無効にするリンクが表示されている' do 
-                            expect(page).to have_link '有効'
-                            expect(page).to_not have_link '無効'
+                        it 'a link to disable is displayed' do 
+                            main_to_expect.to have_link t_link_to(:enable)
+                            main_to_expect.to_not have_link t_link_to(:disable)
                         end
-                        context '無効にする' do 
+
+                        context 'when enabled' do 
                             before do 
-                                click_link '有効'
+                                click_link t_link_to(:enable)
                             end
 
-                            it '無効になり、有効にするリンクが表示されている' do 
-                                expect(page).to have_link '無効'
-                                expect(page).to_not have_link '有効'
+                            it 'a link to enable is displayed' do 
+                                main_to_expect.to have_link t_link_to(:disable)
+                                main_to_expect.to_not have_link t_link_to(:enable)
                             end
                         end
                     end
