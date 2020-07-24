@@ -1,49 +1,51 @@
 require 'rails_helper'
-require 'support/user_shared_context'
 
 RSpec.describe User, type: :system do
-    let(:general_user){FactoryBot.create(:general_user)}
-    
-    let!(:game){FactoryBot.create(:game)}
-    let!(:item_genre){FactoryBot.create(:item_genre)}
-    let!(:item_genre_game){FactoryBot.create(:item_genre_game, item_genre_id: item_genre.id, game_id: game.id, enable: true)}
-    let!(:buy_item){FactoryBot.create(:buy_item, item_genre_id: item_genre.id, game_id: game.id)}
-    let!(:sale_item){FactoryBot.create(:sale_item, item_genre_id: item_genre.id, game_id: game.id)}
+    let(:general_user){create(:general_user)}
+    let!(:game){create(:game)}
+    let!(:item_genre){create(:item_genre)}
+    let!(:item_genre_game){create(:item_genre_game, item_genre: item_genre, game: game, enable: true)}
+    let!(:buy_item){create(:buy_item, item_genre: item_genre, game: game)}
+    let!(:sale_item){create(:sale_item, item_genre: item_genre, game: game)}
+     
 
-    describe 'マイページ' do
-        describe 'ユーザでログインしている場合' do
-            let(:login_user){general_user}
-            include_context 'ユーザがログイン状態になる'
-            context 'マイページに遷移している場合' do
+    describe 'MyPage' do
+        let(:login_user){general_user}
+        include_context 'when user is logging in'
+
+        it 'a login flash message is displayed' do
+            expect(find('#flash')).to have_content 'ログインしました'
+        end
+
+        context 'when transitioning to mypage' do
+            before do
+                click_link t_navbar(:mypage)
+            end
+
+            it 'a link to edit user is displayed' do
+                main_to_expect.to have_link t('users.show.edit_user')
+            end
+
+            it 'a link to codes is displayed' do
+                main_to_expect.to have_link t('users.show.codes')
+            end
+
+            it "a link to user's item trades is displayed" do
+                main_to_expect.to have_link t('users.show.user_item_trades')
+            end
+
+            context "with there is user's game ranks" do
+                let!(:user_game_rank){create(:user_game_rank, user: login_user, game: game)}
                 before do
-                    click_link 'マイページ'
+                    visit current_path
                 end
 
-                it 'ユーザ情報変更リンクが表示されている' do
-                    expect(page).to have_link 'ユーザ情報変更'
-                end
-
-                it 'コード一覧リンクが表示されている' do
-                    expect(page).to have_link 'コード一覧'
-                end
-
-                it 'あなたのアイテムトレード一覧リンクが表示されている' do
-                    expect(page).to have_link 'あなたのアイテムトレード一覧'
-                end
-
-                context '最近取引されたゲームランク表示' do
-                    let!(:user_game_rank){FactoryBot.create(:user_game_rank, user_id: login_user.id, game_id: game.id)}
-                    before do
-                        visit current_path
-                    end
-
-                    it 'ゲームランクが表示されている' do
-                        expect(page).to have_content '最近取引されたゲーム'
-                        expect(page).to have_content 'ゲームタイトル'
-                        expect(page).to have_content game.title
-                        expect(page).to have_content 'ランク'
-                        expect(page).to have_content 'グレー'
-                    end
+                it "user's game ranks is displayed" do
+                    main_to_expect.to have_content t('users.show.recent_user_game_rank')
+                    main_to_expect.to have_content t_model_attribute_name(Game, :title)
+                    main_to_expect.to have_content game.title
+                    main_to_expect.to have_content t_model_attribute_name(UserGameRank, :rank)
+                    main_to_expect.to have_content t_model_attribute_name(UserGameRank, :gray)
                 end
             end
         end

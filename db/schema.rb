@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
   end
 
   create_table "item_trade_queues", force: :cascade do |t|
-    t.boolean "establish"
+    t.boolean "approve"
     t.bigint "item_trade_id", null: false
     t.bigint "user_id"
     t.integer "lock_version", default: 0

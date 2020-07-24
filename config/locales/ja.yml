@@ -32,7 +32,6 @@ ja:
             index:
                 title: アイテムジャンルゲーム一覧
                 enable_or_disable: 有効/無効
-                
     codes:
         index:
             title: コード一覧
@@ -80,8 +79,6 @@ ja:
             now_state: 現在の取引状態
             state_wait_reaction: 相手の応答待ちです
             state_during_trade: 取引が成立しています。チャットを行い、取引してください。
-            your_evaluate_wait: 相手の評価待ち
-            during_trade: 取引中
             edit_sale: 取引を完了
             success_message: 登録しました。
             buyer_end_evaluate: 相手は取引を終了しています
@@ -124,8 +121,8 @@ ja:
                 state_wait: あなたの反応待ち
                 state_during_trade: 現在取引中
                 your_evaluate_wait: 相手の評価待ち
-                establish: 取引を承諾
-                not_establish: 取引を拒否
+                approve: 取引を承諾
+                disapprove: 取引を拒否
                 edit_buy: 取引を完了
                 1_hour_has_not_passed_yet: 強制終了するには評価後1時間お待ちください。
                 forced_edit_link: 強制編集
@@ -137,8 +134,8 @@ ja:
                 title: アイテムトレード編集
                 trade_deadline: 取引期限（今から何時間有効か）
             respond:
-                establish: 取引を承認しました。
-                not_establish: 取引を拒否しました。
+                approve: 取引を承認しました。
+                disapprove: 取引を拒否しました。
         user_message_posts:
             index:
                 title: 受信メッセージ一覧
@@ -204,6 +201,13 @@ ja:
             user_game_rank:
                 game_id: ゲームID
                 rank: ランク
+                red: レッド
+                orange: オレンジ
+                gray: グレー
+                white: ホワイト
+                green: グリーン
+                gold: ゴールド
+                diamond: ダイアモンド
             user_message_post:
                 subject: 件名
                 message: メッセージ
@@ -227,9 +231,8 @@ ja:
                 sale_item_quantity: 売却数量
                 trade_deadline: 取引期限
                 numeric_of_trade_deadline: 取引期限
-                buy_item_genre_id: 購入アイテムジャンル
-                sale_item_genre_id: 売却アイテムジャンル
-
+                buy_item_genre_id: 購入アイテムジャンル名
+                sale_item_genre_id: 売却アイテムジャンル名
     helpers:
         submit:
             create: 登録
@@ -238,12 +241,12 @@ ja:
             search: 検索
             send: 送信
     navbar:
-        admin_games: ゲーム管理
-        item_genres: アイテムジャンル
-        games: ゲーム
-        mypage: マイページ
-        log_out: ログアウト
-
+        navbar:
+            admin_games: ゲーム管理
+            item_genres: アイテムジャンル
+            games: ゲーム
+            mypage: マイページ
+            log_out: ログアウト
     flash:
         create: 作成しました
         update: 更新しました

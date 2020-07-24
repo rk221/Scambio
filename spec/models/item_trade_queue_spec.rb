@@ -10,7 +10,7 @@ RSpec.describe ItemTradeQueue, type: :model do
   let!(:item_trade){create(:item_trade, user: user, game: game, buy_item: buy_item, sale_item: sale_item, user_game_rank: user_game_rank)}
   
   it "is valid with valid attributes" do
-    item_trade_queue = build(:item_trade_queue, user: user, item_trade: item_trade, establish: false)
+    item_trade_queue = build(:item_trade_queue, user: user, item_trade: item_trade, approve: false)
     expect(item_trade_queue).to be_valid
   end
 

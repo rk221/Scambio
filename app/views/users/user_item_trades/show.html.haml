@@ -18,7 +18,7 @@
             = link_to t('.forced_destroy_link'), user_forced_user_item_trade_path(id: @item_trade_queue.item_trade.id, user_id: current_user.id), method: :post, data: {confirm: t('.forced_destroy')}, class: 'btn btn-danger'
         - else  
             = t('.1_hour_has_not_passed_yet')
-    - elsif @item_trade_queue.establish # true 取引が成立している場合
+    - elsif @item_trade_queue.approve # true 取引が成立している場合
         %h5.mb-3
             - if @item_trade_queue.item_trade_detail&.sale_popuarity # 相手が既に評価を終えている場合
                 = t('.buyer_end_evaluate')
@@ -26,12 +26,12 @@
                 = t('.state_during_trade')
         -# 評価する
         = link_to t('.edit_buy'), edit_buy_item_trade_detail_path(@item_trade_queue.item_trade_detail.id), class: 'btn btn-primary' 
-    - elsif @item_trade_queue.establish.nil? && @item_trade_queue.user_id # nil 取引の応答待ちの場合
+    - elsif @item_trade_queue.approve.nil? && @item_trade_queue.user_id # nil 取引の応答待ちの場合
         %h5.mb-3
             = t('.state_wait')
         -# 承認 OR 拒否
-        = link_to t('.establish'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, establish: true, lock_version: @item_trade_queue.lock_version}), method: :post, class: 'btn btn-primary mr-2'
-        = link_to t('.not_establish'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, establish: false, lock_version: @item_trade_queue.lock_version}), method: :post, class: 'btn btn-danger'
+        = link_to t('.approve'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: true, lock_version: @item_trade_queue.lock_version}), method: :post, class: 'btn btn-primary mr-2'
+        = link_to t('.disapprove'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: false, lock_version: @item_trade_queue.lock_version}), method: :post, class: 'btn btn-danger'
     - else # 相手がいない場合
         %h5.mb-3
             = t('.state_for_sale')

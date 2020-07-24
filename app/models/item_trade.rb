@@ -84,10 +84,10 @@ class ItemTrade < ApplicationRecord
     # 購入応答を処理する
     def respond(respond_params)
         self.transaction do
-            raise ActiveRecord::RecordInvalid if enable_item_trade_queue.establish                                       # 既に評価済みの場合エラー
+            raise ActiveRecord::RecordInvalid if enable_item_trade_queue.approve                                       # 既に評価済みの場合エラー
 
             enable_item_trade_queue.update!(respond_params)
-            if enable_item_trade_queue.establish
+            if enable_item_trade_queue.approve
                 UserMessagePost.create_message_approve!(enable_item_trade_queue)            # 成立メッセージを相手に送信
                 ItemTradeDetail.create!(item_trade_queue_id: enable_item_trade_queue.id)    # Detailsを生成
             else
