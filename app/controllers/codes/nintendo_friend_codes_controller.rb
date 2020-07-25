@@ -1,11 +1,11 @@
 class Codes::NintendoFriendCodesController < CodesController
 
     def new 
-        @nintendo_friend_code = NintendoFriendCode.new
+        @nintendo_friend_code = current_user.nintendo_friend_code.new
     end
 
     def create 
-        @nintendo_friend_code = NintendoFriendCode.new(nintendo_friend_code_params)
+        @nintendo_friend_code = current_user.nintendo_friend_code.new(nintendo_friend_code_params)
 
         if @nintendo_friend_code.save 
             redirect_to codes_path, notice: t('flash.regist')
@@ -39,6 +39,6 @@ class Codes::NintendoFriendCodesController < CodesController
     private
 
     def nintendo_friend_code_params
-        params.require(:nintendo_friend_code).permit(:id, :friend_code).merge(user_id: current_user.id)
+        params.require(:nintendo_friend_code).permit(:id, :friend_code)
     end
 end

@@ -11,11 +11,11 @@ class FixedPhrasesController < ApplicationController
     end
 
     def new 
-        @fixed_phrase = FixedPhrase.new
+        @fixed_phrase = current_user.fixed_phrases
     end
 
     def create
-        @fixed_phrase = FixedPhrase.new(fixed_phrase_params)
+        @fixed_phrase = current_user.fixed_phrases.new(fixed_phrase_params)
 
         if @fixed_phrase.save
             redirect_to fixed_phrase_path(@fixed_phrase), notice: t('flash.create')
@@ -48,6 +48,6 @@ class FixedPhrasesController < ApplicationController
     private
 
     def fixed_phrase_params
-        params.require(:fixed_phrase).permit(:name, :text).merge(user_id: current_user.id)
+        params.require(:fixed_phrase).permit(:name, :text)
     end
 end

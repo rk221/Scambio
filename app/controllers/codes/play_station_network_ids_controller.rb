@@ -1,10 +1,10 @@
 class Codes::PlayStationNetworkIdsController < ApplicationController
     def new 
-        @play_station_network_id = PlayStationNetworkId.new
+        @play_station_network_id = current_user.play_station_network_id.new
     end
 
     def create 
-        @play_station_network_id = PlayStationNetworkId.new(play_station_network_id_params)
+        @play_station_network_id = current_user.play_station_network_id.new(play_station_network_id_params)
 
         if @play_station_network_id.save
             redirect_to codes_path, notice: t('flash.regist')
@@ -38,6 +38,6 @@ class Codes::PlayStationNetworkIdsController < ApplicationController
     private
 
     def play_station_network_id_params 
-        params.require(:play_station_network_id).permit(:id, :psn_id).merge(user_id: current_user.id)
+        params.require(:play_station_network_id).permit(:id, :psn_id)
     end
 end

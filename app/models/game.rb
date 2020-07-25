@@ -16,4 +16,18 @@ class Game < ApplicationRecord
     validates :title, presence: true, uniqueness: true
     
     mount_uploader :image_icon, ImageUploader
+
+
+    def save_and_create_item_genre_game
+        self.transaction do
+            self.save!
+            #ItemGenreGameを追加する
+            ItemGenre.find_each do |item_genre|
+                ItemGenreGame.create!(item_genre_id: item_genre.id, game_id: self.id, enable: false) 
+            end
+        end
+        true
+    rescue
+        false
+    end
 end
