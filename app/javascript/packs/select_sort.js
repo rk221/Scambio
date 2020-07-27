@@ -1,12 +1,14 @@
 import Vue from 'vue'
 
-new Vue({
-    el: '.select-sort',
-    data: {
-    },
-    methods:{
-        onSelectedChange(e){
-            e.srcElement.parentNode.parentNode.submit();
+window.onload = () =>{
+    new Vue({
+        el: '.select-sort',
+        data: {
+        },
+        methods:{
+            onSelectedChange(e){
+                e.srcElement.parentNode.parentNode.submit();
+            }
         }
-    }
-});
+    });
+}

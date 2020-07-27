@@ -9,6 +9,11 @@ require("channels")
 
 import 'bootstrap';
 import '../stylesheets/application';
+import './fixed_phrases';
+import './image_prev';
+import './item_trade_chat';
+import './select_sort';
+import './user_message_posts';
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
