@@ -62,6 +62,22 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # mailer指定
+  config.action_mailer.default_url_options = {  :host => 'scambio.herokuapp.com' }
+  #送信方法を指定（この他に:sendmail/:file/:testなどがあります)
+  config.action_mailer.delivery_method = :smtp
+  #送信方法として:smtpを指定した場合は、このconfigを使って送信詳細の設定を行います
+  config.action_mailer.smtp_settings = {
+    #sendgrid利用時はaddress,portは下記で固定
+    address:"smtp.sendgrid.net",
+    port:587,
+    # domain username password は sendgridのapi情報を指定する
+    domain: 'sendgrid.net',
+    user_name: ENV['SENDGRID_USERNAME'],
+    password: ENV['SENDGRID_PASSWORD'],
+    authentication: :plain
+  }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
