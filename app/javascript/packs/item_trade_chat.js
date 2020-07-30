@@ -1,7 +1,7 @@
 import Vue from 'vue'
 // users/shared/_item_trade_chatにおけるjavascript 主に、チャット送信に関するもの
 // 画像投稿
-window.onload = () =>{
+window.addEventListener('DOMContentLoaded', function() {
     new Vue({
         el: '#item_trade_chat_image_form',
         data: {
@@ -12,7 +12,7 @@ window.onload = () =>{
                 e.srcElement.value = '' // ファイルの内容を消去
             }
         }
-    });
+    })
     // コード送信
     new Vue({
         el: '#item_trade_chat_code_form',
@@ -24,7 +24,7 @@ window.onload = () =>{
                 e.srcElement.checked = false
             }
         }
-    });
+    })
     // 定形文送信
     new Vue({
         el: '#item_trade_chat_fixed_phrase_form',
@@ -36,7 +36,7 @@ window.onload = () =>{
                 e.srcElement.checked = false
             }
         }
-    });
+    })
     // チャットメッセージ送信
     new Vue({
         el: '#item_trade_chat_message_form',
@@ -47,5 +47,5 @@ window.onload = () =>{
                 window.clickFormId = 'item_trade_chat_message_form'//チャットをクリックしたことを保持（channel.jsにおいて、受信時、記述内容を消すため）
             }
         }
-    });
-}
+    })
+})
