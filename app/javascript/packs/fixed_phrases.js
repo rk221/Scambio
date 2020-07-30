@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-window.onload = () =>{
+window.addEventListener('DOMContentLoaded', function() {
     new Vue({
         el: '#fixed_phrases',
         data: {
@@ -11,5 +11,5 @@ window.onload = () =>{
                 location.href = href
             }
         }
-    });
-}
+    })
+})

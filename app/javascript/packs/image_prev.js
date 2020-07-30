@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-window.onload = () =>{
+window.addEventListener('DOMContentLoaded', function() {
     new Vue({
         el: '#image_app',
         data: {
@@ -8,16 +8,16 @@ window.onload = () =>{
         },
         methods:{
             onFileChange(e){
-                const files = e.target.files;
+                const files = e.target.files
                 if(files.length > 0){
-                    const file = files[0];
-                    const reader = new FileReader();
+                    const file = files[0]
+                    const reader = new FileReader()
                     reader.onload = (e) => {
-                        this.imageData = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
+                        this.imageData = e.target.result
+                    }
+                    reader.readAsDataURL(file)
                 }
             }
         }
-    });
-}
+    })
+})
