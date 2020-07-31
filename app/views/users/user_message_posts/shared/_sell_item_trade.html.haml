@@ -3,4 +3,4 @@
 %h4.mb-2
     = UserMessagePost.human_attribute_name(:message)
 = t '.message'
-= link_to t('link_to.show'), user_user_item_trade_path(id: item_trade_queue.item_trade_id, user_id: item_trade_queue.item_trade.user_id), class: 'btn btn-primary btn-block mt-3'
+= link_to t('link_to.show'), user_user_item_trade_url(id: item_trade_queue.item_trade_id, user_id: item_trade_queue.item_trade.user_id), class: 'btn btn-primary btn-block mt-3'
