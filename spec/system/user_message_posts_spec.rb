@@ -41,6 +41,7 @@ RSpec.describe UserMessagePost, type: :system do
 
                     it 'received message list is displayed' do
                         main_to_expect.to have_content t('users.user_message_posts.index.title')
+                        main_to_expect.to have_link t('users.user_message_posts.index.all_read')
                     end
 
                     it 'received messages is displayed' do

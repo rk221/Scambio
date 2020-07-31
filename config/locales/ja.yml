@@ -141,6 +141,7 @@ ja:
         user_message_posts:
             index:
                 title: 受信メッセージ一覧
+                all_read: 全て既読にする
             show:
                 title: 受信メッセージ詳細
             shared:
