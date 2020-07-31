@@ -14,6 +14,8 @@
 
 %p
     = link_to t('.user_message_posts'), user_user_message_posts_path(current_user), class: 'btn btn-outline-secondary'
+    - if unready_read_exist
+        = image_pack_tag 'new_notice_icon.png', class: 'ml-2', style: 'height: 2.3em;'
 
 %p
     = link_to t('.user_item_trades'), user_user_item_trades_path(current_user), class: 'btn btn-light'
