@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       post '/user_item_trade/:id/forced' => 'user_item_trades#forced', as: 'forced_user_item_trade'
 
       resources :user_message_posts, only: [:index, :show]
+      post '/user_message_posts/all_read' => 'user_message_posts#all_read', as: 'all_read_user_message_posts'
     end
   end
 

@@ -10,4 +10,9 @@ class Users::UserMessagePostsController < UsersController
         @user_message_post.update!(already_read: true)
         @user_message_post = @user_message_post.decorate
     end
+
+    def all_read
+        current_user.user_message_posts.where(already_read: false).update_all(already_read: true)
+        redirect_to action: 'index'
+    end
 end
