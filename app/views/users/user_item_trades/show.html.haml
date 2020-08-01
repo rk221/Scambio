@@ -14,8 +14,8 @@
             = t('.your_evaluate_wait')
         - if @item_trade_queue.item_trade_detail.last_update_1_hour_passed? #自分が評価してから1時間経過
             -#強制更新 強制停止
-            = button_to t('.forced_edit_link'), user_forced_user_item_trade_path(id: @item_trade_queue.item_trade.id, user_id: current_user.id, to_edit: true), data: {confirm: t('.forced_edit')}, class: 'btn btn-success mr-2'
-            = button_to t('.forced_destroy_link'), user_forced_user_item_trade_path(id: @item_trade_queue.item_trade.id, user_id: current_user.id), data: {confirm: t('.forced_destroy')}, class: 'btn btn-danger'
+            = button_to t('.forced_edit_link'), user_forced_user_item_trade_path(id: @item_trade_queue.item_trade.id, user_id: current_user.id, to_edit: true), data: {confirm: t('.forced_edit')}, class: 'btn btn-success mr-2', form: {style: 'display:inline-block;'}
+            = button_to t('.forced_destroy_link'), user_forced_user_item_trade_path(id: @item_trade_queue.item_trade.id, user_id: current_user.id), data: {confirm: t('.forced_destroy')}, class: 'btn btn-danger', form: {style: 'display:inline-block;'}
         - else  
             = t('.1_hour_has_not_passed_yet')
     - elsif @item_trade_queue.approve # true 取引が成立している場合
@@ -30,7 +30,7 @@
         %h5.mb-3
             = t('.state_wait')
         -# 承認 OR 拒否
-        = button_to t('.approve'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: true, lock_version: @item_trade_queue.lock_version}), class: 'btn btn-primary mr-2',form: {style: 'display:inline-block;'} 
+        = button_to t('.approve'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: true, lock_version: @item_trade_queue.lock_version}), class: 'btn btn-primary mr-2', form: {style: 'display:inline-block;'} 
         = button_to t('.disapprove'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: false, lock_version: @item_trade_queue.lock_version}), class: 'btn btn-danger', form: {style: 'display:inline-block;'}
     - else # 相手がいない場合
         %h5.mb-3
