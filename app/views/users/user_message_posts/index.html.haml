@@ -3,7 +3,7 @@
     = t '.title'
 
 .form-group
-    = link_to t('.all_read'), user_all_read_user_message_posts_path, method: :post, class: 'btn btn-success mr-2'
+    = button_to t('.all_read'), user_all_read_user_message_posts_path, class: 'btn btn-success mr-2'
 
 %table.table.table-hover.table-bordered.text-nowrap#user_message_posts
     %thead
