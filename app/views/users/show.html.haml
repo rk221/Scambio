@@ -22,6 +22,8 @@
 
 %p
     = link_to t('.item_trade_queues'), item_trade_queues_path(current_user), class: 'btn btn-outline-primary'
+    %span.count-notice.ml-2
+        = @item_trade_queue_size
 
 %h3.mb-2
     = t('.recent_user_game_rank')
