@@ -10,6 +10,18 @@ class ItemTradeDecorator < Draper::Decorator
   #     end
   #   end
 
+  def buy_item_quantity
+    unit_name = object.buy_item.unit_name
+    unit_name ||= object.buy_item.item_genre.default_unit_name
+    return "#{object.buy_item_quantity}#{unit_name}"
+  end
+
+  def sale_item_quantity
+    unit_name = object.sale_item.unit_name
+    unit_name ||= object.sale_item.item_genre.default_unit_name
+    return "#{object.sale_item_quantity}#{unit_name}"
+  end
+
   def trade_deadline
     subtract_second = object.trade_deadline - Time.zone.now 
     return "ERROR" if subtract_second < 0
