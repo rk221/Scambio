@@ -31,7 +31,7 @@ RSpec.describe ItemTradeChat, type: :system do
             before do
                 click_link t_navbar(:games)
                 click_link t("games.index.item_trades")
-                click_link t("games.item_trades.index.buy_queue")
+                click_button t("games.item_trades.index.buy_queue")
             end
 
             include_context 'when user is logging out'
@@ -40,7 +40,7 @@ RSpec.describe ItemTradeChat, type: :system do
             context 'when approving a item trade' do
                 before do
                     click_link t_link_to(:show)
-                    click_link t('users.user_item_trades.show.approve')
+                    click_button t('users.user_item_trades.show.approve')
                 end
 
                 it 'chats is displayed' do
