@@ -28,7 +28,7 @@ RSpec.describe UserMessagePost, type: :system do
                 before do
                     click_link t_navbar(:games)
                     click_link t('games.index.item_trades')
-                    click_link t('games.item_trades.index.buy_queue')
+                    click_button t('games.item_trades.index.buy_queue')
                 end
 
                 include_context 'when user is logging out'
@@ -41,7 +41,7 @@ RSpec.describe UserMessagePost, type: :system do
 
                     it 'received message list is displayed' do
                         main_to_expect.to have_content t('users.user_message_posts.index.title')
-                        main_to_expect.to have_link t('users.user_message_posts.index.all_read')
+                        main_to_expect.to have_button t('users.user_message_posts.index.all_read')
                     end
 
                     it 'received messages is displayed' do
@@ -73,7 +73,7 @@ RSpec.describe UserMessagePost, type: :system do
 
                     context 'when approve an item trade' do
                         before do
-                            click_link t('users.user_item_trades.show.approve')
+                            click_button t('users.user_item_trades.show.approve')
                         end
 
                         include_context 'when user is logging out'

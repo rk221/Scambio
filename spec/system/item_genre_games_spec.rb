@@ -73,22 +73,22 @@ RSpec.describe ItemGenreGame, type: :system do
 
                     context 'when disable' do
                         before do 
-                            click_link t_link_to(:disable)
+                            click_button t_button_to(:disable)
                         end
 
                         it 'a link to disable is displayed' do 
-                            main_to_expect.to have_link t_link_to(:enable)
-                            main_to_expect.to_not have_link t_link_to(:disable)
+                            main_to_expect.to have_button t_button_to(:enable)
+                            main_to_expect.to_not have_button t_button_to(:disable)
                         end
 
                         context 'when enabled' do 
                             before do 
-                                click_link t_link_to(:enable)
+                                click_button t_button_to(:enable)
                             end
 
                             it 'a link to enable is displayed' do 
-                                main_to_expect.to have_link t_link_to(:disable)
-                                main_to_expect.to_not have_link t_link_to(:enable)
+                                main_to_expect.to have_button t_button_to(:disable)
+                                main_to_expect.to_not have_button t_button_to(:enable)
                             end
                         end
                     end
