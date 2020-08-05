@@ -40,35 +40,37 @@ end
 
 shared_examples 'item trades is displayed' do
     it 'item trades is displayed' do
+        decorated_item_trade = item_trade.decorate
         expect(find('.item_trades')).to have_content ItemTrade.human_attribute_name(:buy_item_genre_name) # 購入アイテムジャンル名
-        expect(find('.item_trades')).to have_content item_trade.buy_item.item_genre.name
+        expect(find('.item_trades')).to have_content decorated_item_trade.buy_item.item_genre.name
         expect(find('.item_trades')).to have_content ItemTrade.human_attribute_name(:sale_item_genre_name) # 売却アイテムジャンル名
-        expect(find('.item_trades')).to have_content item_trade.sale_item.item_genre.name
+        expect(find('.item_trades')).to have_content decorated_item_trade.sale_item.item_genre.name
         expect(find('.item_trades')).to have_content ItemTrade.human_attribute_name(:buy_item_name) # 購入アイテム名
-        expect(find('.item_trades')).to have_content item_trade.buy_item.name
+        expect(find('.item_trades')).to have_content decorated_item_trade.buy_item.name
         expect(find('.item_trades')).to have_content ItemTrade.human_attribute_name(:sale_item_name) # 売却アイテム名
-        expect(find('.item_trades')).to have_content item_trade.sale_item.name
+        expect(find('.item_trades')).to have_content decorated_item_trade.sale_item.name
         expect(find('.item_trades')).to have_content ItemTrade.human_attribute_name(:buy_item_quantity) # 購入アイテム数量
-        expect(find('.item_trades')).to have_content item_trade.buy_item_quantity
+        expect(find('.item_trades')).to have_content decorated_item_trade.buy_item_quantity
         expect(find('.item_trades')).to have_content ItemTrade.human_attribute_name(:sale_item_quantity) # 売却アイテム数量
-        expect(find('.item_trades')).to have_content item_trade.sale_item_quantity
+        expect(find('.item_trades')).to have_content decorated_item_trade.sale_item_quantity
     end
 end
 
 shared_examples 'item trades is not displayed' do
     it 'item trades is not displayed' do
+        decorated_item_trade = item_trade.decorate
         expect(find('.item_trades')).to_not have_content ItemTrade.human_attribute_name(:buy_item_genre_name) # 購入アイテムジャンル名
-        expect(find('.item_trades')).to_not have_content item_trade.buy_item.item_genre.name
+        expect(find('.item_trades')).to_not have_content decorated_item_trade.buy_item.item_genre.name
         expect(find('.item_trades')).to_not have_content ItemTrade.human_attribute_name(:sale_item_genre_name) # 売却アイテムジャンル名
-        expect(find('.item_trades')).to_not have_content item_trade.sale_item.item_genre.name
+        expect(find('.item_trades')).to_not have_content decorated_item_trade.sale_item.item_genre.name
         expect(find('.item_trades')).to_not have_content ItemTrade.human_attribute_name(:buy_item_name) # 購入アイテム名
-        expect(find('.item_trades')).to_not have_content item_trade.buy_item.name
+        expect(find('.item_trades')).to_not have_content decorated_item_trade.buy_item.name
         expect(find('.item_trades')).to_not have_content ItemTrade.human_attribute_name(:sale_item_name) # 売却アイテム名
-        expect(find('.item_trades')).to_not have_content item_trade.sale_item.name
+        expect(find('.item_trades')).to_not have_content decorated_item_trade.sale_item.name
         expect(find('.item_trades')).to_not have_content ItemTrade.human_attribute_name(:buy_item_quantity) # 購入アイテム数量
-        expect(find('.item_trades')).to_not have_content item_trade.buy_item_quantity
+        expect(find('.item_trades')).to_not have_content decorated_item_trade.buy_item_quantity
         expect(find('.item_trades')).to_not have_content ItemTrade.human_attribute_name(:sale_item_quantity) # 売却アイテム数量
-        expect(find('.item_trades')).to_not have_content item_trade.sale_item_quantity
+        expect(find('.item_trades')).to_not have_content decorated_item_trade.sale_item_quantity
     end
 end
 
