@@ -165,7 +165,7 @@ RSpec.describe ItemTrade, type: :system do
             before do
                 click_link t_navbar(:games)
                 click_link t("games.index.item_trades")
-                click_link t("games.item_trades.index.buy_queue")
+                click_button t("games.item_trades.index.buy_queue")
             end
 
             it 'a link to detail of item trade queue is displayed' do
@@ -195,8 +195,8 @@ RSpec.describe ItemTrade, type: :system do
                     end
 
                     it 'item trade awaiting response' do
-                        main_to_expect.to have_content t('users.user_item_trades.show.approve')
-                        main_to_expect.to have_content t('users.user_item_trades.show.disapprove')
+                        main_to_expect.to have_button t('users.user_item_trades.show.approve')
+                        main_to_expect.to have_button t('users.user_item_trades.show.disapprove')
                     end
 
                     it_behaves_like 'item trades is displayed'
@@ -204,7 +204,7 @@ RSpec.describe ItemTrade, type: :system do
 
                     context 'when approving a item trade' do
                         before do
-                            click_link t('users.user_item_trades.show.approve')
+                            click_button t('users.user_item_trades.show.approve')
                         end
 
                         it 'a detail of user item trade is displayed' do
@@ -430,7 +430,7 @@ RSpec.describe ItemTrade, type: :system do
 
                     context 'when disapproving a item trade' do
                         before do
-                            click_link t('users.user_item_trades.show.disapprove')
+                            click_button t('users.user_item_trades.show.disapprove')
                         end
 
                         it 'a edit of item trade is displayed' do 

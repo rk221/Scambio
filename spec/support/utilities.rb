@@ -14,6 +14,10 @@ def t_link_to(name, options={})
   I18n.t("link_to.#{name}", options)
 end
 
+def t_button_to(name, options={})
+  I18n.t("link_to.#{name}", options)
+end
+
 def t_flash(name, options={})
   I18n.t("flash.#{name}", options)
 end
