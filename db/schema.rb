@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_121128) do
+ActiveRecord::Schema.define(version: 2020_08_07_125551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,17 @@ ActiveRecord::Schema.define(version: 2020_08_06_121128) do
     t.index ["user_id"], name: "index_play_station_network_ids_on_user_id"
   end
 
+  create_table "user_badges", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "badge_id", null: false
+    t.boolean "wear", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["badge_id"], name: "index_user_badges_on_badge_id"
+    t.index ["user_id", "badge_id"], name: "index_user_badges_on_user_id_and_badge_id", unique: true
+    t.index ["user_id"], name: "index_user_badges_on_user_id"
+  end
+
   create_table "user_game_ranks", force: :cascade do |t|
     t.integer "rank", default: 0, null: false
     t.integer "popularity", default: 0, null: false
@@ -213,6 +224,8 @@ ActiveRecord::Schema.define(version: 2020_08_06_121128) do
   add_foreign_key "items", "item_genres"
   add_foreign_key "nintendo_friend_codes", "users"
   add_foreign_key "play_station_network_ids", "users"
+  add_foreign_key "user_badges", "badges"
+  add_foreign_key "user_badges", "users"
   add_foreign_key "user_game_ranks", "games"
   add_foreign_key "user_game_ranks", "users"
   add_foreign_key "user_message_posts", "users"

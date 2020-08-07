@@ -1,5 +1,6 @@
 class Badge < ApplicationRecord
     belongs_to :game
+    has_many :user_badges
 
     validates :game_id, presence: true
     validates :name, presence: true, uniqueness: true, length: {maximum: 30}
