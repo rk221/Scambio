@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_133635) do
+ActiveRecord::Schema.define(version: 2020_08_06_121128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "badges", force: :cascade do |t|
+    t.string "name", limit: 30, null: false
+    t.integer "item_trade_count_condition", default: 0, null: false
+    t.integer "rank_condition", default: 0, null: false
+    t.bigint "game_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_badges_on_game_id"
+    t.index ["name"], name: "index_badges_on_name", unique: true
+  end
 
   create_table "fixed_phrases", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -184,6 +195,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "badges", "games"
   add_foreign_key "fixed_phrases", "users"
   add_foreign_key "item_genre_games", "games"
   add_foreign_key "item_genre_games", "item_genres"
