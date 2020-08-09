@@ -13,6 +13,8 @@ class Game < ApplicationRecord
     has_many :buy_items, through: :item_trades, source: :buy_item
     has_many :sale_items, through: :item_trades, source: :sale_item
     
+    has_many :badges, dependent: :destroy
+
     validates :title, presence: true, uniqueness: true
     
     mount_uploader :image_icon, ImageUploader

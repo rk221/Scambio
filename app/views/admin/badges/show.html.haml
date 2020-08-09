@@ -1,0 +1,30 @@
+- breadcrumb :admin_badge, @badge.id
+%h1.mb-5 
+    = t '.title'
+
+.table-responsive
+    %table.table.table-hover.table-bordered.text-nowrap
+        %tbody
+            %tr 
+                %td 
+                    = Game.human_attribute_name(:title)
+                %td 
+                    = @badge.game.title
+            %tr 
+                %td 
+                    = Badge.human_attribute_name(:name)
+                %td 
+                    = @badge.name
+            %tr 
+                %td 
+                    = Badge.human_attribute_name(:item_trade_count_condition)
+                %td 
+                    = @badge.item_trade_count_condition
+            %tr 
+                %td 
+                    = Badge.human_attribute_name(:rank_condition)
+                %td{class: "user-game-rank-#{@badge.rank_condition}"}
+                    = @badge.rank_name
+
+= link_to t('link_to.edit'), edit_admin_badge_path(@badge), class: 'btn btn-success mr-2'
+= link_to t('link_to.destroy'), admin_badge_path(@badge), method: :delete, data: {confirm: t('confirm.destroy', model: Badge.model_name.human, name: @badge.name)}, class: 'btn btn-danger'

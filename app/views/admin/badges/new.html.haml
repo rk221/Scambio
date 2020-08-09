@@ -1,0 +1,26 @@
+- breadcrumb :new_admin_badge
+%h1.mb-5
+    = t('.title')
+
+= form_with(model: [@badge], url: admin_badges_path, local: true) do |f|
+    = render 'shared/error_messages', model: f.object
+
+    .form-group
+        = f.label :name
+        = f.text_field :name, required: true, maxlength: 30, class: 'form-control'
+    .form-group
+        = f.label :item_trade_count_condition
+        = f.number_field :item_trade_count_condition, value: 1, required: true, min: 1, class: 'form-control'
+    .form-group
+        = f.label :rank_condition
+        = f.number_field :rank_condition, value: 0, required: true, min: -2, max: 4, class: 'form-control'
+    .form-group 
+        = f.label :game_id, Game.human_attribute_name(:title)
+        = f.select :game_id, @games.map{|game| [game.title, game.id]}, {include_blank: t('include_blank')}, {class: 'form-control', 'v-on:change': 'onSelectedChange($event)'}
+    .form-group
+        .form-check
+            = f.check_box :all, {class: 'form-check-input', 'v-on:change': 'onSelectedChange($event)', checked: true}, true, false
+            = f.label :all, t('.all'), class: 'form-check-label'
+
+    .form-group
+        = f.submit nil, class:'btn btn-primary'

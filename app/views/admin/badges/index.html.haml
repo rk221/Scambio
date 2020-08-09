@@ -1,0 +1,27 @@
+- breadcrumb :admin_badges
+%h1.mb-5 
+    = t '.title'
+
+= link_to t('link_to.regist'), new_admin_badge_path, class: 'btn btn-primary mb-3'
+
+.table-responsive
+    %table.table.table-hover.table-bordered.text-nowrap
+        %thead.thead-light
+            %tr 
+                %th
+                    = Game.human_attribute_name(:title)
+                %th
+                    = Badge.human_attribute_name(:name)
+                %th
+        %tbody
+            - @badges.each do |badge|
+                %tr 
+                    %td 
+                        = badge.game.title
+                    %td 
+                        = badge.name
+                    %td 
+                        = link_to t('link_to.show'), admin_badge_path(badge), class: 'btn btn-primary mr-2'
+                        = link_to t('link_to.edit'), edit_admin_badge_path(badge), class: 'btn btn-success mr-2'
+                        = link_to t('link_to.destroy'), admin_badge_path(badge), method: :delete, data: {confirm: t('confirm.destroy', model: Badge.model_name.human, name: badge.name)}, class: 'btn btn-danger'
+                    

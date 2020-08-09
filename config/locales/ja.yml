@@ -1,5 +1,6 @@
 ja:
     empty: なし 
+    include_blank: 指定なし
     confirm:
         destroy: "%{model}「%{name}」を削除しますか？"
         simple_destroy: "%{name}を削除しますか？"
@@ -21,6 +22,17 @@ ja:
                 title: ゲーム登録
             edit:
                 title: ゲーム編集
+        badges:
+            index:
+                title: バッジ一覧
+            show:
+                title: バッジ詳細
+            new:
+                title: バッジ登録
+                all: ゲーム全てに追加する
+            edit:
+                title: バッジ編集
+                all: 同名のバッジ全てに反映する
         item_genres:
             index:
                 title: アイテムジャンル一覧
@@ -172,6 +184,10 @@ ja:
             game:
                 title: ゲームタイトル
                 image_icon: アイコン
+            badge:
+                name: バッジ名
+                item_trade_count_condition: 取引回数条件
+                rank_condition: ユーザランク条件
             item_genre:
                 name:  アイテムジャンル名
                 default_unit_name: デフォルトの単位名
@@ -222,6 +238,7 @@ ja:
                 created_at: 投稿時間
         models:
             game: ゲーム
+            badge: バッジ
             item_genre: アイテムジャンル
             nintendo_friend_code: 任天堂フレンドコード
             play_station_network_id: PlayStationNetworkID
@@ -229,6 +246,7 @@ ja:
             item_trade: アイテムトレード
             item_trade_queue: アイテムトレードキュー
             user_game_rank: ユーザゲームランク
+            user_badge: ユーザバッジ
     activemodel:
         attributes:
             regist_item_trade_form:
@@ -250,6 +268,7 @@ ja:
     navbar:
         navbar:
             admin_games: ゲーム管理
+            admin_badges: バッジ管理
             item_genres: アイテムジャンル
             games: ゲーム
             mypage: マイページ
@@ -266,6 +285,7 @@ ja:
             evaluated_item_trade: 既に評価済みです
         permit_error: このページを見る権限がありません
         error: エラーが発生しました
+        destroy_failed: 削除に失敗しました 
     errors:
         messages:
             psn_id_head_alphabet: は先頭英字で入力してください

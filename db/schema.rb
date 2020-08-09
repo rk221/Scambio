@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2020_08_07_125551) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_badges_on_game_id"
-    t.index ["name"], name: "index_badges_on_name", unique: true
+    t.index ["name", "game_id"], name: "index_badges_on_name_and_game_id", unique: true
   end
 
   create_table "fixed_phrases", force: :cascade do |t|

@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :games
     resources :item_genres
+    resources :badges
+
     resources :item_genre_games, param: :game_id, only: [:index]
     post '/item_genre_games/enable/:id' => 'item_genre_games#enable', as: 'enable_item_genre_game'
     post '/item_genre_games/disable/:id' => 'item_genre_games#disable', as: 'disable_item_genre_game'

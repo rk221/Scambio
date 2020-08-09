@@ -63,6 +63,25 @@ crumb :edit_admin_game do |game_id|
   parent :admin_games
 end
 
+crumb :admin_badges do 
+  link t('admin.badges.index.title'), admin_badges_path
+end
+
+crumb :admin_badge do |badge_id|
+  link t('admin.badges.index.title'), admin_badge_path(id: badge_id)
+  parent :admin_badges
+end
+
+crumb :new_admin_badge do 
+  link t('admin.badges.new.title'), new_admin_badge_path
+  parent :admin_badges
+end
+
+crumb :edit_admin_badge do |badge_id|
+  link t('admin.badges.edit.title'), edit_admin_badge_path(id: badge_id)
+  parent :admin_badges
+end
+
 crumb :admin_item_genres do 
   link t('admin.item_genres.index.title'), admin_item_genres_path
 end

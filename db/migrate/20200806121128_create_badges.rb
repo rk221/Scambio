@@ -11,6 +11,6 @@ class CreateBadges < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :badges, :name, unique: true
+    add_index :badges, [:name, :game_id], unique: true
   end
 end
