@@ -14,7 +14,7 @@ class Admin::GamesController < AdminController
             ItemGenre.find_each do |item_genre|
                 ItemGenreGame.create!(item_genre_id: item_genre.id, game_id: @game.id, enable: false) 
             end
-            redirect_to admin_games_path, notice: t('flash.create')
+            redirect_to action: :index, notice: t('flash.create')
         else
             render :new
         end
@@ -28,7 +28,7 @@ class Admin::GamesController < AdminController
         @game = Game.find(params[:id])
 
         if @game.update(game_params)
-            redirect_to admin_games_path, notice: t('flash.update')
+            redirect_to action: :index, notice: t('flash.update')
         else
             render :edit
         end
@@ -38,7 +38,7 @@ class Admin::GamesController < AdminController
         game = Game.find(params[:id])
         game.destroy! 
 
-        redirect_to admin_games_path, notice: t('flash.destroy')
+        redirect_to action: :index, notice: t('flash.destroy')
     end
     private
 

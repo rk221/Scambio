@@ -33,7 +33,7 @@ class Users::UserItemTradesController < UsersController
         
         if @item_trade.respond(respond_params)
             if @item_trade.enable_item_trade_queue.approve # 成立→引き続き詳細画面 不成立→編集画面
-                redirect_to action: 'show', id: @item_trade.id, user_id: current_user.id, notice: t('.approve')
+                redirect_to action: :show, id: @item_trade.id, user_id: current_user.id, notice: t('.approve')
             else
                 redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('.disapprove')
             end
@@ -53,7 +53,7 @@ class Users::UserItemTradesController < UsersController
         if params[:to_edit]
             redirect_to edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), notice: t('flash.destroy')
         else
-            redirect_to user_user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
+            redirect_to action: :index, user_id: current_user.id, notice: t('flash.destroy')
         end
     end
 

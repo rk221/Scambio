@@ -26,7 +26,7 @@ class ItemTradeQueuesController < ApplicationController
         return redirect_to redirect_to_permit_error if confirm_user(item_trade_queue.item_trade) # ユーザIDと売却者ユーザIDが一致していると不正
 
         if item_trade_queue.buy(current_user.id)
-            redirect_to action: 'show', id: item_trade_queue.id, warning: t('.success_message')
+            redirect_to action: :show, id: item_trade_queue.id, warning: t('.success_message')
         else
             redirect_to_error
         end
