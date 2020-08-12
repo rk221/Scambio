@@ -1,0 +1,21 @@
+- breadcrumb :edit_user_badges
+%h1.mb-5
+    = t('.title')
+
+%p
+    = t('.selectable_up_to_3')
+
+= form_with(url: update_user_badges_path, local: true) do |f|
+    - game_id = nil
+    - @user_badges.each do |user_badge|
+        - if game_id != user_badge.badge.game_id
+            - game_id = user_badge.badge.game_id
+            %h3.mb-3
+                = user_badge.badge.game.title
+        .form-group
+            .form-check
+                = f.check_box "#{user_badge.badge.id}", {class: 'form-check-input', 'v-on:change': 'onSelectedChange($event)', name: "badge_ids[]"}, user_badge.id, false
+                = f.label "#{user_badge.badge.id}", "#{user_badge.badge.name}", class: 'form-check-label'
+
+    .form-group
+        = f.submit nil, class:'btn btn-primary'

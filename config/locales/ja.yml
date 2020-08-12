@@ -117,12 +117,22 @@ ja:
             title: マイページ
             codes: コード一覧
             fixed_phrases: 定形文一覧
+            badges: バッジ一覧
             edit_user: ユーザ情報変更
             user_message_posts: 受信メッセージ一覧
             user_item_trades: あなたのアイテムトレード一覧
             recent_user_game_rank: 最近取引されたゲーム
             reaction_wait_item_trades: 反応待ちアイテムトレード一覧
             item_trade_queues: 購入待ちアイテムトレード一覧
+        badges:
+            index:
+                title: バッジ一覧
+                wear_badges: バッジを装着する
+                wearing_badges: 装着中のバッジ
+                wearable_badges: 装着可能なバッジ
+            edit:
+                title: バッジ編集
+                selectable_up_to_3: 3つまで選択可能
         user_item_trades:
             index:
                 title: あなたのアイテムトレード一覧
@@ -188,6 +198,8 @@ ja:
                 name: バッジ名
                 item_trade_count_condition: 取引回数条件
                 rank_condition: ユーザランク条件
+            user_badge:
+                error_max_wear_badge: これ以上バッジは装着出来ません
             item_genre:
                 name:  アイテムジャンル名
                 default_unit_name: デフォルトの単位名

@@ -19,9 +19,13 @@ class ItemTradeDetail < ApplicationRecord
             end
             # 購入側のRANKを更新
             UserGameRank.find_by(user_id: item_trade_queue.user_id, game_id: item_trade_queue.item_trade.game_id).buy_item_trade_update!(self.buy_popuarity)
+            # 自分のバッジを更新
+            UserBadge.create_to_can_attach!(item_trade_queue.item_trade.user_id, item_trade_queue.item_trade.game_id)
+            # 相手のバッジを更新
+            UserBadge.create_to_can_attach!(item_trade_queue.user_id, item_trade_queue.item_trade.game_id)
         end
         true
-        rescue
+    rescue
         false
     end
 
@@ -34,9 +38,13 @@ class ItemTradeDetail < ApplicationRecord
             end
             # 売却側のRANKを更新
             UserGameRank.find_by(user_id: item_trade_queue.item_trade.user_id, game_id: item_trade_queue.item_trade.game_id).sale_item_trade_update!(self.sale_popuarity)
+            # 自分のバッジを更新
+            UserBadge.create_to_can_attach!(item_trade_queue.user_id, item_trade_queue.item_trade.game_id)
+            # 相手のバッジを更新
+            UserBadge.create_to_can_attach!(item_trade_queue.item_trade.user_id, item_trade_queue.item_trade.game_id)
         end
         true
-        rescue
+    rescue
         false
     end
 end

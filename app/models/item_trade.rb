@@ -71,6 +71,7 @@ class ItemTrade < ApplicationRecord
         update_attribute(:enable, false)   # before_validationは呼ばれないのでcolumnではなくattribute
     end
 
+    # アイテムトレード強制終了処理
     def forced
         self.transaction do
             UserMessagePost.create_message_forced!(self.enable_item_trade_queue.decorate)
@@ -90,6 +91,7 @@ class ItemTrade < ApplicationRecord
             if enable_item_trade_queue.approve
                 UserMessagePost.create_message_approve!(enable_item_trade_queue)            # 成立メッセージを相手に送信
                 ItemTradeDetail.create!(item_trade_queue_id: enable_item_trade_queue.id)    # Detailsを生成
+                UserGameRank.update_trade_count!(enable_item_trade_queue)                   # 取引回数をカウントアップ（両者）
             else
                 UserMessagePost.create_message_reject!(enable_item_trade_queue.decorate)    # 不成立メッセージを相手に送信
                 raise ActiveRecord::RecordInvalid unless disable_trade!                      # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック

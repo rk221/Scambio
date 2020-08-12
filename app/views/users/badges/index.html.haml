@@ -1,0 +1,42 @@
+- breadcrumb :user_badges
+%h1.mb-5
+    = t '.title'
+
+= link_to t('.wear_badges'), edit_user_badges_path(user_id: current_user.id), class: 'btn btn-success mb-3'
+
+%h3.mb-3
+    = t('.wearing_badges')
+
+.table-responsive
+    %table.table.table-bordered.text-nowrap
+        %thead.thead-light
+            %tr 
+                %th
+                    = Game.human_attribute_name(:title)
+                %th
+                    = Badge.human_attribute_name(:name)
+        %tbody
+            - @wear_user_badges.each do |user_badge|
+                %tr 
+                    %td 
+                        = user_badge.badge.game.title
+                    %td 
+                        = user_badge.badge.name
+%h3.mb-3
+    = t('.wearable_badges')
+
+.table-responsive
+    %table.table.table-bordered.text-nowrap
+        %thead.thead-light
+            %tr 
+                %th
+                    = Game.human_attribute_name(:title)
+                %th
+                    = Badge.human_attribute_name(:name)
+        %tbody
+            - @user_badges.each do |user_badge|
+                %tr 
+                    %td 
+                        = user_badge.badge.game.title
+                    %td 
+                        = user_badge.badge.name

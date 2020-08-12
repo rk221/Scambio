@@ -34,4 +34,20 @@ RSpec.describe UserBadge, type: :model do
     user_badge.valid?
     expect(user_badge.errors[:wear]).to include("は一覧にありません")
   end
+
+  context "when there are 4 or more badges" do
+    let!(:badge1){create(:badge, game: game, name: "バッジ1")}
+    let!(:badge2){create(:badge, game: game, name: "バッジ2")}
+    let!(:badge3){create(:badge, game: game, name: "バッジ3")}
+    let!(:badge4){create(:badge, game: game, name: "バッジ4")}
+
+    it "is not valid wear 4 or more badges" do 
+      create(:user_badge, user: user, badge: badge1, wear: true)
+      create(:user_badge, user: user, badge: badge2, wear: true)
+      create(:user_badge, user: user, badge: badge3, wear: true)
+      user_badge = build(:user_badge, user: user, badge: badge4, wear: true)
+      user_badge.valid?
+      expect(user_badge.errors[:base]).to include("これ以上バッジは装着出来ません")
+    end
+  end
 end

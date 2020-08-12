@@ -145,6 +145,16 @@ crumb :edit_fixed_phrase do |fixed_phrase_id|
   parent :fixed_phrase, fixed_phrase_id
 end
 
+crumb :user_badges do
+  link t('users.badges.index.title'), user_badges_path(current_user)
+  parent :user
+end
+
+crumb :edit_user_badges do
+  link t('users.badges.edit.title'), edit_user_badges_path(current_user) 
+  parent :user_badges
+end
+
 crumb :games do
   link t('games.index.title'), games_path
 end

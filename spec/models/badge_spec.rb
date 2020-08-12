@@ -19,11 +19,11 @@ RSpec.describe Badge, type: :model do
     expect(badge.errors[:name]).to include("は30文字以内で入力してください")
   end
 
-  it "is not valid with a not unique name" do
+  it "is not valid with a not unique conbination name and game_id" do
     create(:badge, game: game)
-    badge = build(:badge)
+    badge = build(:badge, game: game)
     badge.valid?
-    expect(badge.errors[:name]).to include("はすでに存在します")
+    expect(badge.errors[:game_id]).to include("はすでに存在します")
   end
 
   it "is not valid without a item_trade_count_condition" do
