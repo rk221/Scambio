@@ -13,6 +13,6 @@ class Users::UserMessagePostsController < UsersController
 
     def all_read
         current_user.user_message_posts.where(already_read: false).update_all(already_read: true)
-        redirect_to action: 'index'
+        redirect_to action: :index
     end
 end
