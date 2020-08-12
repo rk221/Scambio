@@ -1,5 +1,6 @@
 ja:
     empty: なし 
+    include_blank: 指定なし
     confirm:
         destroy: "%{model}「%{name}」を削除しますか？"
         simple_destroy: "%{name}を削除しますか？"
@@ -21,6 +22,17 @@ ja:
                 title: ゲーム登録
             edit:
                 title: ゲーム編集
+        badges:
+            index:
+                title: バッジ一覧
+            show:
+                title: バッジ詳細
+            new:
+                title: バッジ登録
+                all: ゲーム全てに追加する
+            edit:
+                title: バッジ編集
+                all: 同名のバッジ全てに反映する
         item_genres:
             index:
                 title: アイテムジャンル一覧
@@ -105,12 +117,22 @@ ja:
             title: マイページ
             codes: コード一覧
             fixed_phrases: 定形文一覧
+            badges: バッジ一覧
             edit_user: ユーザ情報変更
             user_message_posts: 受信メッセージ一覧
             user_item_trades: あなたのアイテムトレード一覧
             recent_user_game_rank: 最近取引されたゲーム
             reaction_wait_item_trades: 反応待ちアイテムトレード一覧
             item_trade_queues: 購入待ちアイテムトレード一覧
+        badges:
+            index:
+                title: バッジ一覧
+                wear_badges: バッジを装着する
+                wearing_badges: 装着中のバッジ
+                wearable_badges: 装着可能なバッジ
+            edit:
+                title: バッジ編集
+                selectable_up_to_3: 3つまで選択可能
         user_item_trades:
             index:
                 title: あなたのアイテムトレード一覧
@@ -172,6 +194,12 @@ ja:
             game:
                 title: ゲームタイトル
                 image_icon: アイコン
+            badge:
+                name: バッジ名
+                item_trade_count_condition: 取引回数条件
+                rank_condition: ユーザランク条件
+            user_badge:
+                error_max_wear_badge: これ以上バッジは装着出来ません
             item_genre:
                 name:  アイテムジャンル名
                 default_unit_name: デフォルトの単位名
@@ -222,6 +250,7 @@ ja:
                 created_at: 投稿時間
         models:
             game: ゲーム
+            badge: バッジ
             item_genre: アイテムジャンル
             nintendo_friend_code: 任天堂フレンドコード
             play_station_network_id: PlayStationNetworkID
@@ -229,6 +258,7 @@ ja:
             item_trade: アイテムトレード
             item_trade_queue: アイテムトレードキュー
             user_game_rank: ユーザゲームランク
+            user_badge: ユーザバッジ
     activemodel:
         attributes:
             regist_item_trade_form:
@@ -250,6 +280,7 @@ ja:
     navbar:
         navbar:
             admin_games: ゲーム管理
+            admin_badges: バッジ管理
             item_genres: アイテムジャンル
             games: ゲーム
             mypage: マイページ
@@ -266,6 +297,7 @@ ja:
             evaluated_item_trade: 既に評価済みです
         permit_error: このページを見る権限がありません
         error: エラーが発生しました
+        destroy_failed: 削除に失敗しました 
     errors:
         messages:
             psn_id_head_alphabet: は先頭英字で入力してください

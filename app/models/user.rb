@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :user_game_ranks
   has_many :user_game_rank_games, through: :user_game_ranks, source: :game
 
+  has_many :user_badges
+
   has_many :item_trades
   has_many :item_trade_games, through: :item_trades, source: :game
   has_many :buy_items, through: :item_trades, source: :buy_item

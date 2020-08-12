@@ -1,5 +1,4 @@
-Rails.application.routes.draw do
-  devise_for :users, controllers: {
+Rails.application.routes.draw do devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
 
@@ -9,10 +8,14 @@ Rails.application.routes.draw do
       post '/user_item_trade/:id/respond' => 'user_item_trades#respond', as: 'respond_user_item_trade'
       post '/user_item_trade/:id/forced' => 'user_item_trades#forced', as: 'forced_user_item_trade'
 
+      resources :badges, only: [:index]
+
       resources :user_message_posts, only: [:index, :show]
       post '/user_message_posts/all_read' => 'user_message_posts#all_read', as: 'all_read_user_message_posts'
     end
   end
+  get '/users/:user_id/badges/edit' => 'users/badges#edit', as: 'edit_user_badges'
+  post '/users/:user_id/badges' => 'users/badges#update', as: 'update_user_badges'
 
   resources :item_trade_queues, only: [:index, :show]
   post '/item_trade_queues/:id/buy' => 'item_trade_queues#buy', as: 'buy_item_trade_queue'
@@ -20,6 +23,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :games
     resources :item_genres
+    resources :badges
+
     resources :item_genre_games, param: :game_id, only: [:index]
     post '/item_genre_games/enable/:id' => 'item_genre_games#enable', as: 'enable_item_genre_game'
     post '/item_genre_games/disable/:id' => 'item_genre_games#disable', as: 'disable_item_genre_game'

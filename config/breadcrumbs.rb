@@ -63,6 +63,25 @@ crumb :edit_admin_game do |game_id|
   parent :admin_games
 end
 
+crumb :admin_badges do 
+  link t('admin.badges.index.title'), admin_badges_path
+end
+
+crumb :admin_badge do |badge_id|
+  link t('admin.badges.index.title'), admin_badge_path(id: badge_id)
+  parent :admin_badges
+end
+
+crumb :new_admin_badge do 
+  link t('admin.badges.new.title'), new_admin_badge_path
+  parent :admin_badges
+end
+
+crumb :edit_admin_badge do |badge_id|
+  link t('admin.badges.edit.title'), edit_admin_badge_path(id: badge_id)
+  parent :admin_badges
+end
+
 crumb :admin_item_genres do 
   link t('admin.item_genres.index.title'), admin_item_genres_path
 end
@@ -124,6 +143,16 @@ end
 crumb :edit_fixed_phrase do |fixed_phrase_id|
   link t('fixed_phrases.show.title'), edit_fixed_phrase_path(fixed_phrase_id)
   parent :fixed_phrase, fixed_phrase_id
+end
+
+crumb :user_badges do
+  link t('users.badges.index.title'), user_badges_path(current_user)
+  parent :user
+end
+
+crumb :edit_user_badges do
+  link t('users.badges.edit.title'), edit_user_badges_path(current_user) 
+  parent :user_badges
 end
 
 crumb :games do

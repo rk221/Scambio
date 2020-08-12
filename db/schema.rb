@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_133635) do
+ActiveRecord::Schema.define(version: 2020_08_07_125551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "badges", force: :cascade do |t|
+    t.string "name", limit: 30, null: false
+    t.integer "item_trade_count_condition", default: 0, null: false
+    t.integer "rank_condition", default: 0, null: false
+    t.bigint "game_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_badges_on_game_id"
+    t.index ["name", "game_id"], name: "index_badges_on_name_and_game_id", unique: true
+  end
 
   create_table "fixed_phrases", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -129,6 +140,17 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
     t.index ["user_id"], name: "index_play_station_network_ids_on_user_id"
   end
 
+  create_table "user_badges", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "badge_id", null: false
+    t.boolean "wear", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["badge_id"], name: "index_user_badges_on_badge_id"
+    t.index ["user_id", "badge_id"], name: "index_user_badges_on_user_id_and_badge_id", unique: true
+    t.index ["user_id"], name: "index_user_badges_on_user_id"
+  end
+
   create_table "user_game_ranks", force: :cascade do |t|
     t.integer "rank", default: 0, null: false
     t.integer "popularity", default: 0, null: false
@@ -184,6 +206,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "badges", "games"
   add_foreign_key "fixed_phrases", "users"
   add_foreign_key "item_genre_games", "games"
   add_foreign_key "item_genre_games", "item_genres"
@@ -201,6 +224,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_133635) do
   add_foreign_key "items", "item_genres"
   add_foreign_key "nintendo_friend_codes", "users"
   add_foreign_key "play_station_network_ids", "users"
+  add_foreign_key "user_badges", "badges"
+  add_foreign_key "user_badges", "users"
   add_foreign_key "user_game_ranks", "games"
   add_foreign_key "user_game_ranks", "users"
   add_foreign_key "user_message_posts", "users"
