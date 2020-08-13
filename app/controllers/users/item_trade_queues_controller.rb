@@ -1,6 +1,5 @@
-class ItemTradeQueuesController < ApplicationController
-    include Errors 
-    include Users
+class Users::ItemTradeQueuesController < UsersController
+    before_action :user_auth
 
     def index
         @item_trade_queues = ItemTradeQueue.trade_under_purchases(current_user.id).order("item_trade_queues.updated_at DESC").decorate

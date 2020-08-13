@@ -1,4 +1,4 @@
-- breadcrumb :user_user_item_trade, @item_trade_queue.item_trade.id
+- breadcrumb :user_item_trade, @item_trade_queue.item_trade.id
 %h1.mb-5
     = t '.title'
 
@@ -30,8 +30,8 @@
         %h5.mb-3
             = t('.state_wait')
         -# 承認 OR 拒否
-        = button_to t('.approve'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: true, lock_version: @item_trade_queue.lock_version}), class: 'btn btn-primary mr-2', form: {style: 'display:inline-block;'} 
-        = button_to t('.disapprove'), user_respond_user_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: false, lock_version: @item_trade_queue.lock_version}), class: 'btn btn-danger', form: {style: 'display:inline-block;'}
+        = button_to t('.approve'), user_respond_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: true, lock_version: @item_trade_queue.lock_version}), class: 'btn btn-primary mr-2', form: {style: 'display:inline-block;'} 
+        = button_to t('.disapprove'), user_respond_item_trade_path(id: @item_trade_queue.item_trade.id, item_trade_queue: {id: @item_trade_queue.id, approve: false, lock_version: @item_trade_queue.lock_version}), class: 'btn btn-danger', form: {style: 'display:inline-block;'}
     - else # 相手がいない場合
         %h5.mb-3
             = t('.state_for_sale')

@@ -1,5 +1,5 @@
 = render partial: "shared/mailer"
-= render partial: "users/user_message_posts/shared/reject_item_trade", locals: {item_trade_queue: @item_trade_queue}
+= render partial: "users/message_posts/shared/reject_item_trade", locals: {item_trade_queue: @item_trade_queue}
 
 %p
     = t 'message_mailer_mailer.check_the_message'

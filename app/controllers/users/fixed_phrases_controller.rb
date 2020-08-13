@@ -1,6 +1,5 @@
-class FixedPhrasesController < ApplicationController
-    include Users
-    include Errors
+class Users::FixedPhrasesController < UsersController
+    before_action :user_auth
 
     def index 
         @fixed_phrases = current_user.fixed_phrases
@@ -18,7 +17,7 @@ class FixedPhrasesController < ApplicationController
         @fixed_phrase = FixedPhrase.new(fixed_phrase_params)
 
         if @fixed_phrase.save
-            redirect_to action: :show, id: @fixed_phrase, notice: t('flash.create')
+            redirect_to action: :show, id: @fixed_phrase, user_id: current_user.id, notice: t('flash.create')
         else
             render :new
         end
@@ -32,7 +31,7 @@ class FixedPhrasesController < ApplicationController
         @fixed_phrase = current_user.fixed_phrases.find(params[:id])
 
         if @fixed_phrase.update(fixed_phrase_params)
-            redirect_to action: :show, id: @fixed_phrase, notice: t('flash.update')
+            redirect_to action: :show, id: @fixed_phrase, user_id: current_user.id, notice: t('flash.update')
         else
             render :edit
         end
@@ -42,7 +41,7 @@ class FixedPhrasesController < ApplicationController
         @fixed_phrase = current_user.fixed_phrases.find(params[:id])
 
         @fixed_phrase.destroy!
-        redirect_to action: :index, notice: t('flash.destroy')
+        redirect_to action: :index, user_id: current_user.id, notice: t('flash.destroy')
     end
 
     private

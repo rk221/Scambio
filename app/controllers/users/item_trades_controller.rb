@@ -1,6 +1,5 @@
-class Users::UserItemTradesController < UsersController
+class Users::ItemTradesController < UsersController
     before_action :user_auth
-    include Errors
 
     # ユーザの取引一覧
     def index #page paramsを受け取るとページ切り替え可能

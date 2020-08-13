@@ -4,21 +4,24 @@ Rails.application.routes.draw do devise_for :users, controllers: {
 
   resources :users, only: [:show] do 
     scope module: :users do
-      resources :user_item_trades, only: [:index, :show]
-      post '/user_item_trade/:id/respond' => 'user_item_trades#respond', as: 'respond_user_item_trade'
-      post '/user_item_trade/:id/forced' => 'user_item_trades#forced', as: 'forced_user_item_trade'
+      resources :item_trades, only: [:index, :show]
+      post '/item_trade/:id/respond' => 'item_trades#respond', as: 'respond_item_trade'
+      post '/item_trade/:id/forced' => 'item_trades#forced', as: 'forced_item_trade'
+
+      resources :item_trade_queues, only: [:index, :show]
+      post '/item_trade_queues/:id/buy' => 'item_trade_queues#buy', as: 'buy_item_trade_queue'
 
       resources :badges, only: [:index]
 
-      resources :user_message_posts, only: [:index, :show]
-      post '/user_message_posts/all_read' => 'user_message_posts#all_read', as: 'all_read_user_message_posts'
+      resources :message_posts, only: [:index, :show]
+      post '/message_posts/all_read' => 'message_posts#all_read', as: 'all_read_message_posts'
+
+      resources :fixed_phrases
     end
   end
   get '/users/:user_id/badges/edit' => 'users/badges#edit', as: 'edit_user_badges'
   post '/users/:user_id/badges' => 'users/badges#update', as: 'update_user_badges'
 
-  resources :item_trade_queues, only: [:index, :show]
-  post '/item_trade_queues/:id/buy' => 'item_trade_queues#buy', as: 'buy_item_trade_queue'
 
   namespace :admin do
     resources :games
@@ -30,7 +33,6 @@ Rails.application.routes.draw do devise_for :users, controllers: {
     post '/item_genre_games/disable/:id' => 'item_genre_games#disable', as: 'disable_item_genre_game'
   end
 
-  resources :fixed_phrases
   
   resources :codes, only: [:index]
   namespace :codes do

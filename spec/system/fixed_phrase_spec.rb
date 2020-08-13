@@ -19,7 +19,7 @@ RSpec.describe FixedPhrase, type: :system do
                 end
 
                 it 'a fixed phrase list is displayed' do
-                    main_to_expect.to have_content t('fixed_phrases.index.title')
+                    main_to_expect.to have_content t('users.fixed_phrases.index.title')
                     main_to_expect.to have_content FixedPhrase.human_attribute_name(:name)
                     main_to_expect.to have_content fixed_phrase.name
                 end
@@ -30,7 +30,7 @@ RSpec.describe FixedPhrase, type: :system do
                     end
 
                     it 'detail of fixed phrase is displayed' do
-                        main_to_expect.to have_content t('fixed_phrases.show.title')
+                        main_to_expect.to have_content t('users.fixed_phrases.show.title')
                         main_to_expect.to have_content FixedPhrase.human_attribute_name(:name)
                         main_to_expect.to have_content fixed_phrase.name
                         main_to_expect.to have_content FixedPhrase.human_attribute_name(:text)
@@ -53,7 +53,7 @@ RSpec.describe FixedPhrase, type: :system do
                 end
 
                 it 'create of fixed phrase is displayed' do
-                    main_to_expect.to have_content t('fixed_phrases.new.title')
+                    main_to_expect.to have_content t('users.fixed_phrases.new.title')
                 end
 
                 context 'when create valid item genre' do
@@ -64,7 +64,7 @@ RSpec.describe FixedPhrase, type: :system do
                     end
 
                     it 'detail of fixed phrase is displayed' do
-                        main_to_expect.to have_content t('fixed_phrases.show.title')
+                        main_to_expect.to have_content t('users.fixed_phrases.show.title')
                         main_to_expect.to have_content FixedPhrase.human_attribute_name(:name)
                         main_to_expect.to have_content fixed_phrase.name
                         main_to_expect.to have_content FixedPhrase.human_attribute_name(:text)
@@ -80,7 +80,7 @@ RSpec.describe FixedPhrase, type: :system do
                     end
 
                     it 'create of fixed phrase is displayed' do
-                        main_to_expect.to have_content t('fixed_phrases.new.title')
+                        main_to_expect.to have_content t('users.fixed_phrases.new.title')
                     end
                 end
             end
@@ -94,7 +94,7 @@ RSpec.describe FixedPhrase, type: :system do
             end
 
             it 'detail of fixed phrase is displayed' do
-                main_to_expect.to have_content t('fixed_phrases.show.title')
+                main_to_expect.to have_content t('users.fixed_phrases.show.title')
                 main_to_expect.to have_content FixedPhrase.human_attribute_name(:name)
                 main_to_expect.to have_content fixed_phrase.name
                 main_to_expect.to have_content FixedPhrase.human_attribute_name(:text)
@@ -107,7 +107,7 @@ RSpec.describe FixedPhrase, type: :system do
                 end
 
                 it 'edit of fixed phrase is displayed' do
-                    main_to_expect.to have_content t('fixed_phrases.edit.title')
+                    main_to_expect.to have_content t('users.fixed_phrases.edit.title')
                 end
 
                 context 'when edit valid item genre' do
@@ -118,7 +118,7 @@ RSpec.describe FixedPhrase, type: :system do
                     end
 
                     it 'detail of fixed phrase is displayed' do
-                        main_to_expect.to have_content t('fixed_phrases.show.title')
+                        main_to_expect.to have_content t('users.fixed_phrases.show.title')
                         main_to_expect.to have_content FixedPhrase.human_attribute_name(:name)
                         main_to_expect.to have_content fixed_phrase.name + '更新後'
                         main_to_expect.to have_content FixedPhrase.human_attribute_name(:text)
@@ -136,7 +136,7 @@ RSpec.describe FixedPhrase, type: :system do
             end
 
             it 'detail of fixed phrase is displayed' do
-                main_to_expect.to have_content t('fixed_phrases.show.title')
+                main_to_expect.to have_content t('users.fixed_phrases.show.title')
                 main_to_expect.to have_content FixedPhrase.human_attribute_name(:name)
                 main_to_expect.to have_content fixed_phrase.name
                 main_to_expect.to have_content FixedPhrase.human_attribute_name(:text)
@@ -150,7 +150,7 @@ RSpec.describe FixedPhrase, type: :system do
                 end
 
                 it 'fixed phrase is not displayed' do
-                    main_to_expect.to have_content t('fixed_phrases.index.title')
+                    main_to_expect.to have_content t('users.fixed_phrases.index.title')
                     main_to_expect.to_not have_content fixed_phrase.name
                 end
             end

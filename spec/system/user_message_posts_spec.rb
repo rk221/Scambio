@@ -40,14 +40,14 @@ RSpec.describe UserMessagePost, type: :system do
                     end
 
                     it 'received message list is displayed' do
-                        main_to_expect.to have_content t('users.user_message_posts.index.title')
-                        main_to_expect.to have_button t('users.user_message_posts.index.all_read')
+                        main_to_expect.to have_content t('users.message_posts.index.title')
+                        main_to_expect.to have_button t('users.message_posts.index.all_read')
                     end
 
                     it 'received messages is displayed' do
                         main_to_expect.to have_content t_model_attribute_name(UserMessagePost, :subject)
                         main_to_expect.to have_content t_model_attribute_name(UserMessagePost, :created_at)
-                        main_to_expect.to have_content t('users.user_message_posts.shared.sell_item_trade.subject')
+                        main_to_expect.to have_content t('users.message_posts.shared.sell_item_trade.subject')
                     end
 
                     context 'when transitioning to details of user message post' do
@@ -59,8 +59,8 @@ RSpec.describe UserMessagePost, type: :system do
                             main_to_expect.to have_content t_model_attribute_name(UserMessagePost, :subject)
                             main_to_expect.to have_content t_model_attribute_name(UserMessagePost, :created_at)
                             main_to_expect.to have_content t_model_attribute_name(UserMessagePost, :message)
-                            main_to_expect.to have_content t('users.user_message_posts.shared.sell_item_trade.subject')
-                            main_to_expect.to have_content t('users.user_message_posts.shared.sell_item_trade.message')
+                            main_to_expect.to have_content t('users.message_posts.shared.sell_item_trade.subject')
+                            main_to_expect.to have_content t('users.message_posts.shared.sell_item_trade.message')
                             main_to_expect.to have_content t_link_to(:show)
                         end
                     end
@@ -73,7 +73,7 @@ RSpec.describe UserMessagePost, type: :system do
 
                     context 'when approve an item trade' do
                         before do
-                            click_button t('users.user_item_trades.show.approve')
+                            click_button t('users.item_trades.show.approve')
                         end
 
                         include_context 'when user is logging out'
@@ -96,7 +96,7 @@ RSpec.describe UserMessagePost, type: :system do
 
                                 context 'when complete the item trade' do
                                     before do
-                                        click_link t('users.user_item_trades.show.edit_buy')
+                                        click_link t('users.item_trades.show.edit_buy')
                                     end
 
                                     context 'when evaluate' do

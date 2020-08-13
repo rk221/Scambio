@@ -1,4 +1,4 @@
-class Users::UserMessagePostsController < UsersController
+class Users::MessagePostsController < UsersController
     before_action :user_auth
 
     def index
@@ -13,6 +13,6 @@ class Users::UserMessagePostsController < UsersController
 
     def all_read
         current_user.user_message_posts.where(already_read: false).update_all(already_read: true)
-        redirect_to action: :index
+        redirect_to action: :index, user_id: current_user.id
     end
 end

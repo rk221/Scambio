@@ -1,9 +1,9 @@
-- breadcrumb :user_user_item_trades
+- breadcrumb :user_item_trades
 %h1.mb-5 
     = t '.title'
 
 .mb-5
-    = search_form_for @q, url: user_user_item_trades_path do |f|
+    = search_form_for @q, url: user_item_trades_path do |f|
         .form-group
             = f.label :game_title, Game.human_attribute_name(:title)
             = f.search_field :game_title_cont, class: 'form-control'
@@ -79,7 +79,7 @@
                 - if item_trade.enable &&  item_trade_enable_or_sold# 取引有効 AND (期限有効 OR 購入されている)
                     %tr
                         %td{colspan: 2}
-                            = link_to t('link_to.show'), user_user_item_trade_path(id: item_trade.id), class: 'btn btn-primary'
+                            = link_to t('link_to.show'), user_item_trade_path(id: item_trade.id), class: 'btn btn-primary'
                 - if !item_trade.enable || !item_trade_enable_or_sold # 取引無効 OR !(期限有効 OR 購入されている)
                     %tr
                         %td{colspan: 2}

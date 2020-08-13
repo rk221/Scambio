@@ -39,7 +39,7 @@ RSpec.describe UserBadge, type: :system do
                 context 'when approve' do
                     before do
                         click_link t_link_to(:show)
-                        click_button t('users.user_item_trades.show.approve')
+                        click_button t('users.item_trades.show.approve')
                     end
 
                     include_context 'when user is logging out'
@@ -58,7 +58,7 @@ RSpec.describe UserBadge, type: :system do
                             before do
                                 click_link t_navbar(:mypage)
                                 click_link t_link_to(:show)
-                                click_link t('users.user_item_trades.show.edit_buy')
+                                click_link t('users.item_trades.show.edit_buy')
                                 find('label[for=good]').click
                                 click_button t_submit(:send)
                             end

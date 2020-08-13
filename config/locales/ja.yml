@@ -57,15 +57,6 @@ ja:
                 title: PlayStationNetworkID登録
             edit:
                 title: PlayStationNetworkID編集
-    fixed_phrases:
-        index:
-            title: 定形文一覧
-        show:
-            title: 定形文詳細
-        new:
-            title: 定形文登録
-        edit:
-            title: 定形文編集
     games: 
         index:
             title: ゲーム一覧
@@ -83,19 +74,6 @@ ja:
             edit:
                 title: アイテムトレード編集
                 trade_deadline: 取引期限（今から何時間有効か）
-    item_trade_queues:
-        index:
-            title: アイテムトレード購入待ち一覧
-        show:
-            title: アイテムトレード購入待ち詳細
-            now_state: 現在の取引状態
-            state_wait_reaction: 相手の応答待ちです
-            state_during_trade: 取引が成立しています。チャットを行い、取引してください。
-            edit_sale: 取引を完了
-            success_message: 登録しました。
-            buyer_end_evaluate: 相手は取引を終了しています
-        buy:
-            another_user_already_exists: 既に他のユーザが購入しています。
     item_trade_details:
         shared:
             edit:
@@ -133,7 +111,7 @@ ja:
             edit:
                 title: バッジ編集
                 selectable_up_to_3: 3つまで選択可能
-        user_item_trades:
+        item_trades:
             index:
                 title: あなたのアイテムトレード一覧
                 edit: 取引を有効化
@@ -160,7 +138,29 @@ ja:
             respond:
                 approve: 取引を承認しました。
                 disapprove: 取引を拒否しました。
-        user_message_posts:
+        item_trade_queues:
+            index:
+                title: アイテムトレード購入待ち一覧
+            show:
+                title: アイテムトレード購入待ち詳細
+                now_state: 現在の取引状態
+                state_wait_reaction: 相手の応答待ちです
+                state_during_trade: 取引が成立しています。チャットを行い、取引してください。
+                edit_sale: 取引を完了
+                success_message: 登録しました。
+                buyer_end_evaluate: 相手は取引を終了しています
+            buy:
+                another_user_already_exists: 既に他のユーザが購入しています。
+        fixed_phrases:
+            index:
+                title: 定形文一覧
+            show:
+                title: 定形文詳細
+            new:
+                title: 定形文登録
+            edit:
+                title: 定形文編集
+        message_posts:
             index:
                 title: 受信メッセージ一覧
                 all_read: 全て既読にする

@@ -1,9 +1,9 @@
-- breadcrumb :edit_fixed_phrase, @fixed_phrase.id
+- breadcrumb :edit_user_fixed_phrase, @fixed_phrase.id
 
 %h1.mb-5
     = t('.title')
 
-= form_with(model: [@fixed_phrase], url: fixed_phrase_path, local: true) do |f|
+= form_with(model: [@fixed_phrase], url: user_fixed_phrase_path, local: true) do |f|
     = render 'shared/error_messages', model: f.object
     .form-group
         = f.label :name

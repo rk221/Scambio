@@ -40,7 +40,7 @@ RSpec.describe ItemTradeChat, type: :system do
             context 'when approving a item trade' do
                 before do
                     click_link t_link_to(:show)
-                    click_button t('users.user_item_trades.show.approve')
+                    click_button t('users.item_trades.show.approve')
                 end
 
                 it 'chats is displayed' do

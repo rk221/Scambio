@@ -93,7 +93,7 @@ RSpec.describe ItemTrade, type: :system do
                     end
 
                     it 'updated item trade to detail of your item trade is displayed' do
-                        main_to_expect.to have_content t('users.user_item_trades.show.title')
+                        main_to_expect.to have_content t('users.item_trades.show.title')
                         main_to_expect.to have_content update_item_trade.buy_item_quantity
                         main_to_expect.to have_content update_item_trade.sale_item_quantity
                     end
@@ -133,11 +133,11 @@ RSpec.describe ItemTrade, type: :system do
 
 
                     it 'user item trade list is displayed' do
-                        main_to_expect.to have_content t('users.user_item_trades.index.title')
+                        main_to_expect.to have_content t('users.item_trades.index.title')
                     end
 
                     it 'item trade is disabled' do
-                        main_to_expect.to have_content t('users.user_item_trades.index.edit')
+                        main_to_expect.to have_content t('users.item_trades.index.edit')
                     end
 
                     it_behaves_like 'item trades is displayed'
@@ -169,12 +169,12 @@ RSpec.describe ItemTrade, type: :system do
             end
 
             it 'a link to detail of item trade queue is displayed' do
-                main_to_expect.to have_content t('item_trade_queues.show.title')
+                main_to_expect.to have_content t('users.item_trade_queues.show.title')
             end
 
             it 'item trade awaiting response' do
-                main_to_expect.to have_content t("item_trade_queues.show.now_state")
-                main_to_expect.to have_content t("item_trade_queues.show.state_wait_reaction")
+                main_to_expect.to have_content t("users.item_trade_queues.show.now_state")
+                main_to_expect.to have_content t("users.item_trade_queues.show.state_wait_reaction")
             end
 
             it_behaves_like 'item trades is displayed'
@@ -191,12 +191,12 @@ RSpec.describe ItemTrade, type: :system do
                     end
 
                     it 'a detail of user item trade is displayed' do
-                        main_to_expect.to have_content t('users.user_item_trades.show.title')
+                        main_to_expect.to have_content t('users.item_trades.show.title')
                     end
 
                     it 'item trade awaiting response' do
-                        main_to_expect.to have_button t('users.user_item_trades.show.approve')
-                        main_to_expect.to have_button t('users.user_item_trades.show.disapprove')
+                        main_to_expect.to have_button t('users.item_trades.show.approve')
+                        main_to_expect.to have_button t('users.item_trades.show.disapprove')
                     end
 
                     it_behaves_like 'item trades is displayed'
@@ -204,15 +204,15 @@ RSpec.describe ItemTrade, type: :system do
 
                     context 'when approving a item trade' do
                         before do
-                            click_button t('users.user_item_trades.show.approve')
+                            click_button t('users.item_trades.show.approve')
                         end
 
                         it 'a detail of user item trade is displayed' do
-                            main_to_expect.to have_content t("users.user_item_trades.show.title")
+                            main_to_expect.to have_content t("users.item_trades.show.title")
                         end
 
                         it 'a link to end item trade is displayed' do
-                            main_to_expect.to have_content t('users.user_item_trades.show.edit_buy')
+                            main_to_expect.to have_content t('users.item_trades.show.edit_buy')
                         end
 
                         it_behaves_like 'item trades is displayed'
@@ -228,7 +228,7 @@ RSpec.describe ItemTrade, type: :system do
                                 end
 
                                 it 'a item trade queues is displayed' do
-                                    main_to_expect.to have_content t('item_trade_queues.index.title')
+                                    main_to_expect.to have_content t('users.item_trade_queues.index.title')
                                 end
 
                                 it 'enable item trade is displayed' do
@@ -244,12 +244,12 @@ RSpec.describe ItemTrade, type: :system do
                                     end
 
                                     it 'a detail of item trade queue is displayed' do
-                                        main_to_expect.to have_content t('item_trade_queues.show.title')
+                                        main_to_expect.to have_content t('users.item_trade_queues.show.title')
                                     end
 
                                     it 'item trade is during trade' do
-                                        main_to_expect.to have_content t('item_trade_queues.show.state_during_trade')
-                                        main_to_expect.to have_content t('item_trade_queues.show.edit_sale')
+                                        main_to_expect.to have_content t('users.item_trade_queues.show.state_during_trade')
+                                        main_to_expect.to have_content t('users.item_trade_queues.show.edit_sale')
                                     end
 
                                     it_behaves_like 'item trades is displayed'
@@ -265,12 +265,12 @@ RSpec.describe ItemTrade, type: :system do
                                             end
 
                                             it 'a detail of user item trade is displayed' do
-                                                main_to_expect.to have_content t("users.user_item_trades.show.title")
+                                                main_to_expect.to have_content t("users.item_trades.show.title")
                                             end
 
                                             it 'item trade is during trade' do
-                                                main_to_expect.to have_content t("users.user_item_trades.show.state_during_trade")
-                                                main_to_expect.to have_content t("users.user_item_trades.show.edit_buy")
+                                                main_to_expect.to have_content t("users.item_trades.show.state_during_trade")
+                                                main_to_expect.to have_content t("users.item_trades.show.edit_buy")
                                             end
 
                                             it_behaves_like 'item trades is displayed'
@@ -278,7 +278,7 @@ RSpec.describe ItemTrade, type: :system do
 
                                             context 'when end item trade of buyer first' do
                                                 before do
-                                                    click_link t('users.user_item_trades.show.edit_buy')
+                                                    click_link t('users.item_trades.show.edit_buy')
                                                 end
 
                                                 it 'item trade detail is displayed' do
@@ -351,7 +351,7 @@ RSpec.describe ItemTrade, type: :system do
 
                                             context 'when end item trade of seller first' do
                                                 before do
-                                                    click_link t('users.user_item_trades.show.edit_buy')
+                                                    click_link t('users.item_trades.show.edit_buy')
                                                 end
 
                                                 it 'item trade detail is displayed' do
@@ -430,7 +430,7 @@ RSpec.describe ItemTrade, type: :system do
 
                     context 'when disapproving a item trade' do
                         before do
-                            click_button t('users.user_item_trades.show.disapprove')
+                            click_button t('users.item_trades.show.disapprove')
                         end
 
                         it 'a edit of item trade is displayed' do 
