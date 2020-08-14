@@ -25,7 +25,7 @@
             - else
                 = t('.state_during_trade')
         -# 評価する
-        = link_to t('.edit_buy'), edit_buy_item_trade_detail_path(@item_trade_queue.item_trade_detail.id), class: 'btn btn-primary' 
+        = link_to t('.edit_buy'), user_edit_buy_item_trade_detail_path(@item_trade_queue.item_trade_detail.id, user_id: current_user.id), class: 'btn btn-primary' 
     - elsif @item_trade_queue.approve.nil? && @item_trade_queue.user_id # nil 取引の応答待ちの場合
         %h5.mb-3
             = t('.state_wait')
@@ -42,6 +42,6 @@
 -# チャット機能
 - if @item_trade_queue.item_trade_detail
     .container
-        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat, item_trade_chats: @item_trade_chats, item_trade_queue: @item_trade_queue, user: @user, url: item_trade_detail_sale_item_trade_chats_path(item_trade_detail_id: @item_trade_chat.item_trade_detail_id)}) 
+        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat, item_trade_chats: @item_trade_chats, item_trade_queue: @item_trade_queue, user: @user, url: user_item_trade_detail_sale_item_trade_chats_path(item_trade_detail_id: @item_trade_chat.item_trade_detail_id, user_id: current_user.id)}) 
 
 

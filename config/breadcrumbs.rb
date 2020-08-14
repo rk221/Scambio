@@ -41,12 +41,14 @@ crumb :user_item_trade_queue do |item_trade_queue_id|
   parent :user_item_trade_queues
 end
 
-crumb :edit_buy_item_trade_detail do |item_trade_detail_id|
-  link t('item_trade_details.edit_buy.title'), edit_buy_item_trade_detail_path(id: item_trade_detail_id)
+crumb :user_edit_buy_item_trade_detail do |item_trade_detail|
+  link t('users.item_trade_details.edit_buy.title'), user_edit_buy_item_trade_detail_path(id: item_trade_detail.id, user_id: current_user.id)
+  parent :user_item_trade, item_trade_detail.item_trade_queue.item_trade.id
 end
 
-crumb :edit_sale_item_trade_detail do |item_trade_detail_id|
-  link t('item_trade_details.edit_sale.title'), edit_sale_item_trade_detail_path(id: item_trade_detail_id)
+crumb :user_edit_sale_item_trade_detail do |item_trade_detail|
+  link t('users.item_trade_details.edit_sale.title'), user_edit_sale_item_trade_detail_path(id: item_trade_detail.id, user_id: current_user.id)
+  parent :user_item_trade_queue, item_trade_detail.item_trade_queue.id 
 end
 
 crumb :admin_games do 

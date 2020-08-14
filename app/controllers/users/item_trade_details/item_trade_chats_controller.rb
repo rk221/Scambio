@@ -1,6 +1,6 @@
-class ItemTradeDetails::ItemTradeChatsController < ApplicationController
-    include Users
-    
+class Users::ItemTradeDetails::ItemTradeChatsController < UsersController
+    before_action :user_auth
+
     def sale_create # 売却者側が送信した場合
         return unless confirm_user(ItemTradeDetail.find(params[:item_trade_chat][:item_trade_detail_id]).item_trade_queue.item_trade) # 売却者ユーザ確認
 
@@ -18,6 +18,7 @@ class ItemTradeDetails::ItemTradeChatsController < ApplicationController
     end
 
     private
+
     def item_trade_chat_params(sender_is_seller)
         params.require(:item_trade_chat).permit(:item_trade_detail_id, :message, :image).merge(sender_is_seller: sender_is_seller)
     end

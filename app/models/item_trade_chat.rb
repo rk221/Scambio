@@ -23,6 +23,6 @@ class ItemTradeChat < ApplicationRecord
     end
 
     def template
-        ApplicationController.renderer.render partial: 'item_trade_details/item_trade_chats/balloon', locals: { item_trade_chat: self.decorate }
+        ApplicationController.renderer.render partial: 'users/item_trade_details/item_trade_chats/balloon', locals: { item_trade_chat: self.decorate }
     end
 end

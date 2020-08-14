@@ -282,10 +282,10 @@ RSpec.describe ItemTrade, type: :system do
                                                 end
 
                                                 it 'item trade detail is displayed' do
-                                                    main_to_expect.to have_content t('item_trade_details.edit_buy.title')
-                                                    main_to_expect.to have_content t('item_trade_details.shared.edit.good')
-                                                    main_to_expect.to have_content t('item_trade_details.shared.edit.normal')
-                                                    main_to_expect.to have_content t('item_trade_details.shared.edit.bad')
+                                                    main_to_expect.to have_content t('users.item_trade_details.edit_buy.title')
+                                                    main_to_expect.to have_content t('users.item_trade_details.shared.edit.good')
+                                                    main_to_expect.to have_content t('users.item_trade_details.shared.edit.normal')
+                                                    main_to_expect.to have_content t('users.item_trade_details.shared.edit.bad')
                                                 end
 
                                                 context 'when evaluate good' do
@@ -295,7 +295,7 @@ RSpec.describe ItemTrade, type: :system do
                                                     end
 
                                                     it 'end item trade message is displayed' do
-                                                        expect(find('#flash')).to have_content t('item_trade_details.buy_evaluate.success_message')
+                                                        expect(find('#flash')).to have_content t('users.item_trade_details.buy_evaluate.success_message')
                                                         main_to_expect.to have_content t('users.show.title')
                                                     end
 
@@ -315,7 +315,7 @@ RSpec.describe ItemTrade, type: :system do
                                                     end
 
                                                     it 'end item trade message is displayed' do
-                                                        expect(find('#flash')).to have_content t('item_trade_details.buy_evaluate.success_message')
+                                                        expect(find('#flash')).to have_content t('users.item_trade_details.buy_evaluate.success_message')
                                                         main_to_expect.to have_content t('users.show.title')
                                                     end
 
@@ -335,7 +335,7 @@ RSpec.describe ItemTrade, type: :system do
                                                     end
 
                                                     it 'end item trade message is displayed' do
-                                                        expect(find('#flash')).to have_content t('item_trade_details.buy_evaluate.success_message')
+                                                        expect(find('#flash')).to have_content t('users.item_trade_details.buy_evaluate.success_message')
                                                         main_to_expect.to have_content t('users.show.title')
                                                     end
 
@@ -355,10 +355,10 @@ RSpec.describe ItemTrade, type: :system do
                                                 end
 
                                                 it 'item trade detail is displayed' do
-                                                    main_to_expect.to have_content t('item_trade_details.edit_buy.title')
-                                                    main_to_expect.to have_content t('item_trade_details.shared.edit.good')
-                                                    main_to_expect.to have_content t('item_trade_details.shared.edit.normal')
-                                                    main_to_expect.to have_content t('item_trade_details.shared.edit.bad')
+                                                    main_to_expect.to have_content t('users.item_trade_details.edit_buy.title')
+                                                    main_to_expect.to have_content t('users.item_trade_details.shared.edit.good')
+                                                    main_to_expect.to have_content t('users.item_trade_details.shared.edit.normal')
+                                                    main_to_expect.to have_content t('users.item_trade_details.shared.edit.bad')
                                                 end
 
                                                 context 'when evaluate good' do
@@ -368,7 +368,7 @@ RSpec.describe ItemTrade, type: :system do
                                                     end
 
                                                     it 'end item trade message is displayed' do
-                                                        expect(find('#flash')).to have_content t('item_trade_details.buy_evaluate.success_message')
+                                                        expect(find('#flash')).to have_content t('users.item_trade_details.buy_evaluate.success_message')
                                                         main_to_expect.to have_content t('users.show.title')
                                                     end
 
@@ -388,7 +388,7 @@ RSpec.describe ItemTrade, type: :system do
                                                     end
 
                                                     it 'end item trade message is displayed' do
-                                                        expect(find('#flash')).to have_content t('item_trade_details.buy_evaluate.success_message')
+                                                        expect(find('#flash')).to have_content t('users.item_trade_details.buy_evaluate.success_message')
                                                         main_to_expect.to have_content t('users.show.title')
                                                     end
 
@@ -408,7 +408,7 @@ RSpec.describe ItemTrade, type: :system do
                                                     end
 
                                                     it 'end item trade message is displayed' do
-                                                        expect(find('#flash')).to have_content t('item_trade_details.buy_evaluate.success_message')
+                                                        expect(find('#flash')).to have_content t('users.item_trade_details.buy_evaluate.success_message')
                                                         main_to_expect.to have_content t('users.show.title')
                                                     end
 

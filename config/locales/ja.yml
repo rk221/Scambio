@@ -74,20 +74,6 @@ ja:
             edit:
                 title: アイテムトレード編集
                 trade_deadline: 取引期限（今から何時間有効か）
-    item_trade_details:
-        shared:
-            edit:
-                good: 高評価
-                normal: 普通
-                bad: 低評価
-        edit_buy:
-            title: アイテムトレード評価
-        edit_sale:
-            title: アイテムトレード評価
-        buy_evaluate:
-            success_message: 取引を終了しました。
-        sale_evaluate:
-            success_message: 取引を終了しました。
     message_mailer_mailer:
         check_the_message: 新着メッセージを確認してください。
     users:
@@ -151,6 +137,20 @@ ja:
                 buyer_end_evaluate: 相手は取引を終了しています
             buy:
                 another_user_already_exists: 既に他のユーザが購入しています。
+        item_trade_details:
+            shared:
+                edit:
+                    good: 高評価
+                    normal: 普通
+                    bad: 低評価
+            edit_buy:
+                title: アイテムトレード評価
+            edit_sale:
+                title: アイテムトレード評価
+            buy_evaluate:
+                success_message: 取引を終了しました。
+            sale_evaluate:
+                success_message: 取引を終了しました。
         fixed_phrases:
             index:
                 title: 定形文一覧

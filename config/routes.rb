@@ -17,6 +17,18 @@ Rails.application.routes.draw do devise_for :users, controllers: {
       post '/message_posts/all_read' => 'message_posts#all_read', as: 'all_read_message_posts'
 
       resources :fixed_phrases
+
+      get '/item_trade_details/:id/edit_buy' => 'item_trade_details#edit_buy', as: 'edit_buy_item_trade_detail'
+      get '/item_trade_details/:id/edit_sale' => 'item_trade_details#edit_sale', as: 'edit_sale_item_trade_detail'
+      patch '/item_trade_details/:id/edit_buy' => 'item_trade_details#buy_evaluate', as: 'buy_evaluate_item_trade_detail'
+      patch '/item_trade_details/:id/edit_sale' => 'item_trade_details#sale_evaluate', as: 'sale_evaluate_item_trade_detail'
+
+      resources :item_trade_details, only: [] do
+        scope module: :item_trade_details do
+          post '/item_trade_chats/sale' => 'item_trade_chats#sale_create', as: 'sale_item_trade_chats'
+          post '/item_trade_chats/buy' => 'item_trade_chats#buy_create', as: 'buy_item_trade_chats'
+        end
+      end
     end
   end
   get '/users/:user_id/badges/edit' => 'users/badges#edit', as: 'edit_user_badges'
@@ -45,18 +57,6 @@ Rails.application.routes.draw do devise_for :users, controllers: {
   resources :games, only: [:index] do
     scope module: :games do
       resources :item_trades, except: [:show]
-    end
-  end
-
-  get '/item_trade_details/:id/edit_buy' => 'item_trade_details#edit_buy', as: 'edit_buy_item_trade_detail'
-  get '/item_trade_details/:id/edit_sale' => 'item_trade_details#edit_sale', as: 'edit_sale_item_trade_detail'
-  patch '/item_trade_details/:id/edit_buy' => 'item_trade_details#buy_evaluate', as: 'buy_evaluate_item_trade_detail'
-  patch '/item_trade_details/:id/edit_sale' => 'item_trade_details#sale_evaluate', as: 'sale_evaluate_item_trade_detail'
-
-  resources :item_trade_details, only: [] do
-    scope module: :item_trade_details do
-      post '/item_trade_chats/sale' => 'item_trade_chats#sale_create', as: 'sale_item_trade_chats'
-      post '/item_trade_chats/buy' => 'item_trade_chats#buy_create', as: 'buy_item_trade_chats'
     end
   end
 
