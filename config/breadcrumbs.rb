@@ -103,28 +103,29 @@ crumb :admin_item_genre_games do |game_id|
   parent :admin_games
 end
 
-crumb :codes do 
-  link t('codes.index.title'), codes_path
+crumb :user_codes do 
+  link t('users.codes.index.title'), user_codes_path(current_user)
+  parent :user
 end
 
-crumb :new_nintendo_friend_code do
-  link t('codes.nintendo_friend_codes.new.title'), new_codes_nintendo_friend_code_path
-  parent :codes
+crumb :new_user_nintendo_friend_code do
+  link t('users.codes.nintendo_friend_codes.new.title'), new_user_codes_nintendo_friend_code_path(current_user)
+  parent :user_codes
 end
 
-crumb :edit_nintendo_friend_code do |nintendo_friend_code_id|
-  link t('codes.nintendo_friend_codes.edit.title'), edit_codes_nintendo_friend_code_path(id: nintendo_friend_code_id)
-  parent :codes
+crumb :edit_user_nintendo_friend_code do |nintendo_friend_code_id|
+  link t('users.codes.nintendo_friend_codes.edit.title'), edit_user_codes_nintendo_friend_code_path(id: nintendo_friend_code_id, user_id: current_user.id)
+  parent :user_codes
 end
 
-crumb :new_play_station_network_id do
-  link t('codes.play_station_network_ids.new.title'), new_codes_play_station_network_id_path
-  parent :codes
+crumb :new_user_play_station_network_id do
+  link t('users.codes.play_station_network_ids.new.title'), new_user_codes_play_station_network_id_path(current_user)
+  parent :user_codes
 end
 
-crumb :edit_play_station_network_id do |play_station_network_id_id| 
-  link t('codes.play_station_network_ids.edit.title'), edit_codes_play_station_network_id_path(id: play_station_network_id_id)
-  parent :codes
+crumb :edit_user_play_station_network_id do |play_station_network_id_id| 
+  link t('users.codes.play_station_network_ids.edit.title'), edit_user_codes_play_station_network_id_path(id: play_station_network_id_id, user_id: current_user.id)
+  parent :user_codes
 end
 
 crumb :user_fixed_phrases do

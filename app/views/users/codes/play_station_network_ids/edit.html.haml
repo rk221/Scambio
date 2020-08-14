@@ -1,0 +1,5 @@
+- breadcrumb :edit_user_play_station_network_id, @play_station_network_id.id
+%h1.mb-5
+    = t('.title')
+
+= render partial: 'users/codes/play_station_network_ids/shared/form', locals: {play_station_network_id: @play_station_network_id, form_path: user_codes_play_station_network_id_path(current_user)}

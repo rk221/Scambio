@@ -1,4 +1,5 @@
-class Codes::NintendoFriendCodesController < CodesController
+class Users::Codes::NintendoFriendCodesController < UsersController
+    before_action :user_auth
 
     def new 
         @nintendo_friend_code = NintendoFriendCode.new
@@ -8,7 +9,7 @@ class Codes::NintendoFriendCodesController < CodesController
         @nintendo_friend_code = NintendoFriendCode.new(nintendo_friend_code_params)
 
         if @nintendo_friend_code.save 
-            redirect_to codes_path, notice: t('flash.regist')
+            redirect_to user_codes_path(current_user), notice: t('flash.regist')
         else
             render :new
         end
@@ -22,7 +23,7 @@ class Codes::NintendoFriendCodesController < CodesController
         @nintendo_friend_code = current_user.nintendo_friend_code
 
         if @nintendo_friend_code.update(nintendo_friend_code_params)
-            redirect_to codes_path, notice: t('flash.update')
+            redirect_to user_codes_path(current_user), notice: t('flash.update')
         else
             render :edit 
         end
@@ -33,7 +34,7 @@ class Codes::NintendoFriendCodesController < CodesController
 
         @nintendo_friend_code.destroy!
 
-        redirect_to codes_path, notice: t('flash.destroy')
+        redirect_to user_codes_path(current_user), notice: t('flash.destroy')
     end
 
     private

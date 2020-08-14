@@ -29,6 +29,12 @@ Rails.application.routes.draw do devise_for :users, controllers: {
           post '/item_trade_chats/buy' => 'item_trade_chats#buy_create', as: 'buy_item_trade_chats'
         end
       end
+
+      resources :codes, only: [:index]
+      namespace :codes do
+        resources :nintendo_friend_codes, only: [:new, :create, :edit, :update, :destroy]
+        resources :play_station_network_ids, only: [:new, :create, :edit, :update, :destroy]
+      end
     end
   end
   get '/users/:user_id/badges/edit' => 'users/badges#edit', as: 'edit_user_badges'
@@ -44,15 +50,6 @@ Rails.application.routes.draw do devise_for :users, controllers: {
     post '/item_genre_games/enable/:id' => 'item_genre_games#enable', as: 'enable_item_genre_game'
     post '/item_genre_games/disable/:id' => 'item_genre_games#disable', as: 'disable_item_genre_game'
   end
-
-  
-  resources :codes, only: [:index]
-  namespace :codes do
-    resources :nintendo_friend_codes, only: [:new, :create, :edit, :update, :destroy]
-    resources :play_station_network_ids, only: [:new, :create, :edit, :update, :destroy]
-  end
-
-  get '/games', to: 'games#index'
 
   resources :games, only: [:index] do
     scope module: :games do

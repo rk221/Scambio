@@ -24,7 +24,7 @@ RSpec.describe Codes, type: :system do
                 end
 
                 it 'a codes is displayed' do 
-                    main_to_expect.to have_content t('codes.index.title')
+                    main_to_expect.to have_content t('users.codes.index.title')
                 end
 
                 it 'a nintendo friend code is displayed' do

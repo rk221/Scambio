@@ -44,19 +44,6 @@ ja:
             index:
                 title: アイテムジャンルゲーム一覧
                 enable_or_disable: 有効/無効
-    codes:
-        index:
-            title: コード一覧
-        nintendo_friend_codes:
-            new:
-                title: 任天堂フレンドコード登録
-            edit:
-                title: 任天堂フレンドコード編集
-        play_station_network_ids:
-            new:
-                title: PlayStationNetworkID登録
-            edit:
-                title: PlayStationNetworkID編集
     games: 
         index:
             title: ゲーム一覧
@@ -179,6 +166,19 @@ ja:
                 forced_item_trade:
                     subject: 取引が強制終了されました
                     message: 取引の評価が行われなかったため、強制終了されました。
+        codes:
+            index:
+                title: コード一覧
+            nintendo_friend_codes:
+                new:
+                    title: 任天堂フレンドコード登録
+                edit:
+                    title: 任天堂フレンドコード編集
+            play_station_network_ids:
+                new:
+                    title: PlayStationNetworkID登録
+                edit:
+                    title: PlayStationNetworkID編集
         shared:
             item_trade_chat:
                 chat: チャット
