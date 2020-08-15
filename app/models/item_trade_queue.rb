@@ -1,11 +1,12 @@
 class ItemTradeQueue < ApplicationRecord
-    belongs_to :user, optional: true
+    belongs_to :user
     belongs_to :item_trade
-    has_one :item_trade_detail, dependent: :destroy
-    has_one :enable_item_trade, class_name: "ItemTrade", foreign_key: "enable_item_trade_queue_id"
 
-    validates :item_trade_id, presence: true
-    validates :approve, inclusion: {in: [true, false, nil]}
+    has_one :item_trade_detail, dependent: :destroy
+
+    validates :item_trade_id, presence: true, uniqueness: true
+    validates :user_id, presence: true
+    validates :approve, inclusion: {in: [true, false]}
 
     # キューが購入されている状態
     scope :exist_user, -> {where.not(item_trade_queues: {user_id: nil})}

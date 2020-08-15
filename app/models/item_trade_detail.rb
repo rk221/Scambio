@@ -1,10 +1,12 @@
 class ItemTradeDetail < ApplicationRecord
-    belongs_to :item_trade_queue
+    belongs_to :item_trade_queue, optional: true
+    belongs_to :item_trade
     has_many :item_trade_chats, dependent: :destroy
 
     validates :buy_popuarity, inclusion: {in: [3, 0, -1]}, allow_nil: true
     validates :sale_popuarity, inclusion: {in: [3, 0, -1]}, allow_nil: true
-    validates :item_trade_queue_id, presence: true
+    validates :item_trade_id, presence: true
+    validates :item_trade_queue_id, presence: true, on: :create # 新規作成時のみキューIDが必要
 
     def last_update_1_hour_passed?
         updated_at.since(1.hours) < Time.zone.now
