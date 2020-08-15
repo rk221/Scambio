@@ -281,7 +281,7 @@ ja:
         navbar:
             admin_games: ゲーム管理
             admin_badges: バッジ管理
-            item_genres: アイテムジャンル
+            item_genres: アイテムジャンル管理
             games: ゲーム
             mypage: マイページ
             log_out: ログアウト

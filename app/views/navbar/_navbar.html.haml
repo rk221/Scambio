@@ -2,12 +2,14 @@
     - if user_signed_in?
         %ul.navbar-nav.ml-auto
             - if current_user.admin?
-                %li.navitem
-                    = link_to t('.admin_games'), admin_games_path, class: "nav-link"
-                %li.navitem
-                    = link_to t('.admin_badges'), admin_badges_path, class: "nav-link"
-                %li.navitem
-                    = link_to t('.item_genres'), admin_item_genres_path, class: "nav-link"
+                %li.navitem#admin_navbar
+                    %ul.navbar-nav.ml-auto
+                        %li.navitem
+                            = link_to t('.admin_games'), admin_games_path, class: "nav-link"
+                        %li.navitem
+                            = link_to t('.admin_badges'), admin_badges_path, class: "nav-link"
+                        %li.navitem
+                            = link_to t('.item_genres'), admin_item_genres_path, class: "nav-link"
                     
             %li.navitem
                 = link_to t('.games'), games_path, class: 'nav-link'
