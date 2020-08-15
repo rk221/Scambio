@@ -1,0 +1,5 @@
+- breadcrumb :edit_user_nintendo_friend_code, @nintendo_friend_code.id
+%h1.mb-5
+    = t('.title')
+
+= render partial: 'users/codes/nintendo_friend_codes/shared/form', locals: {nintendo_friend_code: @nintendo_friend_code, form_path: user_codes_nintendo_friend_code_path(current_user)}

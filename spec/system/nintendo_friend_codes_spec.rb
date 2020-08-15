@@ -20,7 +20,7 @@ RSpec.describe NintendoFriendCode, type: :system do
             end
 
             it 'a create of nintendo friend code is displayed' do
-                main_to_expect.to have_content t('codes.nintendo_friend_codes.new.title')
+                main_to_expect.to have_content t('users.codes.nintendo_friend_codes.new.title')
             end
 
             context 'when transitioning to create of nintendo friend code' do
@@ -31,7 +31,7 @@ RSpec.describe NintendoFriendCode, type: :system do
                 end
 
                 it 'a codes is displayed' do 
-                    main_to_expect.to have_content t('codes.index.title')
+                    main_to_expect.to have_content t('users.codes.index.title')
                 end
 
                 it 'a nintendo friend code is displayed' do
@@ -51,7 +51,7 @@ RSpec.describe NintendoFriendCode, type: :system do
             end
 
             it 'a edit of nintendo_friend_codes is displayed' do
-                main_to_expect.to have_content t('codes.nintendo_friend_codes.edit.title')
+                main_to_expect.to have_content t('users.codes.nintendo_friend_codes.edit.title')
             end
 
             context 'when transitioning to edit of nintendo friend code' do
@@ -62,7 +62,7 @@ RSpec.describe NintendoFriendCode, type: :system do
                 end
 
                 it 'a codes is displayed' do 
-                    main_to_expect.to have_content t('codes.index.title')
+                    main_to_expect.to have_content t('users.codes.index.title')
                 end
 
                 it 'a after nintendo friend code is displayed' do
@@ -83,7 +83,7 @@ RSpec.describe NintendoFriendCode, type: :system do
             end
 
             it 'a codes is displayed' do 
-                main_to_expect.to have_content t('codes.index.title')
+                main_to_expect.to have_content t('users.codes.index.title')
             end
 
             it 'a nintendo friend code is not displayed' do

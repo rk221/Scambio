@@ -1,0 +1,17 @@
+- breadcrumb :user_fixed_phrases
+
+%h1.mb-5 
+    = t '.title'
+
+= link_to t('link_to.regist'), new_user_fixed_phrase_path(current_user.id), class: 'btn btn-primary mb-3'
+
+%table.table.table-hover.table-bordered.text-nowrap#fixed_phrases
+    %thead.thead-light
+        %tr 
+            %th
+                = FixedPhrase.human_attribute_name(:name)
+    %tbody
+        - @fixed_phrases.each do |fixed_phrase|
+            %tr{"@click": "onClick($event)", "data-href": user_fixed_phrase_path(id: fixed_phrase.id, user_id: current_user.id)}
+                %td
+                    = fixed_phrase.name

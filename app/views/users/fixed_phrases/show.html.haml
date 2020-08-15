@@ -1,0 +1,28 @@
+- breadcrumb :user_fixed_phrase, @fixed_phrase.id
+
+%h1.mb-5 
+    = t '.title'
+
+%table.table.fixed_phrases
+    %thead.thead-light
+        %tr
+            %th
+                = FixedPhrase.human_attribute_name(:name)
+    %tbody
+        %tr 
+            %td
+                = @fixed_phrase.name
+%table.table.fixed_phrases
+    %thead.thead-light
+        %tr
+            %th
+                = FixedPhrase.human_attribute_name(:text)
+    %tbody
+        %tr 
+            %td
+                .message
+                    = simple_format(h @fixed_phrase.text)
+        %tr 
+            %td
+                = link_to t('link_to.edit'), edit_user_fixed_phrase_path(id: @fixed_phrase.id, user_id: current_user.id), class: 'btn btn-success mr-2'
+                = link_to t('link_to.destroy'), user_fixed_phrase_path(id: @fixed_phrase.id, user_id: current_user.id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: FixedPhrase.model_name.human)}, class: 'btn btn-danger'

@@ -10,6 +10,6 @@ class UsersController < ApplicationController
 
   private
   def user_auth
-    permit_error_redirect unless current_user.id == params[:user_id].to_i
+    redirect_to_permit_error unless current_user.id == params[:user_id].to_i
   end
 end

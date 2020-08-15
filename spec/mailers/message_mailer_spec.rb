@@ -30,9 +30,9 @@ RSpec.describe MessageMailer, type: :mailer do
     context 'when send_mail' do
       it { expect(mail.from.first).to eq('scambio.main@gmail.com') }
       it { expect(mail.to.first).to eq(item_trade_queue.user.email) }
-      it { expect(mail.subject).to eq(I18n.t('users.user_message_posts.shared.approve_item_trade.subject')) }
-      it { expect(get_message_part(mail, /html/)).to match(/#{I18n.t('users.user_message_posts.shared.approve_item_trade.message')}/) }
-      it { expect(get_message_part(mail, /plain/)).to match(/#{I18n.t('users.user_message_posts.shared.approve_item_trade.message')}/) }
+      it { expect(mail.subject).to eq(I18n.t('users.message_posts.shared.approve_item_trade.subject')) }
+      it { expect(get_message_part(mail, /html/)).to match(/#{I18n.t('users.message_posts.shared.approve_item_trade.message')}/) }
+      it { expect(get_message_part(mail, /plain/)).to match(/#{I18n.t('users.message_posts.shared.approve_item_trade.message')}/) }
     end
   end
 
@@ -46,9 +46,9 @@ RSpec.describe MessageMailer, type: :mailer do
     context 'when send_mail' do
       it { expect(mail.from.first).to eq('scambio.main@gmail.com') }
       it { expect(mail.to.first).to eq(item_trade_queue.user.email) }
-      it { expect(mail.subject).to eq(I18n.t('users.user_message_posts.shared.forced_item_trade.subject')) }
-      it { expect(get_message_part(mail, /html/)).to match(/#{I18n.t('users.user_message_posts.shared.forced_item_trade.message')}/) }
-      it { expect(get_message_part(mail, /plain/)).to match(/#{I18n.t('users.user_message_posts.shared.forced_item_trade.message')}/) }
+      it { expect(mail.subject).to eq(I18n.t('users.message_posts.shared.forced_item_trade.subject')) }
+      it { expect(get_message_part(mail, /html/)).to match(/#{I18n.t('users.message_posts.shared.forced_item_trade.message')}/) }
+      it { expect(get_message_part(mail, /plain/)).to match(/#{I18n.t('users.message_posts.shared.forced_item_trade.message')}/) }
     end
   end
 
@@ -62,9 +62,9 @@ RSpec.describe MessageMailer, type: :mailer do
     context 'when send_mail' do
       it { expect(mail.from.first).to eq('scambio.main@gmail.com') }
       it { expect(mail.to.first).to eq(item_trade_queue.user.email) }
-      it { expect(mail.subject).to eq(I18n.t('users.user_message_posts.shared.reject_item_trade.subject')) }
-      it { expect(get_message_part(mail, /html/)).to match(/#{I18n.t('users.user_message_posts.shared.reject_item_trade.message')}/) }
-      it { expect(get_message_part(mail, /plain/)).to match(/#{I18n.t('users.user_message_posts.shared.reject_item_trade.message')}/) }
+      it { expect(mail.subject).to eq(I18n.t('users.message_posts.shared.reject_item_trade.subject')) }
+      it { expect(get_message_part(mail, /html/)).to match(/#{I18n.t('users.message_posts.shared.reject_item_trade.message')}/) }
+      it { expect(get_message_part(mail, /plain/)).to match(/#{I18n.t('users.message_posts.shared.reject_item_trade.message')}/) }
     end
   end
 
@@ -78,9 +78,9 @@ RSpec.describe MessageMailer, type: :mailer do
     context 'when send_mail' do
       it { expect(mail.from.first).to eq('scambio.main@gmail.com') }
       it { expect(mail.to.first).to eq(item_trade_queue.item_trade.user.email) }
-      it { expect(mail.subject).to eq(I18n.t('users.user_message_posts.shared.sell_item_trade.subject')) }
-      it { expect(get_message_part(mail, /html/)).to match(/#{I18n.t('users.user_message_posts.shared.sell_item_trade.message')}/) }
-      it { expect(get_message_part(mail, /plain/)).to match(/#{I18n.t('users.user_message_posts.shared.sell_item_trade.message')}/) }
+      it { expect(mail.subject).to eq(I18n.t('users.message_posts.shared.sell_item_trade.subject')) }
+      it { expect(get_message_part(mail, /html/)).to match(/#{I18n.t('users.message_posts.shared.sell_item_trade.message')}/) }
+      it { expect(get_message_part(mail, /plain/)).to match(/#{I18n.t('users.message_posts.shared.sell_item_trade.message')}/) }
     end
   end
 end

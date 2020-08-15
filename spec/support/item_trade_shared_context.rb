@@ -135,7 +135,7 @@ shared_examples 'item trade is enabled' do
         end
 
         it 'a item trade queues is displayed' do
-            main_to_expect.to have_content t('item_trade_queues.index.title')
+            main_to_expect.to have_content t('users.item_trade_queues.index.title')
         end
 
         it 'enable item trade is displayed' do
@@ -157,7 +157,7 @@ shared_examples 'item trade is disabled' do
         end
 
         it 'a item trade queues is displayed' do
-            main_to_expect.to have_content t('item_trade_queues.index.title')
+            main_to_expect.to have_content t('users.item_trade_queues.index.title')
         end
 
         it 'item trade is not displayed' do
@@ -185,7 +185,7 @@ shared_examples 'item trade is awaiting evaluation' do
         end
 
         it 'user item trade list is displayed' do
-            main_to_expect.to have_content t('users.user_item_trades.index.title')
+            main_to_expect.to have_content t('users.item_trades.index.title')
         end
 
         it 'a link to show of item trade' do
@@ -201,12 +201,12 @@ shared_examples 'item trade is awaiting evaluation' do
             end
             
             it 'a detail of user item trade is displayed' do
-                main_to_expect.to have_content t("users.user_item_trades.show.title")
+                main_to_expect.to have_content t("users.item_trades.show.title")
             end
 
             it 'item trade is waiting for the other party to evaluate' do
-                main_to_expect.to have_content t('users.user_item_trades.show.now_state')
-                main_to_expect.to have_content t('users.user_item_trades.show.your_evaluate_wait')
+                main_to_expect.to have_content t('users.item_trades.show.now_state')
+                main_to_expect.to have_content t('users.item_trades.show.your_evaluate_wait')
             end
 
             it_behaves_like 'item trades is displayed'

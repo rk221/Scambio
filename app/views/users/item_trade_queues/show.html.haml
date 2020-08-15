@@ -1,0 +1,29 @@
+- breadcrumb :user_item_trade_queue, @item_trade_queue.id
+%h1.mb-5
+    = t '.title'
+
+.container.mb-5
+    = render(partial: 'users/shared/item_trade_show', locals: {item_trade_queue: @item_trade_queue}) 
+
+-# 取引の状態や、操作を行う
+.container.mb-5
+    %h3.mb-3
+        = t('.now_state')
+    - if @item_trade_queue.approve #true 取引が成立している
+        %h5.mb-3
+            - if @item_trade_queue.item_trade_detail&.buy_popuarity # 相手が既に評価を終えている場合
+                = t('.buyer_end_evaluate')
+            - else
+                = t('.state_during_trade')
+        -# 評価する 
+        = link_to t('.edit_sale'), user_edit_sale_item_trade_detail_path(id: @item_trade_queue.item_trade_detail.id, user_id: current_user.id), class: 'btn btn-primary'
+    - elsif @item_trade_queue.approve.nil? #nil 相手の応答待ち
+        %h5.mb-3
+            = t('.state_wait_reaction')
+
+
+
+-# チャット機能
+- if @item_trade_queue.item_trade_detail
+    .container
+        = render(partial: 'users/shared/item_trade_chat', locals: {item_trade_chat: @item_trade_chat, item_trade_chats: @item_trade_chats, item_trade_queue: @item_trade_queue, user: @user, url: user_item_trade_detail_buy_item_trade_chats_path(item_trade_detail_id: @item_trade_chat.item_trade_detail_id, user_id: current_user.id)}) 

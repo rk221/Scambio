@@ -1,0 +1,20 @@
+- breadcrumb :user_message_post, @user_message_post.id
+
+%h1.mb-5
+    = t '.title'
+
+
+%table.table.table-hover.table-bordered.text-nowrap
+    %tbody
+        %tr
+            %td
+                = UserMessagePost.human_attribute_name(:subject)
+            %td
+                = @user_message_post.subject
+        %tr
+            %td
+                = UserMessagePost.human_attribute_name(:created_at)
+            %td 
+                = @user_message_post.created_at
+
+= raw(@user_message_post.message)

@@ -2,7 +2,7 @@
 %h5.mb-3
     = t('.chat')
 #item_trade_chat.overflow-auto.mb-3{"data-item_trade_detail_id": item_trade_queue.item_trade_detail.id}
-    = render(partial: 'item_trade_details/item_trade_chats/balloon', collection: item_trade_chats, as: 'item_trade_chat')
+    = render(partial: 'users/item_trade_details/item_trade_chats/balloon', collection: item_trade_chats, as: 'item_trade_chat')
 
 #item_trade_chat_forms
     .row.mb-3

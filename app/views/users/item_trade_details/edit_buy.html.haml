@@ -1,0 +1,5 @@
+- breadcrumb :user_edit_buy_item_trade_detail, @item_trade_detail
+%h1.mb-5
+    = t('.title')
+
+= render partial: 'users/item_trade_details/shared/edit', locals: {item_trade_detail: @item_trade_detail, edit_path: user_edit_buy_item_trade_detail_path(user_id: current_user.id), label: :buy_popuarity}

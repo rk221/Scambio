@@ -11,42 +11,44 @@ crumb :edit_user_registration do
   parent :user
 end
 
-crumb :user_user_message_posts do
-  link t('users.user_message_posts.index.title'), user_user_message_posts_path(current_user)
+crumb :user_message_posts do
+  link t('users.message_posts.index.title'), user_message_posts_path(current_user)
   parent :user
 end
 
-crumb :user_user_message_post do |user_message_post_id|
-  link t('users.user_message_posts.show.title'), user_user_message_post_path(id: user_message_post_id, user_id: current_user.id)
-  parent :user_user_message_posts
+crumb :user_message_post do |user_message_post_id|
+  link t('users.message_posts.show.title'), user_message_post_path(id: user_message_post_id, user_id: current_user.id)
+  parent :user_message_posts
 end
 
-crumb :user_user_item_trades do
-  link t('users.user_item_trades.index.title'), user_user_item_trades_path(current_user)
+crumb :user_item_trades do
+  link t('users.item_trades.index.title'), user_item_trades_path(current_user)
   parent :user
 end
 
-crumb :user_user_item_trade do |item_trade_id|
-  link t('users.user_item_trades.show.title'), user_user_item_trade_path(id: item_trade_id, user_id: current_user.id)
-  parent :user_user_item_trades
+crumb :user_item_trade do |item_trade_id|
+  link t('users.item_trades.show.title'), user_item_trade_path(id: item_trade_id, user_id: current_user.id)
+  parent :user_item_trades
 end
 
-crumb :item_trade_queues do
-  link t('item_trade_queues.index.title'), item_trade_queues_path
+crumb :user_item_trade_queues do
+  link t('users.item_trade_queues.index.title'), user_item_trade_queues_path(current_user)
   parent :user
 end
 
-crumb :item_trade_queue do |item_trade_queue_id|
-  link t('item_trade_queues.show.title'), item_trade_queue_path(id: item_trade_queue_id)
-  parent :item_trade_queues
+crumb :user_item_trade_queue do |item_trade_queue_id|
+  link t('users.item_trade_queues.show.title'), user_item_trade_queue_path(id: item_trade_queue_id, user_id: current_user.id)
+  parent :user_item_trade_queues
 end
 
-crumb :edit_buy_item_trade_detail do |item_trade_detail_id|
-  link t('item_trade_details.edit_buy.title'), edit_buy_item_trade_detail_path(id: item_trade_detail_id)
+crumb :user_edit_buy_item_trade_detail do |item_trade_detail|
+  link t('users.item_trade_details.edit_buy.title'), user_edit_buy_item_trade_detail_path(id: item_trade_detail.id, user_id: current_user.id)
+  parent :user_item_trade, item_trade_detail.item_trade_queue.item_trade.id
 end
 
-crumb :edit_sale_item_trade_detail do |item_trade_detail_id|
-  link t('item_trade_details.edit_sale.title'), edit_sale_item_trade_detail_path(id: item_trade_detail_id)
+crumb :user_edit_sale_item_trade_detail do |item_trade_detail|
+  link t('users.item_trade_details.edit_sale.title'), user_edit_sale_item_trade_detail_path(id: item_trade_detail.id, user_id: current_user.id)
+  parent :user_item_trade_queue, item_trade_detail.item_trade_queue.id 
 end
 
 crumb :admin_games do 
@@ -101,48 +103,49 @@ crumb :admin_item_genre_games do |game_id|
   parent :admin_games
 end
 
-crumb :codes do 
-  link t('codes.index.title'), codes_path
-end
-
-crumb :new_nintendo_friend_code do
-  link t('codes.nintendo_friend_codes.new.title'), new_codes_nintendo_friend_code_path
-  parent :codes
-end
-
-crumb :edit_nintendo_friend_code do |nintendo_friend_code_id|
-  link t('codes.nintendo_friend_codes.edit.title'), edit_codes_nintendo_friend_code_path(id: nintendo_friend_code_id)
-  parent :codes
-end
-
-crumb :new_play_station_network_id do
-  link t('codes.play_station_network_ids.new.title'), new_codes_play_station_network_id_path
-  parent :codes
-end
-
-crumb :edit_play_station_network_id do |play_station_network_id_id| 
-  link t('codes.play_station_network_ids.edit.title'), edit_codes_play_station_network_id_path(id: play_station_network_id_id)
-  parent :codes
-end
-
-crumb :fixed_phrases do
-  link t('fixed_phrases.index.title'), fixed_phrases_path
+crumb :user_codes do 
+  link t('users.codes.index.title'), user_codes_path(current_user)
   parent :user
 end
 
-crumb :fixed_phrase do |fixed_phrase_id|
-  link t('fixed_phrases.show.title'), fixed_phrase_path(fixed_phrase_id)
-  parent :fixed_phrases
+crumb :new_user_nintendo_friend_code do
+  link t('users.codes.nintendo_friend_codes.new.title'), new_user_codes_nintendo_friend_code_path(current_user)
+  parent :user_codes
 end
 
-crumb :new_fixed_phrase do
-  link t('fixed_phrases.show.title'), new_fixed_phrase_path
-  parent :fixed_phrases
+crumb :edit_user_nintendo_friend_code do |nintendo_friend_code_id|
+  link t('users.codes.nintendo_friend_codes.edit.title'), edit_user_codes_nintendo_friend_code_path(id: nintendo_friend_code_id, user_id: current_user.id)
+  parent :user_codes
 end
 
-crumb :edit_fixed_phrase do |fixed_phrase_id|
-  link t('fixed_phrases.show.title'), edit_fixed_phrase_path(fixed_phrase_id)
-  parent :fixed_phrase, fixed_phrase_id
+crumb :new_user_play_station_network_id do
+  link t('users.codes.play_station_network_ids.new.title'), new_user_codes_play_station_network_id_path(current_user)
+  parent :user_codes
+end
+
+crumb :edit_user_play_station_network_id do |play_station_network_id_id| 
+  link t('users.codes.play_station_network_ids.edit.title'), edit_user_codes_play_station_network_id_path(id: play_station_network_id_id, user_id: current_user.id)
+  parent :user_codes
+end
+
+crumb :user_fixed_phrases do
+  link t('users.fixed_phrases.index.title'), user_fixed_phrases_path(current_user)
+  parent :user
+end
+
+crumb :user_fixed_phrase do |fixed_phrase_id|
+  link t('users.fixed_phrases.show.title'), user_fixed_phrase_path(id: fixed_phrase_id, user_id: current_user.id)
+  parent :user_fixed_phrases
+end
+
+crumb :new_user_fixed_phrase do
+  link t('users.fixed_phrases.show.title'), new_user_fixed_phrase_path(current_user)
+  parent :user_fixed_phrases
+end
+
+crumb :edit_user_fixed_phrase do |fixed_phrase_id|
+  link t('users.fixed_phrases.show.title'), edit_user_fixed_phrase_path(id: fixed_phrase_id, user_id: current_user.id)
+  parent :user_fixed_phrase, fixed_phrase_id
 end
 
 crumb :user_badges do
@@ -171,7 +174,7 @@ end
 
 crumb :edit_game_item_trade do |item_trade|
   link t('games.item_trades.edit.title'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id)
-  parent :user_user_item_trade, item_trade.id
+  parent :user_item_trade, item_trade.id
 end
 
 # crumb :projects do

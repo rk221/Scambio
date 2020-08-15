@@ -20,7 +20,7 @@ RSpec.describe PlayStationNetworkId, type: :system do
             end
 
             it 'a create of play station newtwork id is displayed' do
-                main_to_expect.to have_content t('codes.play_station_network_ids.new.title')
+                main_to_expect.to have_content t('users.codes.play_station_network_ids.new.title')
             end
 
             context 'when transitioning to create of play station newtwork id' do
@@ -31,7 +31,7 @@ RSpec.describe PlayStationNetworkId, type: :system do
                 end
 
                 it 'a codes is displayed' do 
-                    main_to_expect.to have_content t('codes.index.title')
+                    main_to_expect.to have_content t('users.codes.index.title')
                 end
 
                 it 'a play station network id is displayed' do
@@ -50,7 +50,7 @@ RSpec.describe PlayStationNetworkId, type: :system do
             end
 
             it 'a edit of play station newtwork id is displayed' do
-                main_to_expect.to have_content t('codes.play_station_network_ids.edit.title')
+                main_to_expect.to have_content t('users.codes.play_station_network_ids.edit.title')
             end
 
             context 'when transitioning to edit of play station newtwork id' do
@@ -61,7 +61,7 @@ RSpec.describe PlayStationNetworkId, type: :system do
                 end
 
                 it 'a codes is displayed' do 
-                    main_to_expect.to have_content t('codes.index.title')
+                    main_to_expect.to have_content t('users.codes.index.title')
                 end
 
                 it 'a after play station network id is displayed' do
@@ -81,7 +81,7 @@ RSpec.describe PlayStationNetworkId, type: :system do
             end
 
             it 'a codes is displayed' do
-                main_to_expect.to have_content t('codes.index.title')
+                main_to_expect.to have_content t('users.codes.index.title')
             end
 
             it 'a play station network id is not displayed' do

@@ -26,7 +26,7 @@ class Games::ItemTradesController < ApplicationController
         @regist_item_trade_form = RegistItemTradeForm.new(regist_item_trade_form_params)
 
         if @regist_item_trade_form.save 
-            redirect_to user_user_item_trades_path(id: @regist_item_trade_form.id, user_id: current_user.id), notice: t('flash.regist')
+            redirect_to user_item_trades_path(id: @regist_item_trade_form.id, user_id: current_user.id), notice: t('flash.regist')
         else
             @selectable_item_genres = ItemGenreGame.selectable_item_genres(@regist_item_trade_form.game_id)
             render :new
@@ -44,7 +44,7 @@ class Games::ItemTradesController < ApplicationController
         
         # 取引を再登録
         if @item_trade.re_regist(update_item_trade_params)
-            redirect_to user_user_item_trade_path(id: @item_trade.id, user_id: current_user.id), notice: t('flash.update')
+            redirect_to user_item_trade_path(id: @item_trade.id, user_id: current_user.id), notice: t('flash.update')
         else
             render :edit
         end
@@ -54,7 +54,7 @@ class Games::ItemTradesController < ApplicationController
         @item_trade = current_user.item_trades.find(params[:id])
         return redirect_to_permit_error if @item_trade.enable && @item_trade&.enable_item_trade_queue.user_id
         @item_trade.disable_trade!
-        redirect_to user_user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
+        redirect_to user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
     end
 
     private
