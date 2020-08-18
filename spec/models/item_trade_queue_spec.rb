@@ -19,4 +19,23 @@ RSpec.describe ItemTradeQueue, type: :model do
     item_trade_queue.valid?
     expect(item_trade_queue.errors[:item_trade_id]).to include("を入力してください")
   end
+
+  it "is not valid without an user_id" do
+    item_trade_queue = build(:item_trade_queue, user: nil, item_trade: item_trade)
+    item_trade_queue.valid?
+    expect(item_trade_queue.errors[:user_id]).to include("を入力してください")
+  end
+
+  it "is not valid without an approve" do
+    item_trade_queue = build(:item_trade_queue, user: user, item_trade: item_trade, approve: nil)
+    item_trade_queue.valid?
+    expect(item_trade_queue.errors[:approve]).to include("は一覧にありません")
+  end
+
+  it "is not valid with a not unique name" do
+    create(:item_trade_queue, user: user, item_trade: item_trade)
+    item_trade_queue = build(:item_trade_queue, user: user, item_trade: item_trade)
+    item_trade_queue.valid?
+    expect(item_trade_queue.errors[:item_trade_id]).to include("はすでに存在します")
+  end
 end

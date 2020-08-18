@@ -69,13 +69,13 @@
                     %td 
                         = item_trade.sale_item_quantity
 
-                - if item_trade.enable && item_trade.trade_deadline != "ERROR" && item_trade.enable_item_trade_queue.user_id.nil? # 取引有効 AND 期限有効 AND 購入されていない
+                - if item_trade.enable && item_trade.trade_deadline != "ERROR" && !item_trade.item_trade_queue # 取引有効 AND 期限有効 AND 購入されていない
                     %tr 
                         %td
                             = ItemTrade.human_attribute_name(:trade_deadline)
                         %td
                             = item_trade.trade_deadline
-                - item_trade_enable_or_sold =(item_trade.trade_deadline != "ERROR" || item_trade.enable_item_trade_queue.user_id)
+                - item_trade_enable_or_sold = (item_trade.trade_deadline != "ERROR" || item_trade.item_trade_queue)
                 - if item_trade.enable &&  item_trade_enable_or_sold# 取引有効 AND (期限有効 OR 購入されている)
                     %tr
                         %td{colspan: 2}

@@ -8,8 +8,7 @@ Rails.application.routes.draw do devise_for :users, controllers: {
       post '/item_trade/:id/respond' => 'item_trades#respond', as: 'respond_item_trade'
       post '/item_trade/:id/forced' => 'item_trades#forced', as: 'forced_item_trade'
 
-      resources :item_trade_queues, only: [:index, :show]
-      post '/item_trade_queues/:id/buy' => 'item_trade_queues#buy', as: 'buy_item_trade_queue'
+      resources :item_trade_queues, only: [:index, :show, :create]
 
       resources :badges, only: [:index]
 

@@ -9,7 +9,7 @@ RSpec.describe ItemTradeChat, type: :model do
   let!(:user_game_rank){create(:user_game_rank, user: user, game: game)}
   let!(:item_trade){create(:item_trade, user: user, game: game, buy_item: buy_item, sale_item: sale_item, user_game_rank: user_game_rank)}
   let!(:item_trade_queue){create(:item_trade_queue, user: user, item_trade: item_trade)}
-  let!(:item_trade_detail){create(:item_trade_detail, item_trade_queue: item_trade_queue)}
+  let!(:item_trade_detail){create(:item_trade_detail, item_trade_queue: item_trade_queue, item_trade: item_trade)}
 
   it "is valid with valid attributes" do
     item_trade_chat = build(:item_trade_chat, sender_is_seller: true, item_trade_detail: item_trade_detail, message: 'テストメッセージ')

@@ -3,5 +3,6 @@ FactoryBot.define do
     buy_popuarity {0}
     sale_popuarity {0}
     item_trade_queue
+    item_trade
   end
 end

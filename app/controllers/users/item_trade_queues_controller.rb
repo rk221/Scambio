@@ -7,8 +7,8 @@ class Users::ItemTradeQueuesController < UsersController
 
     def show 
         @item_trade_queue = current_user.item_trade_queues.find(params[:id]).decorate
-        return redirect_to_error t('flash.item_trades.end_item_trade') unless @item_trade_queue.item_trade.enable
-        return redirect_to_error t('flash.item_trades.evaluated_item_trade') if @item_trade_queue.item_trade_detail&.sale_popuarity
+        return redirect_to_error t('flash.item_trades.end_item_trade') unless @item_trade_queue.item_trade.enable                       # 取引が有効ではない
+        return redirect_to_error t('flash.item_trades.evaluated_item_trade') if @item_trade_queue.item_trade_detail&.sale_popuarity     # 既に取引を評価して終了している
 
         if @item_trade_queue.item_trade_detail
             @item_trade_chat = ItemTradeChat.new(item_trade_detail_id: @item_trade_queue.item_trade_detail.id, sender_is_seller: false)
@@ -18,16 +18,17 @@ class Users::ItemTradeQueuesController < UsersController
         @user = current_user.decorate
     end
 
-    def buy # アイテムトレード一覧から購入を押すことで飛んでくる
-        item_trade_queue = ItemTradeQueue.find(params[:id])
-
-        return redirect_back(fallback_location: root_path, warning: t('.another_user_already_exists')) if item_trade_queue.user_id # 既に購入待ちが居る場合
-        return redirect_to redirect_to_permit_error if confirm_user(item_trade_queue.item_trade) # ユーザIDと売却者ユーザIDが一致していると不正
-
-        if item_trade_queue.buy(current_user.id)
-            redirect_to action: :show, id: item_trade_queue.id, warning: t('.success_message')
+    def create 
+        @item_trade_queue = current_user.item_trade_queues.new(buy_params)
+        if @item_trade_queue.save
+            redirect_to action: :show, id: @item_trade_queue.id, warning: t('.success_message')
         else
             redirect_to_error
         end
+    end
+
+    private 
+    def buy_params
+        params.require(:item_trade_queue).permit(:item_trade_id)
     end
 end
