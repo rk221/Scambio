@@ -16,15 +16,16 @@ class ItemTradeDetail < ApplicationRecord
     def buy_evaluate(buy_evaluate_params)
         self.transaction do
             update!(buy_evaluate_params)
-            if self.sale_popuarity # 両者評価しているなら取引を終了させる
-                item_trade_queue.item_trade.disable_trade! 
-            end
             # 購入側のRANKを更新
-            UserGameRank.find_by(user_id: item_trade_queue.user_id, game_id: item_trade_queue.item_trade.game_id).buy_item_trade_update!(self.buy_popuarity)
+            UserGameRank.find_by(user_id: item_trade_queue.user_id, game_id: item_trade_queue.item_trade.game_id).buy_item_trade_update!(buy_popuarity)
             # 自分のバッジを更新
             UserBadge.create_to_can_attach!(item_trade_queue.item_trade.user_id, item_trade_queue.item_trade.game_id)
             # 相手のバッジを更新
             UserBadge.create_to_can_attach!(item_trade_queue.user_id, item_trade_queue.item_trade.game_id)
+
+            if sale_popuarity # 両者評価しているなら取引を終了させる (queueを削除するため、注意)
+                raise ActiveRecord::RecordInvalid unless item_trade_queue.item_trade.disable_trade               # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
+            end
         end
         true
     rescue
@@ -35,15 +36,16 @@ class ItemTradeDetail < ApplicationRecord
     def sale_evaluate(sale_evaluate_params)
         self.transaction do
             update!(sale_evaluate_params)
-            if self.buy_popuarity # 両者評価しているなら取引を終了させる
-                item_trade_queue.item_trade.disable_trade! 
-            end
             # 売却側のRANKを更新
-            UserGameRank.find_by(user_id: item_trade_queue.item_trade.user_id, game_id: item_trade_queue.item_trade.game_id).sale_item_trade_update!(self.sale_popuarity)
+            UserGameRank.find_by(user_id: item_trade.user_id, game_id: item_trade.game_id).sale_item_trade_update!(sale_popuarity)
             # 自分のバッジを更新
-            UserBadge.create_to_can_attach!(item_trade_queue.user_id, item_trade_queue.item_trade.game_id)
+            UserBadge.create_to_can_attach!(item_trade_queue.user_id, item_trade.game_id)
             # 相手のバッジを更新
-            UserBadge.create_to_can_attach!(item_trade_queue.item_trade.user_id, item_trade_queue.item_trade.game_id)
+            UserBadge.create_to_can_attach!(item_trade.user_id, item_trade.game_id)
+
+            if buy_popuarity # 両者評価しているなら取引を終了させる (queueを削除するため、注意)
+                raise ActiveRecord::RecordInvalid unless item_trade_queue.item_trade.disable_trade               # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
+            end
         end
         true
     rescue

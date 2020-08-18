@@ -80,7 +80,7 @@
                         - if current_user.id == item_trade.user_id
                             = link_to t('link_to.show'), user_item_trade_path(id: item_trade.id, user_id: current_user.id), class: 'btn btn-outline-dark'
                         - else
-                            = button_to t('.buy_queue'), user_buy_item_trade_queue_path(id: item_trade.enable_item_trade_queue.id, user_id: current_user.id),  class: 'btn btn-primary'
+                            = button_to t('.buy_queue'), user_item_trade_queues_path(user_id: current_user.id, item_trade_queue: {item_trade_id: item_trade.id}),  class: 'btn btn-primary'
 
 = pagenate(@page_item_trades)
 

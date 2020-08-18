@@ -8,8 +8,8 @@ class Games::ItemTradesController < ApplicationController
         # 検索に会うもの + 有効な取引 + 購入されていない取引 + ゲームに一致している
         @page_item_trades = search_item_trades(@q.result(distinct: true), search_params)
             .enabled # 有効な取引
-            .includes(:enable_item_trade_queue, :game, :user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank)
-            .where(item_trade_queues: {user_id: nil}, game_id: params[:game_id]) # 購入されていない ゲーム一致
+            .includes(:item_trade_queue, :game, :user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank)
+            .where(item_trade_queues: {id: nil}, game_id: params[:game_id]) # 購入されていない ゲーム一致
             .page(params[:page])
         @item_trades = @page_item_trades.decorate
         @selectable_item_genres = ItemGenreGame.selectable_item_genres(params[:game_id])
@@ -35,15 +35,15 @@ class Games::ItemTradesController < ApplicationController
 
     def edit 
         @item_trade = current_user.item_trades.find(params[:id])
-        return redirect_to_permit_error if @item_trade.enable && @item_trade&.enable_item_trade_queue.user_id
+        return redirect_to_permit_error if @item_trade.enable && @item_trade.item_trade_queue # 有効かつ、ユーザが購入中の場合は編集禁止
     end
 
     def update 
         @item_trade = current_user.item_trades.find(params[:id])
-        return redirect_to_permit_error if @item_trade.enable && @item_trade&.enable_item_trade_queue.user_id
+        return redirect_to_permit_error if @item_trade.enable && @item_trade.item_trade_queue # 有効かつ、ユーザが購入中の場合は編集禁止
         
         # 取引を再登録
-        if @item_trade.re_regist(update_item_trade_params)
+        if @item_trade.update(update_item_trade_params)
             redirect_to user_item_trade_path(id: @item_trade.id, user_id: current_user.id), notice: t('flash.update')
         else
             render :edit
@@ -52,12 +52,17 @@ class Games::ItemTradesController < ApplicationController
 
     def destroy
         @item_trade = current_user.item_trades.find(params[:id])
-        return redirect_to_permit_error if @item_trade.enable && @item_trade&.enable_item_trade_queue.user_id
-        @item_trade.disable_trade!
-        redirect_to user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
+        return redirect_to_permit_error if @item_trade.enable && @item_trade.item_trade_queue # 有効化つ、ユーザが購入中の場合は削除禁止
+
+        if @item_trade.disable_trade
+            redirect_to user_item_trades_path(user_id: current_user.id), notice: t('flash.destroy')
+        else 
+            redirect_to_error
+        end
     end
 
     private
+    
     def regist_item_trade_form_params 
         params.require(:regist_item_trade_form)
         .permit(:buy_item_name, :buy_item_quantity, :sale_item_name, :sale_item_quantity, :numeric_of_trade_deadline, :buy_item_genre_id, :sale_item_genre_id)
@@ -65,7 +70,7 @@ class Games::ItemTradesController < ApplicationController
     end
 
     def update_item_trade_params 
-        params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity, :numeric_of_trade_deadline)
+        params.require(:item_trade).permit(:buy_item_quantity, :sale_item_quantity, :numeric_of_trade_deadline).merge(enable: true)
     end
 
     # 検索フォームのパラメータ（ソートも含む)

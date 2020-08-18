@@ -15,11 +15,6 @@ RSpec.describe MessageMailer, type: :mailer do
   let(:item_trade){create(:item_trade, user: sale_user, game: game, buy_item: buy_item, sale_item: sale_item, enable: true, numeric_of_trade_deadline: 1, user_game_rank: sale_user_game_rank)}
   let(:item_trade_queue){create(:item_trade_queue, item_trade: item_trade, user: buy_user).decorate}
 
-  before do
-    @item_trade = item_trade
-    @item_trade.update(enable_item_trade_queue_id: item_trade_queue.id)
-  end
-
   describe '#send_approve_item_trade' do
     
     subject(:mail) do

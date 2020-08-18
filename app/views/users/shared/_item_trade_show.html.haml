@@ -1,50 +1,50 @@
 .item_trades
     %table.table.table-bordered.text-nowrap
         %tbody
-            %tr{"class": "user-game-rank-#{item_trade_queue.item_trade.user_game_rank.rank}"} 
+            %tr{"class": "user-game-rank-#{item_trade.user_game_rank.rank}"} 
                 %td 
                     = UserGameRank.human_attribute_name(:rank)
                 %td 
-                    = item_trade_queue.item_trade.user_game_rank.rank_name
+                    = item_trade.user_game_rank.rank_name
             %tr 
                 %td 
                     = Game.human_attribute_name(:title)
                 %td 
-                    = item_trade_queue.item_trade.game.title
+                    = item_trade.game.title
             %tr 
                 %td 
                     = ItemTrade.human_attribute_name(:buy_item_genre_name)
                 %td 
-                    = item_trade_queue.item_trade.buy_item.item_genre.name
+                    = item_trade.buy_item.item_genre.name
             %tr 
                 %td 
                     = ItemTrade.human_attribute_name(:buy_item_name)
                 %td 
-                    = item_trade_queue.item_trade.buy_item.name
+                    = item_trade.buy_item.name
             %tr 
                 %td 
                     = ItemTrade.human_attribute_name(:buy_item_quantity)
                 %td 
-                    = item_trade_queue.item_trade.buy_item_quantity
+                    = item_trade.buy_item_quantity
             %tr 
                 %td 
                     = ItemTrade.human_attribute_name(:sale_item_genre_name)
                 %td 
-                    = item_trade_queue.item_trade.sale_item.item_genre.name
+                    = item_trade.sale_item.item_genre.name
             %tr 
                 %td 
                     = ItemTrade.human_attribute_name(:sale_item_name)
                 %td 
-                    = item_trade_queue.item_trade.sale_item.name
+                    = item_trade.sale_item.name
             %tr 
                 %td 
                     = ItemTrade.human_attribute_name(:sale_item_quantity)
                 %td 
-                    = item_trade_queue.item_trade.sale_item_quantity
+                    = item_trade.sale_item_quantity
 
-            - if item_trade_queue.item_trade.trade_deadline != "ERROR" && item_trade_queue.user_id.nil? # 取引有効 AND 期限有効 AND 購入されていない
+            - if item_trade.trade_deadline != "ERROR" && item_trade&.item_trade_queue.blank? # 取引有効 AND 期限有効 AND 購入されていない
                 %tr 
                     %td 
                         = ItemTrade.human_attribute_name(:trade_deadline)
                     %td 
-                        = item_trade_queue.item_trade.trade_deadline
+                        = item_trade.trade_deadline
