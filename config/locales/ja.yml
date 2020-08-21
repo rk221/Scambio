@@ -198,6 +198,8 @@ ja:
                 name: バッジ名
                 item_trade_count_condition: 取引回数条件
                 rank_condition: ユーザランク条件
+                description: 説明
+                image_icon: アイコン
             user_badge:
                 error_max_wear_badge: これ以上バッジは装着出来ません
             item_genre:

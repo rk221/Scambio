@@ -55,4 +55,10 @@ RSpec.describe Badge, type: :model do
     badge.valid?
     expect(badge.errors[:rank_condition]).to include("は4以下の値にしてください")
   end
+  
+  it "is not valid with a 201 characters or more description" do
+    badge = build(:badge, description: 'a' * 201, game: game)
+    badge.valid?
+    expect(badge.errors[:description]).to include("は200文字以内で入力してください")
+  end
 end
