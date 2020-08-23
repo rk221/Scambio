@@ -2,56 +2,49 @@
 %h1.mb-5 
     = t '.title'
 
-.item_trades
+.item-trades#item_trades
     - @item_trade_queues.each do |item_trade_queue|
-        - next if item_trade_queue.item_trade_detail&.sale_popuarity
-        %table.table.table-bordered.text-nowrap
-            %tbody
-                %tr{"class": "user-game-rank-#{item_trade_queue.item_trade.user_game_rank.rank}"} 
-                    %td 
-                        = UserGameRank.human_attribute_name(:rank)
-                    %td 
-                        = item_trade_queue.item_trade.user_game_rank.rank_name
-                %tr 
-                    %td 
-                        = ItemTrade.human_attribute_name(:user_nickname)
-                    %td 
-                        = item_trade_queue.item_trade.user.nickname
-                %tr 
-                    %td 
-                        = Game.human_attribute_name(:title)
-                    %td 
-                        = item_trade_queue.item_trade.game.title
-                %tr 
-                    %td 
+        .item-trade
+            .user-game-rank{class: "user-game-rank-#{item_trade_queue.item_trade.user_game_rank.rank}"}
+                = item_trade_queue.item_trade.user_game_rank.rank_name
+            .user-badges
+                = trade_badges(item_trade_queue.item_trade.user.user_badges)
+            .user.element-frame
+                .head
+                    = ItemTrade.human_attribute_name(:user_nickname)
+                .name.float-right
+                    = item_trade_queue.item_trade.user.nickname
+            .buy
+                .item-genre-name.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:buy_item_genre_name)
-                    %td 
+                    .name.float-right
                         = item_trade_queue.item_trade.buy_item.item_genre.name
-                %tr 
-                    %td 
+                .item-name.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:buy_item_name)
-                    %td 
+                    .name.float-right
                         = item_trade_queue.item_trade.buy_item.name
-                %tr 
-                    %td 
+                .item-quantity.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:buy_item_quantity)
-                    %td 
+                    .name.float-right
                         = item_trade_queue.item_trade.buy_item_quantity
-                %tr 
-                    %td 
+            .sale
+                .item-genre-name.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:sale_item_genre_name)
-                    %td 
+                    .name.float-right
                         = item_trade_queue.item_trade.sale_item.item_genre.name
-                %tr 
-                    %td 
+                .item-name.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:sale_item_name)
-                    %td 
+                    .name.float-right
                         = item_trade_queue.item_trade.sale_item.name
-                %tr 
-                    %td 
+                .item-quantity.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:sale_item_quantity)
-                    %td 
+                    .name.float-right
                         = item_trade_queue.item_trade.sale_item_quantity
-                %tr
-                    %td{colspan: 2}
-                        = link_to t('link_to.show'), user_item_trade_queue_path(id: item_trade_queue.id, user_id: current_user.id), class: 'btn btn-primary mr-2'
+            .link
+                = link_to t('link_to.show'), user_item_trade_queue_path(id: item_trade_queue.id, user_id: current_user.id), class: 'btn btn-dark btn-block'

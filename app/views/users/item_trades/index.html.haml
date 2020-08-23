@@ -29,60 +29,70 @@
         .form-group
             = f.select(:sorts, {'取引開始日時の近い順': 'updated_at desc', '購入数量の少ない順': 'buy_item_quantity asc'},{selected: params[:q][:sorts]}, class: 'select-sort form-control', 'v-on:change': 'onSelectedChange($event)')
 
-.item_trades
+.item-trades#item_trades
     - @item_trades.each do |item_trade|
-        %table.table.table-bordered.text-nowrap
-            %tbody
-                %tr 
-                    %td 
-                        = Game.human_attribute_name(:title)
-                    %td 
-                        = item_trade.game.title
-                %tr 
-                    %td 
+        .item-trade
+            .user-game-rank{class: "user-game-rank-#{item_trade.user_game_rank.rank}"}
+                = item_trade.user_game_rank.rank_name
+            .user-badges
+                = trade_badges(item_trade.user.user_badges)
+            .game.element-frame
+                .head
+                    = Game.human_attribute_name(:title)
+                .name.float-right
+                    = item_trade.game.title
+            .user.element-frame
+                .head
+                    = ItemTrade.human_attribute_name(:user_nickname)
+                .name.float-right
+                    = item_trade.user.nickname
+            .buy
+                .item-genre-name.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:buy_item_genre_name)
-                    %td 
+                    .name.float-right
                         = item_trade.buy_item.item_genre.name
-                %tr 
-                    %td 
+                .item-name.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:buy_item_name)
-                    %td 
+                    .name.float-right
                         = item_trade.buy_item.name
-                %tr 
-                    %td 
+                .item-quantity.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:buy_item_quantity)
-                    %td 
+                    .name.float-right
                         = item_trade.buy_item_quantity
-                %tr 
-                    %td 
+            .sale
+                .item-genre-name.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:sale_item_genre_name)
-                    %td 
+                    .name.float-right
                         = item_trade.sale_item.item_genre.name
-                %tr 
-                    %td 
+                .item-name.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:sale_item_name)
-                    %td 
+                    .name.float-right
                         = item_trade.sale_item.name
-                %tr 
-                    %td 
+                .item-quantity.element-frame
+                    .head
                         = ItemTrade.human_attribute_name(:sale_item_quantity)
-                    %td 
+                    .name.float-right
                         = item_trade.sale_item_quantity
-
-                - if item_trade.enable && item_trade.trade_deadline != "ERROR" && !item_trade.item_trade_queue # 取引有効 AND 期限有効 AND 購入されていない
-                    %tr 
-                        %td
-                            = ItemTrade.human_attribute_name(:trade_deadline)
-                        %td
-                            = item_trade.trade_deadline
+            - if item_trade.enable && item_trade.trade_deadline != "ERROR" && !item_trade.item_trade_queue # 取引有効 AND 期限有効 AND 購入されていない
+                .trade-deadline.element-frame
+                    .head
+                        = ItemTrade.human_attribute_name(:trade_deadline)
+                    .name.float-right
+                        = item_trade.trade_deadline
+            .link
                 - item_trade_enable_or_sold = (item_trade.trade_deadline != "ERROR" || item_trade.item_trade_queue)
                 - if item_trade.enable &&  item_trade_enable_or_sold# 取引有効 AND (期限有効 OR 購入されている)
                     %tr
                         %td{colspan: 2}
-                            = link_to t('link_to.show'), user_item_trade_path(id: item_trade.id), class: 'btn btn-primary'
+                            = link_to t('link_to.show'), user_item_trade_path(id: item_trade.id), class: 'btn btn-dark btn-block'
                 - if !item_trade.enable || !item_trade_enable_or_sold # 取引無効 OR !(期限有効 OR 購入されている)
                     %tr
                         %td{colspan: 2}
-                            = link_to t('.edit'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id), class: 'btn btn-success'
+                            = link_to t('.edit'), edit_game_item_trade_path(id: item_trade.id, game_id: item_trade.game_id), class: 'btn btn-success btn-block'
 
 = pagenate(@page_item_trades)

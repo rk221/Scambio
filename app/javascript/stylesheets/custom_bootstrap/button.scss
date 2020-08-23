@@ -1,0 +1,29 @@
+/* 通常のボタン色 */
+.btn-buy,
+.btn-buy.disabled, .btn-buy:disabled {
+  color: #fff;
+  background-color: #00dd66;
+  border-color: #33dd00;
+}
+
+/* focusされた時の枠線の色 */
+.btn-buy:focus, .btn-buy.focus,
+.btn-buy:not(:disabled):not(.disabled):active:focus, .btn-buy:not(:disabled):not(.disabled).active:focus,
+.show > .btn-buy.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+/* hover時（マウスカーソルを重ねた時）の色（通常より濃いor暗めの色を指定）*/
+.btn-buy:hover {
+  color: #fff;
+  background-color: #00cc66;
+  border-color: #009900;
+}
+
+/* active時の色（hover時と同等かさらに濃いor暗めの色を指定） */
+.btn-buy:not(:disabled):not(.disabled):active, .btn-buy:not(:disabled):not(.disabled).active,
+.show > .btn-buy.dropdown-toggle {
+  color: #fff;
+  background-color: #33cc00;
+  border-color: #006600;
+}

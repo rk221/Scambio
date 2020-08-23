@@ -9,6 +9,9 @@ class UserBadge < ApplicationRecord
     validate :with_select_up_to_3
 
     MAX_WEAR_BADGE = 3
+
+    scope :wearing, -> { where(wear: true)}
+    
     # 最大数以上の装着かどうかチェックする
     def with_select_up_to_3
         return true unless wear # バッジを装着しようとしているではない時は true

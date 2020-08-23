@@ -9,6 +9,9 @@
         = f.label :name
         = f.text_field :name, required: true, maxlength: 30, class: 'form-control'
     .form-group
+        = f.label :description
+        = f.text_area :description, cols: "20", rows: "5", maxlength: 200, class: 'form-control'
+    .form-group
         = f.label :item_trade_count_condition
         = f.number_field :item_trade_count_condition, value: 1, required: true, min: 1, class: 'form-control'
     .form-group

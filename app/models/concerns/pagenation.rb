@@ -2,7 +2,7 @@ module Pagenation
     extend ActiveSupport::Concern
   
     included do
-        NUMBER_OF_OUTPUT_LINES = 1 # １ページの件数
+        NUMBER_OF_OUTPUT_LINES = 30 # １ページの件数
 
         scope :page, -> (page_params = '1') do 
             @now_page = self.page_to_i(page_params)

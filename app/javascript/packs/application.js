@@ -15,6 +15,7 @@ import './item_trade_chat'
 import './select_sort'
 import './user_message_posts'
 import './badge'
+import './item_trade'
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
