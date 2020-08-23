@@ -97,6 +97,18 @@ RSpec.describe UserBadge, type: :system do
                                             main_to_expect.to have_content badge.name
                                         end
                                     end
+
+                                    context 'when update not check user badges' do 
+                                        before do 
+                                            click_button t_submit(:submit)
+                                        end
+
+                                        it 'an user_badges is displayed' do 
+                                            main_to_expect.to have_content t('users.badges.index.title')
+                                            main_to_expect.to have_content t('users.badges.index.wearable_badges')
+                                            main_to_expect.to have_content t('users.badges.index.wearing_badges')
+                                        end
+                                    end
                                 end
                             end
                         end
