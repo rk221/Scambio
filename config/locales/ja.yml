@@ -105,6 +105,8 @@ ja:
                 forced_edit: 相手の評価を待たずに更新しますがよろしいですか？
                 forced_destroy: 相手の評価を待たずに削除しますがよろしいですか？
                 buyer_end_evaluate: 相手は取引を終了しています
+                buy_user: 購入者ユーザ情報
+                buy_user_name: 購入者ユーザ名
             edit:
                 title: アイテムトレード編集
                 trade_deadline: 取引期限（今から何時間有効か）
