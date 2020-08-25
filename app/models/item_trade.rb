@@ -75,7 +75,7 @@ class ItemTrade < ApplicationRecord
     # アイテムトレード強制終了処理
     def forced
         self.transaction do
-            #UserMessagePost.create_message_forced!(self.enable_item_trade_queue)
+            UserMessagePost.create_message_forced!(item_trade_queue)
             raise ActiveRecord::RecordInvalid unless disable_trade               # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
         end
         true
@@ -85,17 +85,17 @@ class ItemTrade < ApplicationRecord
 
     # 購入応答を処理する
     def respond(approve)
-        return false if item_trade_queue.approve                                     # 既に評価済みの場合エラー
+        return false if item_trade_queue.approve                                                            # 既に評価済みの場合エラー
         self.transaction do
             if approve
-                item_trade_queue.update!(approve: true)                                 # 応答処理
-                UserMessagePost.create_message_approve!(item_trade_queue)            # 成立メッセージを相手に送信
-                ItemTradeDetail.create!(item_trade_queue_id: item_trade_queue.id, item_trade_id: id)    # Detailsを生成
-                UserGameRank.update_trade_count!(item_trade_queue)                   # 取引回数をカウントアップ（両者）
+                item_trade_queue.update!(approve: true)                                                     # 応答処理
+                UserMessagePost.create_message_approve!(item_trade_queue)                                   # 成立メッセージを相手に送信
+                ItemTradeDetail.create!(item_trade_queue_id: item_trade_queue.id, item_trade_id: id)        # Detailsを生成
+                raise ActiveRecord::RecordInvalid unless UserGameRank.update_trade_count(item_trade_queue)  # 取引回数をカウントアップ（両者）
             else
-                UserMessagePost.create_message_reject!(item_trade_queue)    # 不成立メッセージを相手に送信
-                item_trade_queue.destroy!
-                raise ActiveRecord::RecordInvalid unless disable_trade               # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
+                UserMessagePost.create_message_reject!(item_trade_queue)                                    # 不成立メッセージを相手に送信
+                item_trade_queue.destroy!                                                                   # キュー削除
+                raise ActiveRecord::RecordInvalid unless disable_trade                                      # 取引を終了する。falseを返した場合、例外を返しこのトランザクションもロールバック
             end
         end
         true

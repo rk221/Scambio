@@ -21,11 +21,17 @@ class UserGameRank < ApplicationRecord
         update!(popularity: self.popularity + add_popularity)
     end
 
-    def self.update_trade_count!(item_trade_queue)
-        sale_user_game_rank = UserGameRank.find_by(user_id: item_trade_queue.item_trade.user_id, game_id: item_trade_queue.item_trade.game_id) 
-        buy_user_game_rank = UserGameRank.find_by(user_id: item_trade_queue.user_id, game_id: item_trade_queue.item_trade.game_id) 
-        sale_user_game_rank.update!(sale_trade_count: sale_user_game_rank.sale_trade_count + 1)# 売却者の取引回数カウントアップ
-        buy_user_game_rank.update!(buy_trade_count: buy_user_game_rank.buy_trade_count + 1)# 購入者の取引回数カウントアップ
+    # キューに対応する購入者・売却者の取引回数をカウントアップ
+    def self.update_trade_count(item_trade_queue)
+        self.transaction do
+            sale_user_game_rank = UserGameRank.find_by(user_id: item_trade_queue.item_trade.user_id, game_id: item_trade_queue.item_trade.game_id) 
+            buy_user_game_rank = UserGameRank.find_by(user_id: item_trade_queue.user_id, game_id: item_trade_queue.item_trade.game_id) 
+            sale_user_game_rank.update!(sale_trade_count: sale_user_game_rank.sale_trade_count + 1)# 売却者の取引回数カウントアップ
+            buy_user_game_rank.update!(buy_trade_count: buy_user_game_rank.buy_trade_count + 1)# 購入者の取引回数カウントアップ
+        end
+        true
+    rescue
+        false
     end
     
     private 
