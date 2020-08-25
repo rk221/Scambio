@@ -20,7 +20,7 @@ class Users::ItemTradeQueuesController < UsersController
 
     def create 
         @item_trade_queue = current_user.item_trade_queues.new(buy_params)
-        if @item_trade_queue.save
+        if @item_trade_queue.buy
             redirect_to action: :show, id: @item_trade_queue.id, warning: t('.success_message')
         else
             redirect_to_error
