@@ -67,11 +67,11 @@ class Admin::BadgesController < AdminController
     private
 
     def badge_params
-        params.require(:badge).permit(:name, :item_trade_count_condition, :rank_condition, :game_id)
+        params.require(:badge).permit(:name, :description, :image_icon, :item_trade_count_condition, :rank_condition, :game_id)
     end
 
     def badge_all_params
-        params.require(:badge).permit(:name, :item_trade_count_condition, :rank_condition)
+        params.require(:badge).permit(:name, :description, :image_icon, :item_trade_count_condition, :rank_condition)
     end
 
     def params_all

@@ -2,43 +2,63 @@
 %h1.mb-5
     = t '.title'
 
-.container.mb-5
+.container.mb-5#item_trades
     = render(partial: 'users/shared/item_trade_show', locals: {item_trade: @item_trade}) 
         
--# 取引の状態や、操作を行う
-.container.mb-5
-    %h3.mb-3
-        = t('.now_state')
-    - if  @item_trade&.item_trade_queue&.item_trade_detail&.buy_popuarity # 自分が評価していて、相手が評価していない
-        %h5.mb-3
-            = t('.your_evaluate_wait')
-        - if @item_trade&.item_trade_queue&.item_trade_detail&.last_update_1_hour_passed? #自分が評価してから1時間経過
-            -#強制更新 強制停止
-            = button_to t('.forced_edit_link'), user_forced_item_trade_path(id: @item_trade.id, user_id: current_user.id, to_edit: true), data: {confirm: t('.forced_edit')}, class: 'btn btn-success mr-2', form: {style: 'display:inline-block;'}
-            = button_to t('.forced_destroy_link'), user_forced_item_trade_path(id: @item_trade.id, user_id: current_user.id), data: {confirm: t('.forced_destroy')}, class: 'btn btn-danger', form: {style: 'display:inline-block;'}
-        - else  
-            = t('.1_hour_has_not_passed_yet')
-    - elsif @item_trade&.item_trade_queue&.approve # true 取引が成立している場合
-        %h5.mb-3
-            - if @item_trade&.item_trade_queue&.item_trade_detail&.sale_popuarity # 相手が既に評価を終えている場合
-                = t('.buyer_end_evaluate')
-            - else
-                = t('.state_during_trade')
-        -# 評価する
-        = link_to t('.edit_buy'), user_edit_buy_item_trade_detail_path(@item_trade.item_trade_queue.item_trade_detail.id, user_id: current_user.id), class: 'btn btn-primary' 
-    - elsif @item_trade&.item_trade_queue&.approve == false # 取引の応答待ちの場合
-        %h5.mb-3
-            = t('.state_wait')
-        -# [承認 OR 拒否]リンク
-        = button_to t('.approve'), user_respond_item_trade_path(id: @item_trade.id, user_id: current_user.id, approve: true), class: 'btn btn-primary mr-2', form: {style: 'display:inline-block;'} 
-        = button_to t('.disapprove'), user_respond_item_trade_path(id: @item_trade.id, user_id: current_user.id, approve: false), class: 'btn btn-danger', form: {style: 'display:inline-block;'}
-    - else # 相手がいない場合
-        %h5.mb-3
-            = t('.state_for_sale')
-        -# 編集 OR 削除
-        = link_to t('link_to.edit'), edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), class: 'btn btn-success mr-2'
-        = link_to t('link_to.destroy'), game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
+    -# 取引の状態や、操作を行う
+    .container.mb-5
+        %h3.mb-3
+            = t('.now_state')
 
+        - if @item_trade.item_trade_queue # 購入されている
+            - if @item_trade.item_trade_queue.approve # 既に承認済みの場合
+                - if @item_trade.item_trade_queue.item_trade_detail.buy_popuarity # 自分は評価済みで、相手が評価していない
+                    %h5.mb-3
+                        = t('.your_evaluate_wait')
+                    - if @item_trade.item_trade_queue.item_trade_detail.last_update_1_hour_passed? #自分が評価してから1時間経過
+                        -#強制更新 強制停止
+                        = button_to t('.forced_edit_link'), user_forced_item_trade_path(id: @item_trade.id, user_id: current_user.id, to_edit: true), data: {confirm: t('.forced_edit')}, class: 'btn btn-success mr-2', form: {style: 'display:inline-block;'}
+                        = button_to t('.forced_destroy_link'), user_forced_item_trade_path(id: @item_trade.id, user_id: current_user.id), data: {confirm: t('.forced_destroy')}, class: 'btn btn-danger', form: {style: 'display:inline-block;'}
+                    - else  
+                        = t('.1_hour_has_not_passed_yet')
+                - elsif @item_trade.item_trade_queue.item_trade_detail.sale_popuarity # 相手が評価済みで、自分が評価していない
+                    %h5.mb-3
+                        = t('.buyer_end_evaluate')
+                    -# 評価する
+                    = link_to t('.edit_buy'), user_edit_buy_item_trade_detail_path(@item_trade.item_trade_queue.item_trade_detail.id, user_id: current_user.id), class: 'btn btn-primary' 
+                - else # 両者未評価（取引中)
+                    %h5.mb-3
+                        = t('.state_during_trade')
+                    -# 評価する
+                    = link_to t('.edit_buy'), user_edit_buy_item_trade_detail_path(@item_trade.item_trade_queue.item_trade_detail.id, user_id: current_user.id), class: 'btn btn-primary' 
+            - else # 未承認の場合
+                %h5.mb-3
+                    = t('.state_wait')
+                -# [承認 OR 拒否]リンク
+                = button_to t('.approve'), user_respond_item_trade_path(id: @item_trade.id, user_id: current_user.id, approve: true), class: 'btn btn-primary mr-2', form: {style: 'display:inline-block;'} 
+                = button_to t('.disapprove'), user_respond_item_trade_path(id: @item_trade.id, user_id: current_user.id, approve: false), class: 'btn btn-danger', form: {style: 'display:inline-block;'}
+        - else # 購入されていない
+            %h5.mb-3
+                = t('.state_for_sale')
+            -# 編集 OR 削除
+            = link_to t('link_to.edit'), edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), class: 'btn btn-success mr-2'
+            = link_to t('link_to.destroy'), game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
+
+    .container.mb-5
+        %h3.mb-3
+            = t('.buy_user')
+        - if @item_trade.item_trade_queue # 購入されている
+            -# 購入者ユーザ情報
+            .buy-user
+                .user-game-rank{class: "user-game-rank-#{@item_trade.item_trade_queue.user_game_rank.rank}"}
+                    = @item_trade.item_trade_queue.user_game_rank(decorate: true).rank_name
+                .user-badges
+                    = trade_badges(@item_trade.item_trade_queue.user.user_badges)
+                .user.element-frame
+                    .head
+                        = t('.buy_user_name')
+                    .name
+                        = @item_trade.item_trade_queue.user.nickname
 -# チャット機能
 - if @item_trade&.item_trade_queue&.item_trade_detail
     .container

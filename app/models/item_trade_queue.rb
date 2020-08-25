@@ -31,4 +31,10 @@ class ItemTradeQueue < ApplicationRecord
     rescue
         false
     end
+
+    # 購入者のゲームランクを取得する
+    def user_game_rank(decorate: false)
+        user_game_rank = user.user_game_ranks.find_by(game_id: self.item_trade.game_id)
+        decorate ? user_game_rank.decorate : user_game_rank
+    end
 end
