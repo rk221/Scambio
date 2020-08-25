@@ -22,18 +22,25 @@ class UserBadge < ApplicationRecord
     end
 
     # ゲームIDに対応するユーザが付与可能なバッジを追加する
-    def self.create_to_can_attach!(user_id, game_id)
-        user_game_rank = UserGameRank.find_by(user_id: user_id)
-        trade_count = user_game_rank.buy_trade_count + user_game_rank.sale_trade_count
+    def self.create_to_can_attach(user_id, game_id)
+        self.transaction do
+            user_game_rank = UserGameRank.find_by(user_id: user_id)
+            trade_count = user_game_rank.buy_trade_count + user_game_rank.sale_trade_count # 取引回数算出
 
-        badges = Badge.where(game_id: game_id)
-                .where('item_trade_count_condition <= ? AND rank_condition <= ?', trade_count, user_game_rank.rank)
-                
-        user_badges = UserBadge.where(user_id: user_id)
-        badges = badges.where.not(id: user_badges.pluck(:badge_id)) unless user_badges.empty?
-        badges.find_each do |badge|
-            UserBadge.create!(user_id: user_id, badge_id: badge.id, wear: false)
+            # 取引回数に合致しているバッジを抽出
+            badges = Badge.where(game_id: game_id)
+                    .where('item_trade_count_condition <= ? AND rank_condition <= ?', trade_count, user_game_rank.rank) 
+                    
+            user_badges = UserBadge.where(user_id: user_id)
+            # ユーザの持っていないバッジを抽出
+            badges = badges.where.not(id: user_badges.pluck(:badge_id)) unless user_badges.empty?
+            badges.find_each do |badge|
+                UserBadge.create!(user_id: user_id, badge_id: badge.id, wear: false)
+            end
         end
+        true
+    rescue
+        false
     end
 
     # ユーザのバッジ装着を行う（脱着も） 数と整数の入力値チェックはコントローラで行う
