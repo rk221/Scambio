@@ -14,9 +14,8 @@ class ItemTradeQueue < ApplicationRecord
         .where(item_trade_queues: {user_id: current_user_id}, item_trades: {enable: true}, item_trade_details: {sale_popuarity: nil})
     end
 
-    alias_method :save_old, :save
     # アイテムトレード購入処理
-    def save
+    def buy
         item_trade = ItemTrade.find(item_trade_id)
         return false if item_trade.user_id == user_id # 購入者と売却者が一致しているとエラー
         
