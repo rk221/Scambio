@@ -12,12 +12,12 @@ class Games::ItemTradesController < ApplicationController
             .where(item_trade_queues: {id: nil}, game_id: params[:game_id]) # 購入されていない ゲーム一致
             .page(params[:page])
         @item_trades = @page_item_trades.decorate
-        @selectable_item_genres = ItemGenreGame.selectable_item_genres(params[:game_id])
+        @selectable_item_genres = ItemGenreGame.item_genres_that_can_be_used_in_games(params[:game_id])
     end
 
     def new 
         game = Game.find(params[:game_id])
-        @selectable_item_genres = ItemGenreGame.selectable_item_genres(game.id)
+        @selectable_item_genres = ItemGenreGame.item_genres_that_can_be_used_in_games(game.id)
 
         @regist_item_trade_form = RegistItemTradeForm.new(game_id: game.id)
     end
@@ -28,7 +28,7 @@ class Games::ItemTradesController < ApplicationController
         if @regist_item_trade_form.save 
             redirect_to user_item_trades_path(id: @regist_item_trade_form.id, user_id: current_user.id), notice: t('flash.regist')
         else
-            @selectable_item_genres = ItemGenreGame.selectable_item_genres(@regist_item_trade_form.game_id)
+            @selectable_item_genres = ItemGenreGame.item_genres_that_can_be_used_in_games(@regist_item_trade_form.game_id)
             render :new
         end
     end

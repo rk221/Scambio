@@ -1,0 +1,29 @@
+- breadcrumb :edit_admin_item, @item.id
+%h1.mb-5
+    = t('.title')
+
+= form_with(model: [@item], url: admin_item_path, local: true) do |f|
+    = render 'shared/error_messages', model: f.object
+
+    %table.table
+        %tr 
+            %td 
+                = Game.human_attribute_name(:title)
+            %td 
+                = @item.game.title
+        %tr 
+            %td 
+                = ItemGenre.human_attribute_name(:name)
+            %td 
+                = @item.item_genre.name
+        %tr 
+            %td 
+                = Item.human_attribute_name(:name)
+            %td 
+                = @item.name
+
+    .form-group
+        = f.label :unit_name
+        = f.text_field :unit_name, maxlength: 10, class: 'form-control'
+    .form-group
+        = f.submit nil, class:'btn btn-primary'

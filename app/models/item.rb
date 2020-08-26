@@ -14,4 +14,14 @@ class Item < ApplicationRecord
     validates :unit_name, length: {maximum: 10}
     validates :item_genre_id, presence: true 
     validates :game_id, presence: true
+
+    # アイテムトレード購入で使われているアイテム数を返す
+    def registered_count_buy_item_trades
+        ItemTrade.where(buy_item_id: self.id).size
+    end
+
+    # アイテムトレード売却で使われているアイテム数を返す
+    def registered_count_sale_item_trades
+        ItemTrade.where(sale_item_id: self.id).size
+    end
 end

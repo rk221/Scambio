@@ -84,6 +84,20 @@ crumb :edit_admin_badge do |badge_id|
   parent :admin_badges
 end
 
+crumb :admin_items do 
+  link t('admin.items.index.title'), admin_items_path
+end
+
+crumb :admin_item do |item_id|
+  link t('admin.items.show.title'), admin_item_path(item_id)
+  parent :admin_items
+end
+
+crumb :edit_admin_item do |item_id|
+  link t('admin.items.edit.title'), admin_item_path(item_id)
+  parent :admin_item, item_id
+end
+
 crumb :admin_item_genres do 
   link t('admin.item_genres.index.title'), admin_item_genres_path
 end

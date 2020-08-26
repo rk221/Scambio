@@ -44,6 +44,7 @@ Rails.application.routes.draw do devise_for :users, controllers: {
     resources :games
     resources :item_genres
     resources :badges
+    resources :items, only: [:index, :show, :edit, :update]
 
     resources :item_genre_games, param: :game_id, only: [:index]
     post '/item_genre_games/enable/:id' => 'item_genre_games#enable', as: 'enable_item_genre_game'

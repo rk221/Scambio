@@ -1,4 +1,4 @@
-class Admin::ItemGenreGamesController < ApplicationController
+class Admin::ItemGenreGamesController < AdminController
     def index 
         @item_genre_games = ItemGenreGame.where(game_id: params[:game_id]).includes(:item_genre).order('item_genres.name')
     end
