@@ -37,28 +37,33 @@ class ItemTrade < ApplicationRecord
     # 取引が無効 か 期限が無効
     scope :disabled, -> {where("item_trades.enable = false or trade_deadline <= ?", Time.zone.now)}
 
-    # 取引が有効な時
-    scope :enabled_or_during_trade, -> do 
-        eager_load(:item_trade_queue)
-        .where("item_trades.enable = true AND (item_trades.trade_deadline > ? OR item_trade_queues.id IS NOT NULL)", Time.zone.now)
+    # 取引が有効か。取引中  #(ransack での検索ではオプション設定時、絶対に値を受け取らないといけない)
+    scope :enabled_or_during_trade, -> (flag = true) do 
+        if flag
+            eager_load(:item_trade_queue)
+            .where("item_trades.enable = true AND (item_trades.trade_deadline > ? OR item_trade_queues.id IS NOT NULL)", Time.zone.now)
+        end
     end
 
     # 上記の結合を行なってから検索を行うこと！
-    scope :search_buy_item_name, -> (search_name){
+    scope :custom_buy_item_name_cont, -> (search_name) do
         where(buy_item_id: Item.where('items.name like ?', "%" + search_name + "%").ids)
-    }
-    scope :search_buy_item_genre_id, -> (search_genre_id){
+    end
+
+    scope :custom_buy_item_item_genre_id_eq, -> (search_genre_id) do
         where(buy_item_id: Item.where(item_genre_id: search_genre_id).ids)
-    }
-    scope :search_sale_item_name, -> (search_name){
+    end
+
+    scope :custom_sale_item_name_cont, -> (search_name) do
         where(sale_item_id: Item.where('items.name like ?', "%" + search_name + "%").ids)
-    }
-    scope :search_sale_item_genre_id, -> (search_genre_id){
+    end
+
+    scope :custom_sale_item_item_genre_id_eq, -> (search_genre_id) do
         where(sale_item_id: Item.where(item_genre_id: search_genre_id).ids)
-    }
+    end
 
     def self.ransackable_scopes(auth_object = nil)
-        %i(enabled_or_during_trade)
+        %i(enabled_or_during_trade custom_buy_item_name_cont custom_buy_item_item_genre_id_eq custom_sale_item_name_cont custom_sale_item_item_genre_id_eq)
     end
 
     # アイテムトレード正常終了処理

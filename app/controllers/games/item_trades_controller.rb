@@ -5,8 +5,8 @@ class Games::ItemTradesController < ApplicationController
         # 検索
         params[:q] = {sorts: 'updated_at desc'} if params[:q].blank?
         @q = ItemTrade.ransack(search_params)
-        # 検索に会うもの + 有効な取引 + 購入されていない取引 + ゲームに一致している
-        @page_item_trades = search_item_trades(@q.result(distinct: true), search_params)
+        # 検索の結果 + 取引が有効 + 購入されていない取引 + ゲームに一致している
+        @page_item_trades = @q.result(distinct: true)
             .enabled # 有効な取引
             .includes(:item_trade_queue, :game, :user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank)
             .where(item_trade_queues: {id: nil}, game_id: params[:game_id]) # 購入されていない ゲーム一致
@@ -75,14 +75,6 @@ class Games::ItemTradesController < ApplicationController
 
     # 検索フォームのパラメータ（ソートも含む)
     def search_params
-        params.require(:q).permit(:buy_item_name, :sale_item_name, :buy_item_item_genre_id, :sale_item_item_genre_id, :sorts)
-    end
-    #　自作の検索を行う
-    def search_item_trades (item_trades, search_params) 
-        item_trades = item_trades.search_buy_item_name(search_params[:buy_item_name]) if search_params[:buy_item_name].present?
-        item_trades = item_trades.search_sale_item_name(search_params[:sale_item_name]) if search_params[:sale_item_name].present?
-        item_trades = item_trades.search_buy_item_genre_id(search_params[:buy_item_item_genre_id]) if search_params[:buy_item_item_genre_id].present?
-        item_trades = item_trades.search_sale_item_genre_id(search_params[:sale_item_item_genre_id]) if search_params[:sale_item_item_genre_id].present?
-        return item_trades
+        params.require(:q).permit(:custom_buy_item_name_cont, :custom_buy_item_item_genre_id_eq, :custom_sale_item_name_cont, :custom_sale_item_item_genre_id_eq, :sorts)
     end
 end
