@@ -1,6 +1,4 @@
-class Users::Codes::NintendoFriendCodesController < UsersController
-    before_action :user_auth
-
+class Users::Codes::NintendoFriendCodesController < BaseUsersController
     def new 
         @nintendo_friend_code = NintendoFriendCode.new
     end

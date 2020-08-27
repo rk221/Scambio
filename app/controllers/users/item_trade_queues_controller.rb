@@ -1,6 +1,4 @@
-class Users::ItemTradeQueuesController < UsersController
-    before_action :user_auth
-
+class Users::ItemTradeQueuesController < BaseUsersController
     def index
         @item_trade_queues = ItemTradeQueue.trade_under_purchases(current_user.id).order("item_trade_queues.updated_at DESC").decorate
     end
