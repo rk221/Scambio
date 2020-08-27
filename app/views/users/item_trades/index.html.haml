@@ -9,20 +9,20 @@
             = f.search_field :game_title_cont, class: 'form-control'
         .form-group 
             = f.label :enabled_or_during_trade, ItemTrade.human_attribute_name(:enable)
-            = f.check_box :enabled_or_during_trade, {checked: params[:q][:enabled_or_during_trade].present?,class: 'form-check'}, checked_value = true, unchecked_value = false
+            = f.check_box :enabled_or_during_trade, {checked: params[:q][:enabled_or_during_trade].present?, class: 'form-check'}, checked_value = true, unchecked_value = false
         .form-group
             = f.label :buy_item_genre_id, ItemTrade.human_attribute_name(:buy_item_genre_name)
-            = f.select :buy_item_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.id]}, {selected: params[:q][:buy_item_item_genre_id], include_blank: '選択なし'}, class: 'form-control'
+            = f.select :custom_buy_item_item_genre_id_eq, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.id]}, {include_blank: '選択なし'}, class: 'form-control'
         .form-group
-            = f.label :buy_item_name, ItemTrade.human_attribute_name(:buy_item_name)
-            = f.search_field :buy_item_name, value: params[:q][:buy_item_name], class: 'form-control'
+            = f.label :buy_item_name_cont, ItemTrade.human_attribute_name(:buy_item_name)
+            = f.search_field :custom_buy_item_name_cont, class: 'form-control'
 
         .form-group
             = f.label :sale_item_genre_id, ItemTrade.human_attribute_name(:sale_item_genre_name)
-            = f.select :sale_item_item_genre_id, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.id]}, {selected: params[:q][:sale_item_item_genre_id], include_blank: '選択なし'}, class: 'form-control'
+            = f.select :custom_sale_item_item_genre_id_eq, @selectable_item_genres.map{|item_genre| [item_genre.name, item_genre.id]}, {include_blank: '選択なし'}, class: 'form-control'
         .form-group
             = f.label :sale_item_name, ItemTrade.human_attribute_name(:sale_item_name)
-            = f.search_field :sale_item_name, value: params[:q][:sale_item_name], class: 'form-control'
+            = f.search_field :custom_sale_item_name_cont, class: 'form-control'
             
         .form-group
             = f.submit t('helpers.submit.search'), class: 'btn btn-success'
