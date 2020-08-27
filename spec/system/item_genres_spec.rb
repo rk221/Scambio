@@ -11,7 +11,7 @@ RSpec.describe ItemGenre, type: :system do
 
             context 'when transitioning item genre list' do
                 before do
-                    click_link t_navbar(:item_genres)
+                    click_link t_navbar(:admin_item_genres)
                 end
 
                 it 'item genre list is displayed' do
@@ -21,7 +21,7 @@ RSpec.describe ItemGenre, type: :system do
 
             describe 'Create' do
                 before do
-                    click_link t_navbar(:item_genres)
+                    click_link t_navbar(:admin_item_genres)
                     click_link t_link_to(:regist)
                 end
 
@@ -63,7 +63,7 @@ RSpec.describe ItemGenre, type: :system do
             describe 'Edit' do 
                 let!(:item_genre){create(:item_genre)} 
                 before do
-                    click_link t_navbar(:item_genres)
+                    click_link t_navbar(:admin_item_genres)
                     click_link t_link_to(:edit)
                 end
 
@@ -106,7 +106,7 @@ RSpec.describe ItemGenre, type: :system do
                 let!(:item_genre){create(:item_genre)} 
 
                 before do
-                    click_link t_navbar(:item_genres)
+                    click_link t_navbar(:admin_item_genres)
                     click_link t_link_to(:destroy)
                     accept_confirm
                 end
@@ -123,7 +123,7 @@ RSpec.describe ItemGenre, type: :system do
             include_context 'when user is logging in'
 
             it 'a link to item genre is not displayed' do 
-                main_to_expect.to_not have_link t_navbar(:item_genres)
+                main_to_expect.to_not have_link t_navbar(:admin_item_genres)
             end
         end
     end

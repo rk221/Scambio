@@ -7,6 +7,9 @@ class ItemGenreGame < ApplicationRecord
     validates :enable, inclusion: {in: [true, false]}
 
     scope :enabled, -> {where(enable: true)}
+
     # ゲームに対応するジャンルを取得する
-    scope :selectable_item_genres, -> (game_id = nil){enabled.where(game_id: game_id).joins(:item_genre).select(:item_genre_id, :name)}
+    def self.item_genres_that_can_be_used_in_games(game_id = nil)
+        enabled.where(game_id: game_id).joins(:item_genre).select(:item_genre_id, :name)
+    end
 end

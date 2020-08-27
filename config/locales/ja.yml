@@ -33,6 +33,13 @@ ja:
             edit:
                 title: バッジ編集
                 all: 同名のバッジ全てに反映する
+        items:
+            index:
+                title: アイテム一覧
+            show:
+                title: アイテム詳細
+            edit:
+                title: アイテム編集
         item_genres:
             index:
                 title: アイテムジャンル一覧
@@ -205,7 +212,7 @@ ja:
             user_badge:
                 error_max_wear_badge: これ以上バッジは装着出来ません
             item_genre:
-                name:  アイテムジャンル名
+                name: アイテムジャンル名
                 default_unit_name: デフォルトの単位名
             nintendo_friend_code: 
                 friend_code: 任天堂フレンドコード
@@ -214,6 +221,11 @@ ja:
             fixed_phrase:
                 name: 登録名
                 text: 定形文
+            item:
+                name: アイテム名
+                unit_name: 単位名
+                registered_count_buy_item_trades: アイテムトレードでの購入登録数
+                registered_count_sale_item_trades: アイテムトレードでの売却登録数
             item_trade:
                 user_id: ユーザID
                 user_nickname: ユーザ名
@@ -285,7 +297,8 @@ ja:
         navbar:
             admin_games: ゲーム管理
             admin_badges: バッジ管理
-            item_genres: アイテムジャンル管理
+            admin_item_genres: アイテムジャンル管理
+            admin_items: アイテム管理
             games: ゲーム
             mypage: マイページ
             log_out: ログアウト

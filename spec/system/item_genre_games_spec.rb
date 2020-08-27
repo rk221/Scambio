@@ -26,7 +26,7 @@ RSpec.describe ItemGenreGame, type: :system do
             context 'when the game is already registered and the item genre is added' do
                 before do 
                     game_data.save
-                    click_link t_navbar(:item_genres)
+                    click_link t_navbar(:admin_item_genres)
                     click_link t_link_to(:regist)
                     fill_in t_model_attribute_name(ItemGenre, :name), with: item_genre_data.name
                     fill_in t_model_attribute_name(ItemGenre, :default_unit_name), with: item_genre_data.default_unit_name
