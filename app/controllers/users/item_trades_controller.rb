@@ -1,6 +1,4 @@
-class Users::ItemTradesController < UsersController
-    before_action :user_auth
-
+class Users::ItemTradesController < BaseUsersController
     # ユーザの取引一覧
     def index #page paramsを受け取るとページ切り替え可能
         # 検索

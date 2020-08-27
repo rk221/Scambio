@@ -1,6 +1,4 @@
-class Users::ItemTradeDetails::ItemTradeChatsController < UsersController
-    before_action :user_auth
-
+class Users::ItemTradeDetails::ItemTradeChatsController < BaseUsersController
     def sale_create # 売却者側が送信した場合
         return unless confirm_user(ItemTradeDetail.find(params[:item_trade_chat][:item_trade_detail_id]).item_trade_queue.item_trade) # 売却者ユーザ確認
 

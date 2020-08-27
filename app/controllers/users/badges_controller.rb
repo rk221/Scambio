@@ -1,10 +1,7 @@
-class Users::BadgesController < UsersController
-    before_action :user_auth
-
+class Users::BadgesController < BaseUsersController
     def index
         @user_badges = current_user.user_badges.all.includes({badge: :game}).order("games.title asc, badges.name")
         @wear_user_badges = @user_badges.where(wear: true).order("games.title asc, badges.name")
-
     end
 
     def edit

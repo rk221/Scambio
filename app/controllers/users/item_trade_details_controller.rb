@@ -1,6 +1,4 @@
-class Users::ItemTradeDetailsController < UsersController
-    before_action :user_auth
-    
+class Users::ItemTradeDetailsController < BaseUsersController
     def edit_buy # 取引登録者が評価
         @item_trade_detail = ItemTradeDetail.find(params[:id])
         return redirect_to_permit_error unless confirm_user(@item_trade_detail.item_trade_queue.item_trade) # ユーザID確認

@@ -1,6 +1,4 @@
-class Users::Codes::PlayStationNetworkIdsController < UsersController
-    before_action :user_auth
-
+class Users::Codes::PlayStationNetworkIdsController < BaseUsersController
     def new 
         @play_station_network_id = PlayStationNetworkId.new
     end

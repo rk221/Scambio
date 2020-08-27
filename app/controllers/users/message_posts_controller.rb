@@ -1,6 +1,4 @@
-class Users::MessagePostsController < UsersController
-    before_action :user_auth
-
+class Users::MessagePostsController < BaseUsersController
     def index
         @user_message_posts = current_user.user_message_posts.decorate
     end

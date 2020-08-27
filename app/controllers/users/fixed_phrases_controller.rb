@@ -1,6 +1,4 @@
-class Users::FixedPhrasesController < UsersController
-    before_action :user_auth
-
+class Users::FixedPhrasesController < BaseUsersController
     def index 
         @fixed_phrases = current_user.fixed_phrases
     end
