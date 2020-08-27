@@ -30,7 +30,7 @@
             %th
     %body
         - @items.each do |item|
-            %tr 
+            %tr{id: "item_id_#{item.id}"}
                 %td 
                     = item.game.title
                 %td 

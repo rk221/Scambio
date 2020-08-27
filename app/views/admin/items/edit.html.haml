@@ -2,7 +2,7 @@
 %h1.mb-5
     = t('.title')
 
-= form_with(model: [@item], url: admin_item_path, local: true) do |f|
+= form_with(model: [@item], url: admin_item_path, local: true, id: 'item') do |f|
     = render 'shared/error_messages', model: f.object
 
     %table.table
