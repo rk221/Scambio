@@ -44,10 +44,10 @@
             = link_to t('link_to.edit'), edit_game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), class: 'btn btn-success mr-2'
             = link_to t('link_to.destroy'), game_item_trade_path(id: @item_trade.id, game_id: @item_trade.game_id), method: :delete, data: {confirm: t('confirm.simple_destroy', name: ItemTrade.model_name.human)}, class: 'btn btn-danger'
 
-    .container.mb-5
-        %h3.mb-3
-            = t('.buy_user')
-        - if @item_trade.item_trade_queue # 購入されている
+    - if @item_trade.item_trade_queue # 購入されている
+        .container.mb-5
+            %h3.mb-3
+                = t('.buy_user')
             -# 購入者ユーザ情報
             .buy-user
                 .user-game-rank{class: "user-game-rank-#{@item_trade.item_trade_queue.user_game_rank.rank}"}
