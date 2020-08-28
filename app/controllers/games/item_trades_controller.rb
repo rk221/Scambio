@@ -7,9 +7,9 @@ class Games::ItemTradesController < ApplicationController
         @q = ItemTrade.ransack(search_params)
         # 検索の結果 + 取引が有効 + 購入されていない取引 + ゲームに一致している
         @page_item_trades = @q.result(distinct: true)
-            .enabled # 有効な取引
-            .includes(:item_trade_queue, :game, :user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank)
-            .where(item_trade_queues: {id: nil}, game_id: params[:game_id]) # 購入されていない ゲーム一致
+            .can_buy # 購入できる取引
+            .includes(:game, :user, {buy_item: :item_genre}, {sale_item: :item_genre}, :user_game_rank)
+            .where(game_id: params[:game_id]) #ゲーム一致
             .page(params[:page])
         @item_trades = @page_item_trades.decorate
         @selectable_item_genres = ItemGenreGame.item_genres_that_can_be_used_in_games(params[:game_id])

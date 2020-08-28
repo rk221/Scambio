@@ -32,16 +32,21 @@ class ItemTrade < ApplicationRecord
         .where.not(item_trade_queues: {id: nil})
     end
 
-    # 取引が有効 かつ 期限が有効
-    scope :enabled, -> {where("item_trades.enable = true and trade_deadline > ?", Time.zone.now)}
-    # 取引が無効 か 期限が無効
-    scope :disabled, -> {where("item_trades.enable = false or trade_deadline <= ?", Time.zone.now)}
+    # 期限が有効
+    scope :within_deadline, -> {where("item_trades.trade_deadline > ?", Time.zone.now)}
+    # 取引が有効
+    scope :enabled, -> { where(enable: true) }
+    # 取引が無効
+    scope :disabled, -> { where(enable: false) }
+
+    # 購入できる(取引期限が有効かつ、期限が有効かつ、キューが存在しない)
+    scope :can_buy, -> { enabled.within_deadline.includes(:item_trade_queue).where(item_trade_queues: {id: nil}) }
 
     # 取引が有効か。取引中  #(ransack での検索ではオプション設定時、絶対に値を受け取らないといけない)
     scope :enabled_or_during_trade, -> (flag = true) do 
         if flag
             eager_load(:item_trade_queue)
-            .where("item_trades.enable = true AND (item_trades.trade_deadline > ? OR item_trade_queues.id IS NOT NULL)", Time.zone.now)
+            .enabled.where("item_trades.trade_deadline > ? OR item_trade_queues.id IS NOT NULL", Time.zone.now)
         end
     end
 
