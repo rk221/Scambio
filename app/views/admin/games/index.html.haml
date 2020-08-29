@@ -2,7 +2,9 @@
 %h1.mb-5 
     = t '.title'
 
-= link_to t('link_to.regist'), new_admin_game_path, class: 'btn btn-primary mb-3'
+.mb-3
+    = link_to t('link_to.regist'), new_admin_game_path, class: 'btn btn-primary'
+    = link_to t('.output_csv'), admin_output_csv_game_path, remote: true, method: :post, class: 'btn btn-warning'
 
 %table.table.text-nowrap
     %thead.thead-light
