@@ -18,6 +18,7 @@ ja:
             index:
                 title: ゲーム一覧
                 edit_item_genre_games: アイテムジャンル編集
+                button: 'ボタン'
             new:
                 title: ゲーム登録
             edit:
@@ -55,6 +56,7 @@ ja:
         index:
             title: ゲーム一覧
             item_trades: アイテムトレード一覧
+            button: 'ボタン'
         item_trades:
             index:
                 title: アイテムトレード一覧
