@@ -42,6 +42,7 @@ Rails.application.routes.draw do devise_for :users, controllers: {
 
   namespace :admin do
     resources :games
+    post '/games/output_csv' => 'games#output_csv', as: 'output_csv_game'
     resources :item_genres
     resources :badges
     resources :items, only: [:index, :show, :edit, :update]

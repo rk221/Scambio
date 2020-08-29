@@ -6,37 +6,30 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user = User.new(
-    firstname: '管理者',
-    lastname: 'ゆーざー',
-    nickname: 'Admin',
-    birthdate: 20.year.ago,
-    email: 'admin@example.com' ,
-    password: 'password' ,
-    password_confirmation: 'password',
-    confirmed_at: Time.zone.now,
-    admin: true 
-)
-user.save
+require "csv"
 
-user = User.new(
-    firstname: '一般者',
-    lastname: 'ゆーざー',
-    nickname: 'General',
-    birthdate: 20.year.ago,
-    email: 'general@example.com' ,
-    password: 'password' ,
-    password_confirmation: 'password',
-    confirmed_at: Time.zone.now,
-    admin: false 
-)
-user.save
+# 画像の存在確認をし、存在すればパスを返す
+def image_exist?(image_name, table_name: nil, extension: ".jpg")
+    table_name ||= @table_name
+    
+    path = Rails.root.join("db/seeds/", @environment, "images", table_name, image_name + extension)
+    if File.exist?(path)
+        path
+    else 
+        false
+    end
+end
 
-game = Game.new(title: 'あつまれどうぶつの森')
-game.save
+# データを投入するテーブル名を指定(seeds/以下のファイル名, 作成順に気を付ける)
+table_names = %w(users games badges item_genres)
 
-item_genre = ItemGenre.new(name: '家具', default_unit_name: '個')
-item_genre.save
-
-item_genre_game = ItemGenreGame.new(enable: true, game_id: game.id, item_genre_id: item_genre.id)
-item_genre_game.save
+# ファイルの読み込み
+table_names.each do |table_name|
+    @environment = (Rails.env == "test") ? "development" : Rails.env
+    @table_name = table_name
+	path = Rails.root.join("db/seeds", @environment, @table_name + ".rb")
+    if File.exist?(path)
+        puts "#{table_name}..."
+        require path
+    end
+end

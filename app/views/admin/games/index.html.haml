@@ -2,30 +2,28 @@
 %h1.mb-5 
     = t '.title'
 
-= link_to t('link_to.regist'), new_admin_game_path, class: 'btn btn-primary mb-3'
+.mb-3
+    = link_to t('link_to.regist'), new_admin_game_path, class: 'btn btn-primary'
+    = link_to t('.output_csv'), admin_output_csv_game_path, remote: true, method: :post, class: 'btn btn-warning'
 
-.table-responsive
-    %table.table.table-bordered.text-nowrap
-        %thead.thead-light
+%table.table.text-nowrap
+    %thead.thead-light
+        %tr 
+            %th
+                = Game.human_attribute_name(:title)
+            %th
+                .ml-5
+                    = t '.button'
+    %tbody
+        - @games.each do |game|
             %tr 
-                %th
-                    = Game.human_attribute_name(:title)
-                %th
-                    = Game.human_attribute_name(:image_icon)
-                %th
-        %body
-            - @games.each do |game|
-                %tr 
-                    %td 
+                - if game.image_icon.present?
+                    %td.image-icon{style: "background-image: url(#{game.image_icon_url});"}
+                - else
+                    %td.game-title
                         = game.title
-                    %td 
-                        - if game.image_icon.present?
-                            = image_tag(game.image_icon_url, style: 'width: 30%')
-                        - else
-                            = t('empty') 
-                    %td
-                        = link_to t('.edit_item_genre_games'), admin_item_genre_games_path(game_id: game.id), class: 'btn btn-outline-primary mr-2 d-block mb-2'
-                        .d-block
-                            = link_to t('link_to.edit'), edit_admin_game_path(game), class: 'btn btn-success mr-2'
-                            = link_to t('link_to.destroy'), admin_game_path(game), method: :delete, data: {confirm: t('confirm.destroy', model: Game.model_name.human, name: game.title)}, class: 'btn btn-danger'
+                %td
+                    = link_to t('.edit_item_genre_games'), admin_item_genre_games_path(game_id: game.id), class: 'btn btn-outline-primary ml-5 mr-2'
+                    = link_to t('link_to.edit'), edit_admin_game_path(game), class: 'btn btn-success mr-2'
+                    = link_to t('link_to.destroy'), admin_game_path(game), method: :delete, data: {confirm: t('confirm.destroy', model: Game.model_name.human, name: game.title)}, class: 'btn btn-danger'
                     

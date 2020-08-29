@@ -1,0 +1,29 @@
+game_title,genre_name,enable
+あつまれ どうぶつの森,お金,true
+黒い砂漠,お金,true
+ダークソウル3,お金,true
+bloodborne,お金,true
+あつまれ どうぶつの森,家具,true
+黒い砂漠,家具,true
+ダークソウル3,家具,false
+bloodborne,家具,false
+あつまれ どうぶつの森,レシピ,true
+黒い砂漠,レシピ,true
+ダークソウル3,レシピ,false
+bloodborne,レシピ,false
+あつまれ どうぶつの森,道具,true
+黒い砂漠,道具,true
+ダークソウル3,道具,false
+bloodborne,道具,false
+あつまれ どうぶつの森,武器,false
+黒い砂漠,武器,true
+ダークソウル3,武器,false
+bloodborne,武器,true
+あつまれ どうぶつの森,防具,false
+黒い砂漠,防具,true
+ダークソウル3,防具,false
+bloodborne,防具,true
+あつまれ どうぶつの森,その他,true
+黒い砂漠,その他,true
+ダークソウル3,その他,true
+bloodborne,その他,true

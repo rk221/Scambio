@@ -72,3 +72,8 @@ yarn-debug.log*
 
 /MyDocuments
 /public/uploads/
+
+# seeds file
+/db/seeds/development/images/*
+/db/seeds/production/images/*
+/db/seeds/tmp/*
